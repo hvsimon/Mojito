@@ -50,6 +50,7 @@ android {
 }
 
 dependencies {
+    implementation(project(":common-ui-resources"))
 
     // Jetbrains
     implementation("org.jetbrains.kotlin:kotlin-stdlib:1.6.10")

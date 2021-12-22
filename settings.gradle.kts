@@ -7,4 +7,7 @@ dependencyResolutionManagement {
     }
 }
 rootProject.name = "Kiwi's Bar"
-include(":app")
+include(
+    ":app",
+    ":common-ui-resources",
+)
