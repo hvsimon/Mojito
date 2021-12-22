@@ -53,36 +53,25 @@ dependencies {
     implementation(project(":common-ui-resources"))
 
     // Jetbrains
-    implementation("org.jetbrains.kotlin:kotlin-stdlib:1.6.10")
 
     // Androidx
-    implementation("androidx.core:core-ktx:1.7.0")
-    implementation("androidx.appcompat:appcompat:1.3.1")
-    val activity_version = "1.4.0"
-    implementation("androidx.activity:activity-ktx:$activity_version")
-    implementation("androidx.activity:activity-compose:$activity_version")
-    implementation("androidx.constraintlayout:constraintlayout:2.1.1")
-    implementation("androidx.navigation:navigation-compose:2.4.0-rc01")
+    implementation(libs.core)
+    implementation(libs.appcompat)
+    implementation(libs.bundles.activity)
+    implementation(libs.navigation.compose)
 
     // Compose
-    val compose_version = "1.1.0-rc01"
-    implementation("androidx.compose.runtime:runtime:$compose_version")
-    implementation("androidx.compose.compiler:compiler:$compose_version")
-    implementation("androidx.compose.ui:ui:$compose_version")
-    implementation("androidx.compose.ui:ui-tooling:$compose_version")
-    implementation("androidx.compose.foundation:foundation:$compose_version")
-//    implementation("androidx.compose.material:material:$compose_version")
+    implementation(libs.bundles.compose)
+    // TODO: 2021/12/23 choose one?
+    implementation("androidx.compose.material:material:1.1.0-rc01")
     implementation("androidx.compose.material3:material3:1.0.0-alpha02")
 
     // Google
-    implementation("com.google.android.material:material:1.5.0-rc01")
-    val accompanist_version = "0.21.5-rc"
-    implementation("com.google.accompanist:accompanist-systemuicontroller:$accompanist_version")
-    implementation("com.google.accompanist:accompanist-insets:$accompanist_version")
-    implementation("com.google.accompanist:accompanist-insets-ui:$accompanist_version")
+    implementation(libs.material)
+    implementation(libs.bundles.accompanist)
 
-    implementation("io.coil-kt:coil:1.4.0")
-    implementation("io.coil-kt:coil-compose:1.4.0")
+    // UI
+    implementation(libs.coil.compose)
 
     // Test
     testImplementation("junit:junit:4.+")
