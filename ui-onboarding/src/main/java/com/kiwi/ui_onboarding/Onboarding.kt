@@ -67,7 +67,9 @@ fun Header(
     Box(modifier = modifier) {
         Image(
             painter = rememberImagePainter(
-                data = "https://images.unsplash.com/photo-1513558161293-cdaf765ed2fd?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=987&q=80",
+                data = "https://images.unsplash.com/photo-1513558161293-cda" +
+                    "f765ed2fd?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wY" +
+                    "WdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=987&q=80",
                 builder = {
                     size(OriginalSize)
                 },
@@ -99,7 +101,11 @@ fun Header(
                 style = MaterialTheme.typography.titleLarge,
             )
             Text(
-                text = "莫希托（西班牙語：Mojito、西班牙語發音：[moˈxito]）是一種傳統的古巴高球雞尾酒。傳統上，莫希托是一種由五種材料製成的雞尾酒：淡蘭姆酒、白砂糖（傳統上是用甘蔗汁）、青檸汁、蘇打水和薄荷。最原始的古巴配方是使用留蘭香或古巴島上常見的檸檬薄荷。[1]萊姆與薄荷的清爽口味是為了與蘭姆酒的烈性相互補，同時也使得這種透明無色的調酒成為夏日的熱門飲料之一。[2]這種調酒有著相對低的酒精含量(大約10%)。",
+                text = "莫希托（西班牙語：Mojito、西班牙語發音：[moˈxito]）是一種傳統的古巴高球雞尾酒" +
+                    "。傳統上，莫希托是一種由五種材料製成的雞尾酒：淡蘭姆酒、白砂糖（傳統上是用甘蔗汁" +
+                    "）、青檸汁、蘇打水和薄荷。最原始的古巴配方是使用留蘭香或古巴島上常見的檸檬薄荷。" +
+                    "[1]萊姆與薄荷的清爽口味是為了與蘭姆酒的烈性相互補，同時也使得這種透明無色的調酒" +
+                    "成為夏日的熱門飲料之一。[2]這種調酒有著相對低的酒精含量(大約10%)。",
                 color = Color.White,
                 style = MaterialTheme.typography.bodyLarge,
                 maxLines = 2,
@@ -142,12 +148,18 @@ fun BaseWineSection() {
         verticalArrangement = Arrangement.spacedBy(8.dp),
     ) {
         val wineList = listOf(
-            "https://images.unsplash.com/photo-1614313511387-1436a4480ebb?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1760&q=80",
-            "https://images.unsplash.com/photo-1608885898957-a559228e8749?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=987&q=80",
-            "https://images.unsplash.com/photo-1550985543-f47f38aeee65?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1335&q=80",
-            "https://images.unsplash.com/photo-1516535794938-6063878f08cc?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=988&q=80",
-            "https://images.unsplash.com/photo-1527281400683-1aae777175f8?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=987&q=80",
-            "https://images.unsplash.com/photo-1619451050621-83cb7aada2d7?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=986&q=80",
+            "https://images.unsplash.com/photo-1614313511387-1436a4480ebb?ixlib=rb-1.2.1&ixid=Mnw" +
+                "xMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1760&q=80",
+            "https://images.unsplash.com/photo-1608885898957-a559228e8749?ixlib=rb-1.2.1&ixid=Mnw" +
+                "xMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=987&q=80",
+            "https://images.unsplash.com/photo-1550985543-f47f38aeee65?ixlib=rb-1.2.1&ixid=MnwxMj" +
+                "A3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1335&q=80",
+            "https://images.unsplash.com/photo-1516535794938-6063878f08cc?ixlib=rb-1.2.1&ixid=Mnw" +
+                "xMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=988&q=80",
+            "https://images.unsplash.com/photo-1527281400683-1aae777175f8?ixlib=rb-1.2.1&ixid=Mnw" +
+                "xMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=987&q=80",
+            "https://images.unsplash.com/photo-1619451050621-83cb7aada2d7?ixlib=rb-1.2.1&ixid=Mnw" +
+                "xMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=986&q=80",
         )
         Row(
             horizontalArrangement = Arrangement.spacedBy(8.dp),

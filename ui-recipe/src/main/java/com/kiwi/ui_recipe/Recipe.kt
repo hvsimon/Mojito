@@ -40,7 +40,6 @@ fun Recipe() {
         )
         Ingredient()
     }
-
 }
 
 @Composable
@@ -71,7 +70,6 @@ fun Ingredient() {
                     style = MaterialTheme.typography.bodyLarge,
                 )
             }
-
             Divider()
         }
     }

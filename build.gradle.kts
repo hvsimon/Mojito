@@ -14,6 +14,14 @@ buildscript {
     }
 }
 
-//task clean(type: Delete) {
-//    delete rootProject.buildDir
-//}
+plugins {
+    id("org.jlleitschuh.gradle.ktlint") version "10.2.0"
+}
+
+subprojects {
+    apply(plugin = "org.jlleitschuh.gradle.ktlint")
+    configure<org.jlleitschuh.gradle.ktlint.KtlintExtension> {
+        android.set(true)
+        outputColorName.set("RED")
+    }
+}

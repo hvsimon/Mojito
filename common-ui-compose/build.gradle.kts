@@ -3,7 +3,7 @@ plugins {
     id("kotlin-android")
 }
 
-android{
+android {
     compileSdk = libs.versions.compileSdk.get().toInt()
 
     defaultConfig {
