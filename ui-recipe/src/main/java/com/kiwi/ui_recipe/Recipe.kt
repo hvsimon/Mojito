@@ -16,6 +16,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil.compose.rememberImagePainter
@@ -82,7 +83,7 @@ fun Introduction() {
 fun Ingredient(ingredients: List<Ingredient>) {
     Column {
         Text(
-            text = "Ingredients",
+            text = stringResource(id = R.string.ingredients),
             style = MaterialTheme.typography.headlineLarge,
             modifier = Modifier.padding(top = 16.dp),
         )
@@ -112,7 +113,7 @@ fun Ingredient(ingredients: List<Ingredient>) {
 fun Step() {
     Column {
         Text(
-            text = "How to Make a Mojito",
+            text = stringResource(id = R.string.step),
             style = MaterialTheme.typography.headlineLarge,
             modifier = Modifier.padding(top = 16.dp),
         )
@@ -131,7 +132,7 @@ fun Step() {
 fun Tips() {
     Column {
         Text(
-            text = "Tips & Tricks Making a Mojito",
+            text = stringResource(id = R.string.tips),
             style = MaterialTheme.typography.headlineLarge,
             modifier = Modifier.padding(top = 16.dp),
         )

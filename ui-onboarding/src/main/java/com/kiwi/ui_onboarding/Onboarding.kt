@@ -30,6 +30,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -52,7 +53,7 @@ fun Onboarding() {
                 .fillMaxHeight(fraction = 0.75f)
         )
         Text(
-            text = "六大基酒",
+            text = stringResource(id = R.string.six_base_wine),
             style = MaterialTheme.typography.displaySmall,
             modifier = Modifier.padding(16.dp)
         )
@@ -117,7 +118,7 @@ fun Header(
                     .padding(top = 16.dp)
                     .align(Alignment.CenterHorizontally)
             ) {
-                Text(text = "好手氣")
+                Text(text = stringResource(id = R.string.flexible))
             }
         }
     }
@@ -134,7 +135,7 @@ fun SearchBar(
             .padding(horizontal = 16.dp),
     ) {
         Icon(imageVector = Icons.Default.Search, contentDescription = null)
-        Text(text = "想喝什麼呢 ?")
+        Text(text = stringResource(id = R.string.drink_something))
     }
 }
 
@@ -167,12 +168,12 @@ fun BaseWineSection() {
         ) {
             WineCard(
                 imageData = wineList[0],
-                wineName = "蘭姆酒",
+                wineName = stringResource(id = R.string.rum),
                 modifier = Modifier.weight(1f),
             )
             WineCard(
                 imageData = wineList[1],
-                wineName = "琴酒",
+                wineName = stringResource(id = R.string.gin),
                 modifier = Modifier.weight(1f),
             )
         }
@@ -183,12 +184,12 @@ fun BaseWineSection() {
         ) {
             WineCard(
                 imageData = wineList[2],
-                wineName = "伏特加",
+                wineName = stringResource(id = R.string.vodka),
                 modifier = Modifier.weight(1f),
             )
             WineCard(
                 imageData = wineList[3],
-                wineName = "龍舌蘭",
+                wineName = stringResource(id = R.string.tequila),
                 modifier = Modifier.weight(1f),
             )
         }
@@ -199,12 +200,12 @@ fun BaseWineSection() {
         ) {
             WineCard(
                 imageData = wineList[4],
-                wineName = "威士忌",
+                wineName = stringResource(id = R.string.whiskey),
                 modifier = Modifier.weight(1f),
             )
             WineCard(
                 imageData = wineList[5],
-                wineName = "白蘭地",
+                wineName = stringResource(id = R.string.brandy),
                 modifier = Modifier.weight(1f),
             )
         }

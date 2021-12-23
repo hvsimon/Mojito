@@ -1,2 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+    <!--  OnBoarding  -->
+    <string name="drink_something">想喝什麼呢 ?</string>
+    <string name="flexible">隨心所欲</string>
+
+    <string name="six_base_wine">六大基酒</string>
+    <string name="rum">蘭姆酒</string>
+    <string name="gin">琴酒</string>
+    <string name="vodka">伏特加</string>
+    <string name="tequila">龍舌蘭</string>
+    <string name="whiskey">威士忌</string>
+    <string name="brandy">白蘭地</string>
+
+    <!--  Recipe  -->
+    <string name="ingredients">原料</string>
+    <string name="step">How to Make a Mojito</string>
+    <string name="tips">Tips &amp; Tricks Making a Mojito</string>
+</resources>
