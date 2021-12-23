@@ -48,7 +48,15 @@ fun Recipe() {
         )
         Column(modifier = Modifier.padding(16.dp)) {
             Introduction()
-            Ingredient()
+
+            val ingredients = listOf(
+                Ingredient("\uD83C\uDF78 White Rum", "2 shots"),
+                Ingredient("\uD83E\uDDC2 Sugar Syrup", "0.5 shot"),
+                Ingredient("\uD83C\uDF4B Lime Wedges", "4"),
+                Ingredient("\uD83C\uDF3F Fresh Mint", "12 leaves"),
+                Ingredient("\uD83E\uDD64 Soda Water", "fill to top"),
+            )
+            Ingredient(ingredients)
             Step()
             Tips()
         }
@@ -71,21 +79,13 @@ fun Introduction() {
 }
 
 @Composable
-fun Ingredient() {
-    val ingredients = listOf(
-        Ingredient("White Rum", "2 shots"),
-        Ingredient("Sugar Syrup", "0.5 shot"),
-        Ingredient("Lime Wedges", "4"),
-        Ingredient("Fresh Mint", "12 leaves"),
-        Ingredient("Soda Water", "fill to top"),
-    )
-
+fun Ingredient(ingredients: List<Ingredient>) {
     Column {
         Text(
             text = "Ingredients",
             style = MaterialTheme.typography.headlineLarge,
+            modifier = Modifier.padding(top = 16.dp),
         )
-
         ingredients.forEach {
             Row(
                 horizontalArrangement = Arrangement.SpaceBetween,
@@ -114,6 +114,7 @@ fun Step() {
         Text(
             text = "How to Make a Mojito",
             style = MaterialTheme.typography.headlineLarge,
+            modifier = Modifier.padding(top = 16.dp),
         )
 
         Text(
@@ -132,6 +133,7 @@ fun Tips() {
         Text(
             text = "Tips & Tricks Making a Mojito",
             style = MaterialTheme.typography.headlineLarge,
+            modifier = Modifier.padding(top = 16.dp),
         )
 
         Text(
