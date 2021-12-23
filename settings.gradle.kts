@@ -13,4 +13,5 @@ include(
     ":app",
     ":common-ui-resources",
     ":common-ui-compose",
+    ":ui-onboarding",
 )
