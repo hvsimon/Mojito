@@ -45,12 +45,13 @@ android {
     }
 
     composeOptions {
-        kotlinCompilerExtensionVersion = "1.1.0-rc02"
+        kotlinCompilerExtensionVersion = libs.versions.composecompiler.get()
     }
 }
 
 dependencies {
     implementation(project(":common-ui-resources"))
+    implementation(project(":common-ui-compose"))
 
     // Jetbrains
 

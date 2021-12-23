@@ -12,4 +12,5 @@ rootProject.name = "Kiwi's Bar"
 include(
     ":app",
     ":common-ui-resources",
+    ":common-ui-compose",
 )

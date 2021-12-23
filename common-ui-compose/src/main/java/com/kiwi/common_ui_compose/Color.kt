@@ -1,4 +1,4 @@
-package com.kiwi.cocktail
+package com.kiwi.common_ui_compose
 
 import android.os.Build
 import androidx.compose.foundation.isSystemInDarkTheme

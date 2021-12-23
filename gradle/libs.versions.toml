@@ -16,6 +16,7 @@ room = "2.3.0"
 
 # Compose
 compose = "1.1.0-rc01"
+composecompiler = "1.1.0-rc02" # rc02 works with Kotlin 1.6.10
 
 # Google
 material = "1.5.0-rc01"
