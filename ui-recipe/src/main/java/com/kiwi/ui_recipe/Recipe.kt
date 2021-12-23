@@ -1,6 +1,7 @@
 package com.kiwi.ui_recipe
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -38,24 +39,24 @@ fun Recipe() {
     ) {
         Image(
             painter = rememberImagePainter(
-                data = "https://thebarcabinet.com/assets/images/recipes/rum-cocktails/mojito.jpg",
+                data = "https://images.unsplash.com/photo-1609345265499-2133bbeb6ce5?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1994&q=80",
                 builder = {
                     size(OriginalSize)
                 },
             ),
-            contentScale = ContentScale.Crop,
+            contentScale = ContentScale.Inside,
             contentDescription = null,
             modifier = Modifier.fillMaxWidth()
         )
-        Column(modifier = Modifier.padding(16.dp)) {
+        Column {
             Introduction()
 
             val ingredients = listOf(
-                Ingredient("\uD83C\uDF78 White Rum", "2 shots"),
-                Ingredient("\uD83E\uDDC2 Sugar Syrup", "0.5 shot"),
-                Ingredient("\uD83C\uDF4B Lime Wedges", "4"),
-                Ingredient("\uD83C\uDF3F Fresh Mint", "12 leaves"),
-                Ingredient("\uD83E\uDD64 Soda Water", "fill to top"),
+                Ingredient("\uD83C\uDF78 白蘭姆酒", "2 shots"),
+                Ingredient("\uD83E\uDDC2 糖漿", "0.5 shot"),
+                Ingredient("\uD83C\uDF4B 萊姆片", "4"),
+                Ingredient("\uD83C\uDF3F 新鮮薄荷", "12 leaves"),
+                Ingredient("\uD83E\uDD64 蘇打水", "fill to top"),
             )
             Ingredient(ingredients)
             Step()
@@ -66,7 +67,7 @@ fun Recipe() {
 
 @Composable
 fun Introduction() {
-    Column {
+    Column(modifier = Modifier.padding(16.dp)) {
         Text(
             text = "Mojito",
             style = MaterialTheme.typography.displaySmall,
@@ -81,11 +82,14 @@ fun Introduction() {
 
 @Composable
 fun Ingredient(ingredients: List<Ingredient>) {
-    Column {
+    Column(
+        modifier = Modifier
+            .background(color = MaterialTheme.colorScheme.surfaceVariant)
+            .padding(16.dp)
+    ) {
         Text(
             text = stringResource(id = R.string.ingredients),
             style = MaterialTheme.typography.headlineLarge,
-            modifier = Modifier.padding(top = 16.dp),
         )
         ingredients.forEach {
             Row(
@@ -104,25 +108,31 @@ fun Ingredient(ingredients: List<Ingredient>) {
                     style = MaterialTheme.typography.bodyLarge,
                 )
             }
-            Divider()
+            Divider(
+                color = MaterialTheme.colorScheme.onSurface
+            )
         }
     }
 }
 
 @Composable
 fun Step() {
-    Column {
+    Column(modifier = Modifier.padding(16.dp)) {
         Text(
             text = stringResource(id = R.string.step),
             style = MaterialTheme.typography.headlineLarge,
-            modifier = Modifier.padding(top = 16.dp),
         )
 
         Text(
-            text = "Place the Mint, Sugar Syrup & Lime wedges into a highball glass & lightly muddle the ingredients together. The Lime wedges & Mint leaves should be bruised to release their juices & essential oils.\n" +
-                "Fill the glass with crushed ice, pour over the White Rum & stir.\n" +
-                "Top up with Soda Water & stir well from the bottom up.\n" +
-                "Garnish with a sprig of Mint & serve with a straw.",
+            text = """
+                1. Place the Mint, Sugar Syrup & Lime wedges into a highball glass & lightly muddle the ingredients together. The Lime wedges & Mint leaves should be bruised to release their juices & essential oils.
+                
+                2. Fill the glass with crushed ice, pour over the White Rum & stir.
+                
+                3. Top up with Soda Water & stir well from the bottom up.
+                
+                4. Garnish with a sprig of Mint & serve with a straw.
+            """.trimIndent(),
             style = MaterialTheme.typography.bodyLarge,
         )
     }
@@ -130,19 +140,26 @@ fun Step() {
 
 @Composable
 fun Tips() {
-    Column {
+    Column(
+        modifier = Modifier.padding(16.dp)
+    ) {
         Text(
             text = stringResource(id = R.string.tips),
             style = MaterialTheme.typography.headlineLarge,
-            modifier = Modifier.padding(top = 16.dp),
         )
 
         Text(
-            text = "Given that the Mojito is reliant on fresh Limes & Mint that are available in different sizes & flavour intensity, it is a cocktail that really rewards you if you tune the quantities to accommodate the ingredients you have available & most importantly, your own personal tastes.\n" +
-                "If you make a Mojito & find it too sweet, you could try adding Angostura bitters to cut down on the sweetness.\n" +
-                "Don't have any Limes to hand? Try using Lemons for a twist on the classic Mojito but note that you might need to add a little more Sugar Syrup or use a little less Lemon to balance out the extra sourness.\n" +
-                "If you're out of Sugar syrup, you can use half a teaspoon of fine caster Sugar instead. If using Sugar, you might like to add the White Rum & stir to dissolve the Sugar before adding the crushed Ice.\n" +
-                "Don't have crushed ice? Originally, Cuban bartenders mixed the drink using cubed ice, including mint stalks as well as leaves - try this for an equally tasty yet more rustic feel.",
+            text = """
+                Given that the Mojito is reliant on fresh Limes & Mint that are available in different sizes & flavour intensity, it is a cocktail that really rewards you if you tune the quantities to accommodate the ingredients you have available & most importantly, your own personal tastes.
+                
+                If you make a Mojito & find it too sweet, you could try adding Angostura bitters to cut down on the sweetness.
+                
+                Don't have any Limes to hand? Try using Lemons for a twist on the classic Mojito but note that you might need to add a little more Sugar Syrup or use a little less Lemon to balance out the extra sourness.
+                
+                If you're out of Sugar syrup, you can use half a teaspoon of fine caster Sugar instead. If using Sugar, you might like to add the White Rum & stir to dissolve the Sugar before adding the crushed Ice.
+                
+                Don't have crushed ice? Originally, Cuban bartenders mixed the drink using cubed ice, including mint stalks as well as leaves - try this for an equally tasty yet more rustic feel.
+            """.trimIndent(),
             style = MaterialTheme.typography.bodyLarge,
         )
     }
