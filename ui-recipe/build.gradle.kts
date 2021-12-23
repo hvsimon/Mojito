@@ -1,33 +1,13 @@
 plugins {
-    id("com.android.application")
+    id("com.android.library")
     id("kotlin-android")
-    id("kotlin-kapt")
 }
 
 android {
     compileSdk = libs.versions.compileSdk.get().toInt()
 
     defaultConfig {
-        applicationId = "com.kiwi.cocktail"
         minSdk = libs.versions.minSdk.get().toInt()
-        targetSdk = libs.versions.targetSdk.get().toInt()
-        versionCode = 1
-        versionName = "1.0"
-
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-    }
-
-    buildTypes {
-        getByName("debug") {
-
-        }
-        getByName("release") {
-            isMinifyEnabled = true
-            proguardFiles(
-                getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro"
-            )
-        }
     }
 
     compileOptions {
@@ -52,8 +32,6 @@ android {
 dependencies {
     implementation(project(":common-ui-resources"))
     implementation(project(":common-ui-compose"))
-    implementation(project(":ui-onboarding"))
-    implementation(project(":ui-recipe"))
 
     // Jetbrains
 

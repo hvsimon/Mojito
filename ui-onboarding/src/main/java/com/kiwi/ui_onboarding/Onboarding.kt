@@ -1,4 +1,4 @@
-package com.kiwi.cocktail.ui
+package com.kiwi.ui_onboarding
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image

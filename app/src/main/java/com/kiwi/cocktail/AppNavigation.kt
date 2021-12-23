@@ -7,9 +7,9 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.kiwi.cocktail.ui.Following
-import com.kiwi.cocktail.ui.Onboarding
-import com.kiwi.cocktail.ui.Recipe
 import com.kiwi.cocktail.ui.Watched
+import com.kiwi.ui_onboarding.Onboarding
+import com.kiwi.ui_recipe.Recipe
 
 internal sealed class Screen(
     val route: String,
