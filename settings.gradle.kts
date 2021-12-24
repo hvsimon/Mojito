@@ -15,5 +15,5 @@ include(
     ":common-ui-compose",
     ":ui-onboarding",
     ":ui-recipe",
+    ":ui-collection",
 )
-include(":ui-recipe")
