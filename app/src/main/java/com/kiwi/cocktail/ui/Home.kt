@@ -1,5 +1,6 @@
 package com.kiwi.cocktail.ui
 
+import androidx.annotation.DrawableRes
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -46,16 +47,16 @@ fun HomeBottomNavigation(
         val currentDestination = navBackStackEntry?.destination
 
         HomeNavigationItems.forEach { item ->
-            
-            val selected = currentDestination?.hierarchy?.any { it.route == item.route } == true
+
+            val selected = currentDestination?.hierarchy?.any { it.route == item.screen.route } == true
             // <div>Icons made by <a href="https://www.freepik.com" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div>
-            val iconRes = if(selected) R.drawable.ic_mojito_black else R.drawable.ic_mojito_line
+            val iconRes = if (selected) item.selectedIconResId else item.iconResId
             NavigationBarItem(
                 icon = { Icon(painterResource(id = iconRes), contentDescription = null) },
-                label = { Text(text = stringResource(id = item.labelResId)) },
+                label = { Text(text = stringResource(id = item.screen.labelResId)) },
                 selected = selected,
                 onClick = {
-                    navController.navigate(item.route) {
+                    navController.navigate(item.screen.route) {
                         popUpTo(navController.graph.findStartDestination().id) { saveState = true }
                         launchSingleTop = true
                         restoreState = true
@@ -66,8 +67,26 @@ fun HomeBottomNavigation(
     }
 }
 
+private data class HomeNavigationItem(
+    val screen: Screen,
+    @DrawableRes val iconResId: Int,
+    @DrawableRes val selectedIconResId: Int,
+)
+
 private val HomeNavigationItems = listOf(
-    Screen.Onboarding,
-    Screen.Collection,
-    Screen.Watched,
+    HomeNavigationItem(
+        screen = Screen.Onboarding,
+        iconResId = R.drawable.ic_mojito_outlined,
+        selectedIconResId = R.drawable.ic_mojito_filled,
+    ),
+    HomeNavigationItem(
+        screen = Screen.Collection,
+        iconResId = R.drawable.ic_favorite_outlined,
+        selectedIconResId = R.drawable.ic_favorite_filled,
+    ),
+    HomeNavigationItem(
+        screen = Screen.Watched,
+        iconResId = R.drawable.ic_person_outline,
+        selectedIconResId = R.drawable.ic_person_filled,
+    )
 )
