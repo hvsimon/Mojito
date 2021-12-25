@@ -52,7 +52,11 @@ internal fun AppNavigation(
                 {},
             )
         }
-        composable(Screen.Collection.route) { Collection() }
+        composable(Screen.Collection.route) {
+            Collection(
+                openRecipe = { navController.navigate(Screen.Recipe.route) },
+            )
+        }
         composable(Screen.Watched.route) { Watched() }
 
         composable(Screen.Recipe.route) { Recipe() }
