@@ -24,6 +24,7 @@ accompanist = "0.21.5-rc"
 
 # UI
 coil = "1.4.0"
+lottie = "4.2.2"
 
 [libraries]
 # Jetbrains
@@ -51,6 +52,7 @@ accompanist-systemuicontroller = { module = "com.google.accompanist:accompanist-
 
 # UI
 coil-compose = { module = "io.coil-kt:coil-compose", version.ref = "coil" }
+lottie-compose = { module = "com.airbnb.android:lottie-compose", version.ref = "lottie" }
 
 [bundles]
 activity = ["activity-ktx", "activity-compose"]

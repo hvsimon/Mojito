@@ -53,6 +53,7 @@ dependencies {
 
     // UI
     implementation(libs.coil.compose)
+    implementation(libs.lottie.compose)
 
     // Test
     testImplementation("junit:junit:4.+")
