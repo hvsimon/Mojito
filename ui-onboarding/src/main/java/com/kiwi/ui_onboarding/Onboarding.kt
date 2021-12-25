@@ -17,6 +17,7 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Card
 import androidx.compose.material.ExperimentalMaterialApi
+import androidx.compose.material.Surface
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.Button
@@ -37,17 +38,21 @@ import androidx.compose.ui.unit.dp
 import coil.compose.rememberImagePainter
 import coil.size.OriginalSize
 import com.google.accompanist.insets.statusBarsPadding
+import com.kiwi.common_ui_compose.KiwisBarTheme
 
-@Preview
 @Composable
-fun Onboarding() {
+fun Onboarding(
+    openRecipe: () -> Unit,
+    openFoo: () -> Unit
+) {
     val scrollState = rememberScrollState()
     Column(
         modifier = Modifier
-            .verticalScroll(scrollState)
             .fillMaxSize()
+            .verticalScroll(scrollState)
     ) {
         Header(
+            onRandomClick = openRecipe,
             modifier = Modifier
                 .fillMaxWidth()
                 .fillMaxHeight(fraction = 0.75f)
@@ -63,6 +68,7 @@ fun Onboarding() {
 
 @Composable
 fun Header(
+    onRandomClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     Box(modifier = modifier) {
@@ -77,7 +83,8 @@ fun Header(
             ),
             contentScale = ContentScale.Crop,
             contentDescription = null,
-            modifier = Modifier.fillMaxWidth()
+            modifier = Modifier
+                .fillMaxSize()
         )
         SearchBar(
             modifier = Modifier
@@ -113,7 +120,7 @@ fun Header(
                 overflow = TextOverflow.Ellipsis,
             )
             Button(
-                onClick = { },
+                onClick = onRandomClick,
                 modifier = Modifier
                     .padding(top = 16.dp)
                     .align(Alignment.CenterHorizontally)
@@ -247,6 +254,16 @@ fun WineCard(
                     style = MaterialTheme.typography.titleLarge,
                 )
             }
+        }
+    }
+}
+
+@Preview
+@Composable
+fun OnboardingPreview() {
+    KiwisBarTheme {
+        Surface {
+            Onboarding({}, {})
         }
     }
 }

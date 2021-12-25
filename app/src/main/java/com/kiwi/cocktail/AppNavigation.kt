@@ -43,10 +43,15 @@ internal fun AppNavigation(
 ) {
     NavHost(
         navController = navController,
-        startDestination = Screen.Recipe.route,
+        startDestination = Screen.Onboarding.route,
         modifier = modifier
     ) {
-        composable(Screen.Onboarding.route) { Onboarding() }
+        composable(Screen.Onboarding.route) {
+            Onboarding(
+                openRecipe = { navController.navigate(Screen.Recipe.route) },
+                {},
+            )
+        }
         composable(Screen.Collection.route) { Collection() }
         composable(Screen.Watched.route) { Watched() }
 
