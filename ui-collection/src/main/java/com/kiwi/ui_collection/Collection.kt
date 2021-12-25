@@ -29,6 +29,10 @@ fun Collection(
             .statusBarsPadding()
             .fillMaxSize()
     ) {
+        item {
+            CollectionTitle()
+        }
+
         stickyHeader {
             SectionHeader("Unforgettable Cocktails")
         }
@@ -57,7 +61,16 @@ fun Collection(
 }
 
 @Composable
-fun SectionHeader(sectionName: String) {
+private fun CollectionTitle() {
+    Text(
+        text = "Menu",
+        style = MaterialTheme.typography.displayLarge,
+        modifier = Modifier.padding(16.dp)
+    )
+}
+
+@Composable
+private fun SectionHeader(sectionName: String) {
     Text(
         text = sectionName,
         Modifier
