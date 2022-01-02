@@ -49,6 +49,7 @@ android {
 }
 
 dependencies {
+    implementation(project(":data"))
     implementation(project(":common-ui-resources"))
     implementation(project(":common-ui-compose"))
     implementation(project(":ui-onboarding"))

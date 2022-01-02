@@ -11,6 +11,7 @@ dependencyResolutionManagement {
 rootProject.name = "Kiwi's Bar"
 include(
     ":app",
+    ":data",
     ":common-ui-resources",
     ":common-ui-compose",
     ":ui-onboarding",
