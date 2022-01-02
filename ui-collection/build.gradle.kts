@@ -1,6 +1,8 @@
 plugins {
     id("com.android.library")
     id("kotlin-android")
+    id("kotlin-kapt")
+    id("dagger.hilt.android.plugin")
 }
 
 android {
@@ -57,6 +59,10 @@ dependencies {
     // Google
     implementation(libs.material)
     implementation(libs.bundles.accompanist)
+
+    implementation(libs.androidx.hilt.compose)
+    implementation(libs.hilt.library)
+    kapt(libs.hilt.compiler)
 
     // UI
     implementation(libs.coil.compose)

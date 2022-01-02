@@ -29,6 +29,8 @@ android {
 }
 
 dependencies {
+    implementation(libs.lifecycle.runtime)
+
     // Compose
     implementation(libs.bundles.compose)
     // TODO: 2021/12/23 choose one?

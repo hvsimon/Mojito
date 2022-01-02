@@ -6,20 +6,20 @@ import com.kiwi.data.entities.Cocktail
 import com.kiwi.data.entities.Favorite
 import com.kiwi.data.entities.Ingredient
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.flowOf
 
 class CollectionViewModel : ViewModel() {
 
-    val pagedList: Flow<PagingData<Favorite>> = flow {
+    val pagedList: Flow<PagingData<Favorite>> = flowOf(
         PagingData.from(
             MutableList(cocktailNames.size) { index ->
                 Favorite(
                     cocktail = cocktails[index],
                     catalog = categories.random()
                 )
-            }
+            }.sortedBy { it.catalog }
         )
-    }
+    )
 }
 
 private val cocktailNames = listOf(
@@ -31,17 +31,6 @@ private val cocktailNames = listOf(
     "Derby",
     "Old Fashioned",
 )
-
-private val cocktails = cocktailNames.map {
-    Cocktail(
-        name = it,
-        intro = "",
-        gallery = emptyList(),
-        ingredients = ingredients.shuffled().take((1..ingredients.size).random()),
-        steps = emptyList(),
-        tipsAndTricks = emptySet(),
-    )
-}
 
 private val ingredientNames = listOf(
     "Gin",
@@ -61,4 +50,16 @@ private val ingredients = ingredientNames.map {
     )
 }
 
-private val categories = listOf("Unforgettable Cocktails", "Contemporary Classic Cocktails", "New Era Cocktails")
+private val categories =
+    listOf("Unforgettable Cocktails", "Contemporary Classic Cocktails", "New Era Cocktails")
+
+private val cocktails = cocktailNames.map {
+    Cocktail(
+        name = it,
+        intro = "",
+        gallery = emptyList(),
+        ingredients = ingredients.shuffled().take((1..ingredients.size).random()),
+        steps = emptyList(),
+        tipsAndTricks = emptySet(),
+    )
+}

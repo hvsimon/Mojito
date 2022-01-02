@@ -17,7 +17,6 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -26,20 +25,29 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.paging.compose.LazyPagingItems
+import androidx.paging.compose.collectAsLazyPagingItems
 import com.airbnb.lottie.compose.LottieAnimation
 import com.airbnb.lottie.compose.LottieCompositionSpec
 import com.airbnb.lottie.compose.LottieConstants
 import com.airbnb.lottie.compose.rememberLottieComposition
 import com.google.accompanist.insets.statusBarsPadding
 import com.kiwi.common_ui_compose.KiwisBarTheme
-import kotlin.random.Random
+import com.kiwi.common_ui_compose.rememberFlowWithLifecycle
+import com.kiwi.data.entities.Cocktail
+import com.kiwi.data.entities.Favorite
 
 
 @Composable
 fun Collection(
+    viewModel: CollectionViewModel = hiltViewModel(),
     openRecipe: () -> Unit,
 ) {
-    val isEmpty = remember { Random.nextBoolean() }
+
+    val lazyPagingItems = rememberFlowWithLifecycle(viewModel.pagedList).collectAsLazyPagingItems()
+    val isEmpty = lazyPagingItems.itemCount == 0
+
     Column(Modifier.fillMaxSize()) {
         LazyColumn(
             modifier = Modifier
@@ -48,7 +56,10 @@ fun Collection(
             collectionTitle()
 
             if (!isEmpty) {
-                collectionList(onItemClick = openRecipe)
+                collectionList(
+                    list = lazyPagingItems,
+                    onItemClick = openRecipe
+                )
             }
         }
         if (isEmpty) {
@@ -69,31 +80,26 @@ private fun LazyListScope.collectionTitle() {
 
 @OptIn(ExperimentalFoundationApi::class)
 private fun LazyListScope.collectionList(
+    list: LazyPagingItems<Favorite>,
     onItemClick: () -> Unit
 ) {
-    stickyHeader {
-        SectionHeader("Unforgettable Cocktails")
-    }
-    items(5) {
-        CollectionItem(
-            onClick = onItemClick
-        )
-    }
-    stickyHeader {
-        SectionHeader("Contemporary Classic Cocktails")
-    }
-    items(3) {
-        CollectionItem(
-            onClick = onItemClick
-        )
-    }
-    stickyHeader {
-        SectionHeader("New Era Cocktails")
-    }
-    items(10) {
-        CollectionItem(
-            onClick = onItemClick
-        )
+    var lastFavorite: Favorite? = null
+    for (index in list.itemSnapshotList.indices) {
+        val favorite = list.peek(index)
+        if (lastFavorite?.catalog != favorite?.catalog) {
+            stickyHeader {
+                SectionHeader(favorite!!.catalog)
+            }
+        }
+
+        item {
+            CollectionItem(
+                cocktail = favorite!!.cocktail,
+                onClick = onItemClick
+            )
+        }
+
+        lastFavorite = favorite
     }
 }
 
@@ -110,13 +116,12 @@ private fun SectionHeader(sectionName: String) {
 
 @Composable
 private fun CollectionItem(
+    cocktail: Cocktail,
     onClick: () -> Unit,
 ) {
 
-    val cocktail = rememberSaveable { cocktails.random() }
     val ingredients = rememberSaveable {
-        ingredients.shuffled().take((1..ingredients.size).random())
-            .joinToString(prefix = "(", postfix = ")")
+        cocktail.ingredients.joinToString(prefix = "(", postfix = ")") { it.name }
     }
     Column(
         verticalArrangement = Arrangement.Center,
@@ -126,7 +131,7 @@ private fun CollectionItem(
             .padding(horizontal = 16.dp, vertical = 8.dp)
     ) {
         Text(
-            text = cocktail,
+            text = cocktail.name,
             style = MaterialTheme.typography.titleLarge
         )
         Text(
@@ -169,28 +174,7 @@ private fun Empty(modifier: Modifier = Modifier) {
 private fun OnboardingPreview() {
     KiwisBarTheme {
         Surface {
-            Collection({})
+//            Collection({})
         }
     }
 }
-
-private val cocktails = listOf(
-    "Alexander",
-    "Daiquiri",
-    "Negroni",
-    "Screwdriver",
-    "Americano",
-    "Derby",
-    "Old Fashioned",
-)
-
-private val ingredients = listOf(
-    "Gin",
-    "Campari",
-    "Red Vermouth",
-    "Bourbon Whiskey",
-    "Simple Syrup",
-    "Angostura Bitters",
-    "Cointreau",
-    "Lemon Juice",
-)
