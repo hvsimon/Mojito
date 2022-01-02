@@ -3,6 +3,7 @@ package com.kiwi.ui_onboarding
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -42,7 +43,7 @@ import com.kiwi.common_ui_compose.KiwisBarTheme
 
 @Composable
 fun Onboarding(
-    openRecipe: () -> Unit,
+    openRecipe: (cocktailId: Long) -> Unit,
     openFoo: () -> Unit
 ) {
     val scrollState = rememberScrollState()
@@ -68,7 +69,7 @@ fun Onboarding(
 
 @Composable
 fun Header(
-    onRandomClick: () -> Unit,
+    onRandomClick: (cocktailId: Long) -> Unit,
     modifier: Modifier = Modifier
 ) {
     Box(modifier = modifier) {
@@ -120,7 +121,7 @@ fun Header(
                 overflow = TextOverflow.Ellipsis,
             )
             Button(
-                onClick = onRandomClick,
+                onClick = { onRandomClick((0L..9L).random()) },
                 modifier = Modifier
                     .padding(top = 16.dp)
                     .align(Alignment.CenterHorizontally)
