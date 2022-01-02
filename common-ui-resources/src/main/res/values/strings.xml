@@ -16,4 +16,10 @@
     <string name="ingredients">原料</string>
     <string name="step">How to Make a Mojito</string>
     <string name="tips">Tips &amp; Tricks Making a Mojito</string>
+
+    <!--  Favorite  -->
+    <string name="favorite_title">Menu</string>
+    <string name="favorite_empty_message">目前這邊空空，要不要現在製作自己的酒單？</string>
+    <string name="browse_cocktails">瀏覽酒譜</string>
+
 </resources>

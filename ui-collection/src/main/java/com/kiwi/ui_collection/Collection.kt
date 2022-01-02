@@ -22,6 +22,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -71,7 +72,7 @@ fun Collection(
 private fun LazyListScope.collectionTitle() {
     item {
         Text(
-            text = "Menu",
+            text = stringResource(R.string.favorite_title),
             style = MaterialTheme.typography.displayLarge,
             modifier = Modifier.padding(16.dp)
         )
@@ -158,13 +159,13 @@ private fun Empty(modifier: Modifier = Modifier) {
         )
         Text(
             textAlign = TextAlign.Center,
-            text = "目前這邊空空，要不要現在製作自己的酒單？",
+            text = stringResource(R.string.favorite_empty_message),
             modifier = Modifier
                 .padding(horizontal = 16.dp)
                 .padding(bottom = 8.dp)
         )
         Button(onClick = { /*TODO*/ }) {
-            Text(text = "瀏覽酒譜")
+            Text(text = stringResource(R.string.browse_cocktails))
         }
     }
 }
