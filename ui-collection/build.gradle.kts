@@ -30,6 +30,7 @@ android {
 }
 
 dependencies {
+    implementation(project(":data"))
     implementation(project(":common-ui-resources"))
     implementation(project(":common-ui-compose"))
 
@@ -40,6 +41,12 @@ dependencies {
     implementation(libs.appcompat)
     implementation(libs.bundles.activity)
     implementation(libs.navigation.compose)
+    implementation(libs.lifecycle.viewmodel.ktx)
+    implementation(libs.lifecycle.viewmodel.compose)
+
+    implementation(libs.paging.runtime)
+    implementation(libs.paging.common)
+    implementation(libs.paging.compose)
 
     // Compose
     implementation(libs.bundles.compose)
