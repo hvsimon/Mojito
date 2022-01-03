@@ -6,6 +6,7 @@ targetSdk = "31"
 
 # Kotlin
 kotlin = "1.6.10"
+coroutines = "1.6.0"
 
 # Androidx
 core = "1.7.0"
@@ -34,6 +35,8 @@ lottie = "4.2.2"
 
 # Jetbrains
 kotlin-pluginGradle = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin" }
+kotlin-coroutines-android = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-android", version.ref = "coroutines" }
+kotlin-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "coroutines" }
 
 # Androidx
 core = { module = "androidx.core:core-ktx", version.ref = "core" }
