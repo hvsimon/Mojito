@@ -26,6 +26,9 @@ dependencies {
     implementation(libs.kotlin.coroutines.android)
     implementation(libs.kotlin.coroutines.core)
 
+    implementation(libs.paging.runtime)
+    implementation(libs.paging.common)
+
     implementation(libs.dagger.dagger)
     kapt(libs.dagger.compiler)
     implementation(libs.hilt.library)
