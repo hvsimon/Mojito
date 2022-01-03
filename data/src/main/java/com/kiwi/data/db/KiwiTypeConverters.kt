@@ -20,16 +20,6 @@ object KiwiTypeConverters {
     }
 
     @TypeConverter
-    fun fromIngredientList(value: List<Ingredient>): String {
-        return Json.encodeToString(ListSerializer(Ingredient.serializer()), value)
-    }
-
-    @TypeConverter
-    fun toIngredientList(value: String): List<Ingredient> {
-        return Json.decodeFromString(ListSerializer(Ingredient.serializer()), value)
-    }
-
-    @TypeConverter
     fun fromStringSet(value: Set<String>): String {
         return Json.encodeToString(SetSerializer(String.serializer()), value)
     }

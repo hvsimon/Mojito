@@ -61,7 +61,7 @@ fun Onboarding(
     ) {
         cocktail?.let {
             Header(
-                cocktail = it,
+                cocktail = it.cocktail,
                 onRandomClick = openRecipe,
                 modifier = Modifier
                     .fillMaxWidth()
@@ -126,7 +126,7 @@ fun Header(
                 overflow = TextOverflow.Ellipsis,
             )
             Button(
-                onClick = { onRandomClick(cocktail.id) },
+                onClick = { onRandomClick(cocktail.cocktailId) },
                 modifier = Modifier
                     .padding(top = 16.dp)
                     .align(Alignment.CenterHorizontally)

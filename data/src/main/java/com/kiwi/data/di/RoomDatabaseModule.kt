@@ -20,7 +20,6 @@ object RoomDatabaseModule {
     fun provideDatabase(
         @ApplicationContext context: Context
     ): KiwiDatabase {
-//        val builder = Room.inMemoryDatabaseBuilder(context, KiwiDatabase::class.java)
         val builder = Room.databaseBuilder(context, KiwiDatabase::class.java, "kiwi.db")
             .fallbackToDestructiveMigration()
         if (Debug.isDebuggerConnected()) {

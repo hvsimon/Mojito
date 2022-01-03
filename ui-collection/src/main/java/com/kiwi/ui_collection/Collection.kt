@@ -17,7 +17,6 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.scale
@@ -96,7 +95,7 @@ private fun LazyListScope.collectionList(
         item {
             CollectionItem(
                 cocktail = favorite!!.cocktail,
-                onClick = { onItemClick(favorite.cocktail.id) }
+                onClick = { onItemClick(favorite.cocktail.cocktailId) }
             )
         }
 
@@ -121,9 +120,9 @@ private fun CollectionItem(
     onClick: () -> Unit,
 ) {
 
-    val ingredients = rememberSaveable {
-        cocktail.ingredients.joinToString(prefix = "(", postfix = ")") { it.name }
-    }
+//    val ingredients = rememberSaveable {
+//        cocktail.ingredients.joinToString(prefix = "(", postfix = ")") { it.name }
+//    }
     Column(
         verticalArrangement = Arrangement.Center,
         modifier = Modifier
@@ -135,9 +134,9 @@ private fun CollectionItem(
             text = cocktail.name,
             style = MaterialTheme.typography.titleLarge
         )
-        Text(
-            text = ingredients
-        )
+//        Text(
+//            text = ingredients
+//        )
     }
 }
 

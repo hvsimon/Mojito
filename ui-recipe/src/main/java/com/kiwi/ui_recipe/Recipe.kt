@@ -25,14 +25,15 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.rememberImagePainter
 import coil.size.OriginalSize
 import com.kiwi.common_ui_compose.rememberFlowWithLifecycle
+import com.kiwi.data.entities.RecipeEntity
 import com.kiwi.data.entities.Ingredient
 
 @Composable
 fun Recipe(
     viewModel: RecipeViewModel = hiltViewModel(),
 ) {
-    val cocktail by rememberFlowWithLifecycle(viewModel.cocktail).collectAsState(initial = null)
-    if (cocktail == null) {
+    val recipe: RecipeEntity? by rememberFlowWithLifecycle(viewModel.cocktail).collectAsState(initial = null)
+    if (recipe == null) {
         // show loading view
         return
     }
@@ -44,7 +45,7 @@ fun Recipe(
     ) {
         Image(
             painter = rememberImagePainter(
-                data = cocktail!!.gallery.firstOrNull(),
+                data = recipe!!.cocktail.gallery.firstOrNull(),
                 builder = {
                     size(OriginalSize)
                 },
@@ -55,12 +56,12 @@ fun Recipe(
         )
         Column {
             Introduction(
-                cocktailName = cocktail!!.name,
-                cocktailIntro = cocktail!!.intro
+                cocktailName = recipe!!.cocktail.name,
+                cocktailIntro = recipe!!.cocktail.intro
             )
-            Ingredient(cocktail!!.ingredients)
-            Step(cocktail!!.steps)
-            Tips(cocktail!!.tipsAndTricks)
+            Ingredient(recipe!!.ingredients)
+            Step(recipe!!.cocktail.steps)
+            Tips(recipe!!.cocktail.tipsAndTricks)
         }
     }
 }

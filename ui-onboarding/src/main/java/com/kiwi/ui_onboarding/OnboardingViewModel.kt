@@ -9,6 +9,7 @@ import javax.inject.Inject
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.launch
 
 @HiltViewModel
 class OnboardingViewModel @Inject constructor(
@@ -18,4 +19,10 @@ class OnboardingViewModel @Inject constructor(
 
     val randomCocktail = flow { emit(kiwiRepository.getCocktailById(0)) }
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
+
+    init {
+        viewModelScope.launch {
+            kiwiRepository.createDefaultData()
+        }
+    }
 }
