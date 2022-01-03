@@ -1,6 +1,7 @@
 package com.kiwi.data.repositories
 
 import androidx.paging.PagingData
+import com.kiwi.data.db.CocktailDao
 import com.kiwi.data.di.IoDispatcher
 import com.kiwi.data.entities.Cocktail
 import com.kiwi.data.entities.Favorite
@@ -12,6 +13,7 @@ import kotlinx.coroutines.withContext
 
 @Reusable
 class KiwiRepository @Inject constructor(
+    private val cocktailDao: CocktailDao,
     @IoDispatcher private val ioDispatcher: CoroutineDispatcher,
 ) {
 
