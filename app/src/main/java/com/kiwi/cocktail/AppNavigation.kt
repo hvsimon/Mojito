@@ -53,7 +53,6 @@ internal fun AppNavigation(
                 openRecipe = { cocktailId ->
                     navController.navigate("recipe/$cocktailId")
                 },
-                {},
             )
         }
         composable(Screen.Collection.route) {

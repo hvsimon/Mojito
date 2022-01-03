@@ -3,7 +3,6 @@ package com.kiwi.ui_onboarding
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -27,6 +26,8 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
@@ -36,28 +37,37 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.rememberImagePainter
 import coil.size.OriginalSize
 import com.google.accompanist.insets.statusBarsPadding
 import com.kiwi.common_ui_compose.KiwisBarTheme
+import com.kiwi.common_ui_compose.rememberFlowWithLifecycle
+import com.kiwi.data.entities.Cocktail
 
 @Composable
 fun Onboarding(
+    viewModel: OnboardingViewModel = hiltViewModel(),
     openRecipe: (cocktailId: Long) -> Unit,
-    openFoo: () -> Unit
 ) {
+
+    val cocktail by rememberFlowWithLifecycle(viewModel.randomCocktail).collectAsState(initial = null)
+
     val scrollState = rememberScrollState()
     Column(
         modifier = Modifier
             .fillMaxSize()
             .verticalScroll(scrollState)
     ) {
-        Header(
-            onRandomClick = openRecipe,
-            modifier = Modifier
-                .fillMaxWidth()
-                .fillMaxHeight(fraction = 0.75f)
-        )
+        cocktail?.let {
+            Header(
+                cocktail = it,
+                onRandomClick = openRecipe,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .fillMaxHeight(fraction = 0.75f)
+            )
+        }
         Text(
             text = stringResource(id = R.string.six_base_wine),
             style = MaterialTheme.typography.displaySmall,
@@ -69,15 +79,14 @@ fun Onboarding(
 
 @Composable
 fun Header(
+    cocktail: Cocktail,
     onRandomClick: (cocktailId: Long) -> Unit,
     modifier: Modifier = Modifier
 ) {
     Box(modifier = modifier) {
         Image(
             painter = rememberImagePainter(
-                data = "https://images.unsplash.com/photo-1513558161293-cda" +
-                    "f765ed2fd?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wY" +
-                    "WdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=987&q=80",
+                data = cocktail.gallery.random(),
                 builder = {
                     size(OriginalSize)
                 },
@@ -105,23 +114,19 @@ fun Header(
                 .padding(16.dp)
         ) {
             Text(
-                text = "莫希托 (Mojito)",
+                text = cocktail.name,
                 color = Color.White,
                 style = MaterialTheme.typography.titleLarge,
             )
             Text(
-                text = "莫希托（西班牙語：Mojito、西班牙語發音：[moˈxito]）是一種傳統的古巴高球雞尾酒" +
-                    "。傳統上，莫希托是一種由五種材料製成的雞尾酒：淡蘭姆酒、白砂糖（傳統上是用甘蔗汁" +
-                    "）、青檸汁、蘇打水和薄荷。最原始的古巴配方是使用留蘭香或古巴島上常見的檸檬薄荷。" +
-                    "[1]萊姆與薄荷的清爽口味是為了與蘭姆酒的烈性相互補，同時也使得這種透明無色的調酒" +
-                    "成為夏日的熱門飲料之一。[2]這種調酒有著相對低的酒精含量(大約10%)。",
+                text = cocktail.intro,
                 color = Color.White,
                 style = MaterialTheme.typography.bodyLarge,
                 maxLines = 2,
                 overflow = TextOverflow.Ellipsis,
             )
             Button(
-                onClick = { onRandomClick((0L..9L).random()) },
+                onClick = { onRandomClick(cocktail.id) },
                 modifier = Modifier
                     .padding(top = 16.dp)
                     .align(Alignment.CenterHorizontally)
@@ -264,7 +269,7 @@ fun WineCard(
 fun OnboardingPreview() {
     KiwisBarTheme {
         Surface {
-            Onboarding({}, {})
+//            Onboarding({}, {})
         }
     }
 }
