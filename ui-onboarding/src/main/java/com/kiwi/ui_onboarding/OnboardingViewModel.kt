@@ -32,5 +32,12 @@ class OnboardingViewModel @Inject constructor(
                 it.copy(coverCocktail = cocktail)
             }
         }
+
+        viewModelScope.launch {
+            val list = kiwiRepository.getBaseWines()
+            _uiState.update {
+                it.copy(baseWines = list)
+            }
+        }
     }
 }
