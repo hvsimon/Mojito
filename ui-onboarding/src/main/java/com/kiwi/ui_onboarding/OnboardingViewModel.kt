@@ -6,9 +6,10 @@ import androidx.lifecycle.viewModelScope
 import com.kiwi.data.repositories.KiwiRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
-import kotlinx.coroutines.flow.SharingStarted
-import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 @HiltViewModel
@@ -17,12 +18,19 @@ class OnboardingViewModel @Inject constructor(
     kiwiRepository: KiwiRepository,
 ) : ViewModel() {
 
-    val randomCocktail = flow { emit(kiwiRepository.getCocktailById(0)) }
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
+    private val _uiState = MutableStateFlow(OnboardingUiState())
+    val uiState: StateFlow<OnboardingUiState> = _uiState.asStateFlow()
 
     init {
         viewModelScope.launch {
             kiwiRepository.createDefaultData()
+        }
+
+        viewModelScope.launch {
+            val cocktail = kiwiRepository.getCocktailBy(0)
+            _uiState.update {
+                it.copy(coverCocktail = cocktail)
+            }
         }
     }
 }

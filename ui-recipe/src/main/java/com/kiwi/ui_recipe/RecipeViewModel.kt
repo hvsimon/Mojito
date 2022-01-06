@@ -18,7 +18,7 @@ class RecipeViewModel @Inject constructor(
 
     private val cocktailId: Long = savedStateHandle.get("cocktailId")!!
 
-    val cocktail = flow { emit(kiwiRepository.getCocktailById(cocktailId)) }
+    val cocktail = flow { emit(kiwiRepository.getRecipeByCocktailId(cocktailId)) }
         .stateIn(
             scope = viewModelScope,
             started = SharingStarted.WhileSubscribed(5000),

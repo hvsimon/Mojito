@@ -51,7 +51,7 @@ fun Onboarding(
     openRecipe: (cocktailId: Long) -> Unit,
 ) {
 
-    val cocktail by rememberFlowWithLifecycle(viewModel.randomCocktail).collectAsState(initial = null)
+    val uiState by rememberFlowWithLifecycle(viewModel.uiState).collectAsState(initial = OnboardingUiState())
 
     val scrollState = rememberScrollState()
     Column(
@@ -59,9 +59,9 @@ fun Onboarding(
             .fillMaxSize()
             .verticalScroll(scrollState)
     ) {
-        cocktail?.let {
+        uiState.coverCocktail?.let { cocktail ->
             Header(
-                cocktail = it.cocktail,
+                cocktail = cocktail,
                 onRandomClick = openRecipe,
                 modifier = Modifier
                     .fillMaxWidth()

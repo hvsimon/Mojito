@@ -38,4 +38,7 @@ interface CocktailDao {
 
     @Query("SELECT * FROM Cocktail WHERE cocktailId = :cocktailId")
     fun getRecipeBy(cocktailId: Long): RecipeEntity
+
+    @Query("SELECT * FROM Cocktail WHERE cocktailId = :cocktailId")
+    fun getCocktailBy(cocktailId: Long): Cocktail
 }

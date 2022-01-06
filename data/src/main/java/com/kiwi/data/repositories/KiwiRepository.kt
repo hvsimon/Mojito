@@ -6,6 +6,7 @@ import com.kiwi.data.di.IoDispatcher
 import com.kiwi.data.entities.Cocktail
 import com.kiwi.data.entities.Favorite
 import com.kiwi.data.entities.Ingredient
+import com.kiwi.data.entities.RecipeEntity
 import dagger.Reusable
 import javax.inject.Inject
 import kotlinx.coroutines.CoroutineDispatcher
@@ -16,8 +17,12 @@ class KiwiRepository @Inject constructor(
     private val cocktailDao: CocktailDao,
     @IoDispatcher private val ioDispatcher: CoroutineDispatcher,
 ) {
-    suspend fun getCocktailById(cocktailId: Long) = withContext(ioDispatcher) {
+    suspend fun getRecipeByCocktailId(cocktailId: Long): RecipeEntity = withContext(ioDispatcher) {
         cocktailDao.getRecipeBy(cocktailId)
+    }
+
+    suspend fun getCocktailBy(cocktailId: Long): Cocktail = withContext(ioDispatcher) {
+        cocktailDao.getCocktailBy(cocktailId)
     }
 
     fun getFavoritePagingData() = PagingData.from(
