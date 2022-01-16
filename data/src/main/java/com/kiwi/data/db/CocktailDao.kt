@@ -17,15 +17,15 @@ interface CocktailDao {
     suspend fun insertCocktails(vararg cocktail: Cocktail)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertIngredients(vararg cocktail: Ingredient)
+    suspend fun insertIngredients(vararg ingredient: Ingredient)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertCocktailIngredientCrossRef(vararg cocktailIngredientCrossRef: CocktailIngredientCrossRef)
 
     @Transaction
     suspend fun insertRecipe(cocktail: Cocktail, ingredients: List<Ingredient>) {
-        insertCocktails(cocktail)
-        insertIngredients(*ingredients.toTypedArray())
+//        insertCocktails(cocktail)
+//        insertIngredients(*ingredients.toTypedArray())
 
         val ref = ingredients.map {
             CocktailIngredientCrossRef(

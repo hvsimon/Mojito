@@ -6,12 +6,14 @@ import androidx.room.Entity
 import androidx.room.Junction
 import androidx.room.PrimaryKey
 import androidx.room.Relation
+import java.util.UUID
 import kotlinx.serialization.Serializable
 
+@Serializable
 @Entity
 data class Cocktail(
     @PrimaryKey
-    val cocktailId: String,
+    val cocktailId: String = UUID.randomUUID().toString(),
 
     @ColumnInfo(name = "name")
     val name: String,
@@ -26,14 +28,14 @@ data class Cocktail(
     val steps: List<String>,
 
     @ColumnInfo(name = "tips")
-    val tipsAndTricks: Set<String>,
+    val tips: Set<String>,
 )
 
 @Serializable
 @Entity
 data class Ingredient(
     @PrimaryKey
-    val ingredientId: Long,
+    val ingredientId: String = UUID.randomUUID().toString(),
 
     @ColumnInfo(name = "name")
     val name: String,
@@ -45,7 +47,7 @@ data class Ingredient(
 @Entity(primaryKeys = ["cocktailId", "ingredientId"])
 data class CocktailIngredientCrossRef(
     val cocktailId: String,
-    val ingredientId: Long
+    val ingredientId: String
 )
 
 data class RecipeEntity(

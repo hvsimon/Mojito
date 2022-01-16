@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "bd53629d9205ef664a58d2d9734ab6d4",
+    "identityHash": "be2c3456b8353714c5b026598b1ac3da",
     "entities": [
       {
         "tableName": "Cocktail",
@@ -39,7 +39,7 @@
             "notNull": true
           },
           {
-            "fieldPath": "tipsAndTricks",
+            "fieldPath": "tips",
             "columnName": "tips",
             "affinity": "TEXT",
             "notNull": true
@@ -56,12 +56,12 @@
       },
       {
         "tableName": "Ingredient",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`ingredientId` INTEGER NOT NULL, `name` TEXT NOT NULL, `amount` TEXT NOT NULL, PRIMARY KEY(`ingredientId`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`ingredientId` TEXT NOT NULL, `name` TEXT NOT NULL, `amount` TEXT NOT NULL, PRIMARY KEY(`ingredientId`))",
         "fields": [
           {
             "fieldPath": "ingredientId",
             "columnName": "ingredientId",
-            "affinity": "INTEGER",
+            "affinity": "TEXT",
             "notNull": true
           },
           {
@@ -88,7 +88,7 @@
       },
       {
         "tableName": "CocktailIngredientCrossRef",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`cocktailId` TEXT NOT NULL, `ingredientId` INTEGER NOT NULL, PRIMARY KEY(`cocktailId`, `ingredientId`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`cocktailId` TEXT NOT NULL, `ingredientId` TEXT NOT NULL, PRIMARY KEY(`cocktailId`, `ingredientId`))",
         "fields": [
           {
             "fieldPath": "cocktailId",
@@ -99,7 +99,7 @@
           {
             "fieldPath": "ingredientId",
             "columnName": "ingredientId",
-            "affinity": "INTEGER",
+            "affinity": "TEXT",
             "notNull": true
           }
         ],
@@ -117,7 +117,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'bd53629d9205ef664a58d2d9734ab6d4')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'be2c3456b8353714c5b026598b1ac3da')"
     ]
   }
 }

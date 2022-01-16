@@ -61,7 +61,7 @@ fun Recipe(
             )
             Ingredient(recipe!!.ingredients)
             Step(recipe!!.cocktail.steps)
-            Tips(recipe!!.cocktail.tipsAndTricks)
+            Tips(recipe!!.cocktail.tips)
         }
     }
 }

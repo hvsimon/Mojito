@@ -96,7 +96,7 @@ private val cocktails = cocktailNames.map {
         intro = "",
         gallery = emptyList(),
         steps = emptyList(),
-        tipsAndTricks = emptySet(),
+        tips = emptySet(),
     )
 }
 
