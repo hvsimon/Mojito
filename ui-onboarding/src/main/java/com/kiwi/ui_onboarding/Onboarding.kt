@@ -50,7 +50,7 @@ import com.kiwi.data.entities.Cocktail
 @Composable
 fun Onboarding(
     viewModel: OnboardingViewModel = hiltViewModel(),
-    openRecipe: (cocktailId: Long) -> Unit,
+    openRecipe: (cocktailId: String) -> Unit,
 ) {
 
     val uiState by rememberFlowWithLifecycle(viewModel.uiState).collectAsState(initial = OnboardingUiState())
@@ -85,7 +85,7 @@ fun Onboarding(
 @Composable
 fun Header(
     cocktail: Cocktail?,
-    onRandomClick: (cocktailId: Long) -> Unit,
+    onRandomClick: (cocktailId: String) -> Unit,
     modifier: Modifier = Modifier
 ) {
     Box(modifier = modifier) {

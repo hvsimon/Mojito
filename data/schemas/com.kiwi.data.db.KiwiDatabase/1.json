@@ -2,16 +2,16 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "9b1de4ab3d87f7e9e45b70dbd782ab04",
+    "identityHash": "bd53629d9205ef664a58d2d9734ab6d4",
     "entities": [
       {
         "tableName": "Cocktail",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`cocktailId` INTEGER NOT NULL, `name` TEXT NOT NULL, `gallery` TEXT NOT NULL, `intro` TEXT NOT NULL, `steps` TEXT NOT NULL, `tips` TEXT NOT NULL, PRIMARY KEY(`cocktailId`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`cocktailId` TEXT NOT NULL, `name` TEXT NOT NULL, `gallery` TEXT NOT NULL, `intro` TEXT NOT NULL, `steps` TEXT NOT NULL, `tips` TEXT NOT NULL, PRIMARY KEY(`cocktailId`))",
         "fields": [
           {
             "fieldPath": "cocktailId",
             "columnName": "cocktailId",
-            "affinity": "INTEGER",
+            "affinity": "TEXT",
             "notNull": true
           },
           {
@@ -88,12 +88,12 @@
       },
       {
         "tableName": "CocktailIngredientCrossRef",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`cocktailId` INTEGER NOT NULL, `ingredientId` INTEGER NOT NULL, PRIMARY KEY(`cocktailId`, `ingredientId`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`cocktailId` TEXT NOT NULL, `ingredientId` INTEGER NOT NULL, PRIMARY KEY(`cocktailId`, `ingredientId`))",
         "fields": [
           {
             "fieldPath": "cocktailId",
             "columnName": "cocktailId",
-            "affinity": "INTEGER",
+            "affinity": "TEXT",
             "notNull": true
           },
           {
@@ -117,7 +117,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '9b1de4ab3d87f7e9e45b70dbd782ab04')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'bd53629d9205ef664a58d2d9734ab6d4')"
     ]
   }
 }

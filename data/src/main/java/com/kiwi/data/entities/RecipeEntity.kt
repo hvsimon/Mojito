@@ -11,7 +11,7 @@ import kotlinx.serialization.Serializable
 @Entity
 data class Cocktail(
     @PrimaryKey
-    val cocktailId: Long,
+    val cocktailId: String,
 
     @ColumnInfo(name = "name")
     val name: String,
@@ -44,7 +44,7 @@ data class Ingredient(
 
 @Entity(primaryKeys = ["cocktailId", "ingredientId"])
 data class CocktailIngredientCrossRef(
-    val cocktailId: Long,
+    val cocktailId: String,
     val ingredientId: Long
 )
 

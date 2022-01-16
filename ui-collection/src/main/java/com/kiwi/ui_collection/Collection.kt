@@ -42,7 +42,7 @@ import com.kiwi.data.entities.Favorite
 @Composable
 fun Collection(
     viewModel: CollectionViewModel = hiltViewModel(),
-    openRecipe: (cocktailId: Long) -> Unit,
+    openRecipe: (cocktailId: String) -> Unit,
 ) {
 
     val lazyPagingItems = rememberFlowWithLifecycle(viewModel.pagedList).collectAsLazyPagingItems()
@@ -81,7 +81,7 @@ private fun LazyListScope.collectionTitle() {
 @OptIn(ExperimentalFoundationApi::class)
 private fun LazyListScope.collectionList(
     list: LazyPagingItems<Favorite>,
-    onItemClick: (cocktailId: Long) -> Unit
+    onItemClick: (cocktailId: String) -> Unit
 ) {
     var lastFavorite: Favorite? = null
     for (index in list.itemSnapshotList.indices) {

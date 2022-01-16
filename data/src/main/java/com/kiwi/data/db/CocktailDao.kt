@@ -14,18 +14,18 @@ import com.kiwi.data.entities.RecipeEntity
 interface CocktailDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertAllCocktail(vararg cocktail: Cocktail)
+    suspend fun insertCocktails(vararg cocktail: Cocktail)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertAllIngredient(vararg cocktail: Ingredient)
+    suspend fun insertIngredients(vararg cocktail: Ingredient)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertCocktailIngredientCrossRef(vararg cocktailIngredientCrossRef: CocktailIngredientCrossRef)
 
     @Transaction
     suspend fun insertRecipe(cocktail: Cocktail, ingredients: List<Ingredient>) {
-        insertAllCocktail(cocktail)
-        insertAllIngredient(*ingredients.toTypedArray())
+        insertCocktails(cocktail)
+        insertIngredients(*ingredients.toTypedArray())
 
         val ref = ingredients.map {
             CocktailIngredientCrossRef(
@@ -40,5 +40,8 @@ interface CocktailDao {
     fun getRecipeBy(cocktailId: Long): RecipeEntity
 
     @Query("SELECT * FROM Cocktail WHERE cocktailId = :cocktailId")
-    fun getCocktailBy(cocktailId: Long): Cocktail
+    fun getCocktailBy(cocktailId: String): Cocktail
+
+    @Query("SELECT * FROM Cocktail ORDER BY RANDOM() LIMIT 1")
+    fun getRandomCocktail(): Cocktail
 }
