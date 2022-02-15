@@ -68,7 +68,7 @@ internal fun AppNavigation(
             route = Screen.Recipe.route,
             arguments = listOf(
                 navArgument("cocktailId") {
-                    type = NavType.LongType
+                    type = NavType.StringType
                 }
             )
         ) { Recipe() }

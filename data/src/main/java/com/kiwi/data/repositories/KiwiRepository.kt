@@ -18,7 +18,7 @@ class KiwiRepository @Inject constructor(
     private val cocktailDao: CocktailDao,
     @IoDispatcher private val ioDispatcher: CoroutineDispatcher,
 ) {
-    suspend fun getRecipeByCocktailId(cocktailId: Long): RecipeEntity = withContext(ioDispatcher) {
+    suspend fun getRecipeByCocktailId(cocktailId: String): RecipeEntity = withContext(ioDispatcher) {
         cocktailDao.getRecipeBy(cocktailId)
     }
 

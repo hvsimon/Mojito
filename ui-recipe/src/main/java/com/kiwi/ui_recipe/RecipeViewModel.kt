@@ -16,7 +16,7 @@ class RecipeViewModel @Inject constructor(
     kiwiRepository: KiwiRepository,
 ) : ViewModel() {
 
-    private val cocktailId: Long = savedStateHandle.get("cocktailId")!!
+    private val cocktailId: String = savedStateHandle.get("cocktailId")!!
 
     val cocktail = flow { emit(kiwiRepository.getRecipeByCocktailId(cocktailId)) }
         .stateIn(
