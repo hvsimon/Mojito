@@ -1,11 +1,11 @@
 package com.kiwi.data.repositories
 
-import androidx.paging.PagingData
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
 import com.kiwi.data.db.CocktailDao
 import com.kiwi.data.di.IoDispatcher
 import com.kiwi.data.entities.BaseWine
 import com.kiwi.data.entities.Cocktail
-import com.kiwi.data.entities.Favorite
 import dagger.Reusable
 import java.util.UUID
 import javax.inject.Inject
@@ -62,14 +62,15 @@ class KiwiRepository @Inject constructor(
         )
     }
 
-    fun getFavoritePagingData() = PagingData.from(
-        MutableList(cocktailNames.size) { index ->
-            Favorite(
-                cocktail = cocktails[index],
-                catalog = categories.random()
-            )
-        }.sortedBy { it.catalog }
-    )
+    fun getFavoritePagingData() = Pager(
+        config = PagingConfig(pageSize = 50),
+    ) {
+        cocktailDao.getFavoritePagingData()
+    }.flow
+
+//    suspend fun foo() = withContext(ioDispatcher) {
+//        cocktailDao.getFavoritePagingData()
+//    }
 }
 
 private val cocktailNames = listOf(

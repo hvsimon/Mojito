@@ -35,7 +35,7 @@ import com.airbnb.lottie.compose.rememberLottieComposition
 import com.google.accompanist.insets.statusBarsPadding
 import com.kiwi.common_ui_compose.rememberFlowWithLifecycle
 import com.kiwi.data.entities.Cocktail
-import com.kiwi.data.entities.Favorite
+import com.kiwi.data.entities.FavoriteAndCocktail
 import com.kiwi.data.entities.Ingredient
 import java.util.UUID
 
@@ -56,7 +56,7 @@ fun Collection(
 
 @Composable
 private fun Collection(
-    lazyPagingItems: LazyPagingItems<Favorite>,
+    lazyPagingItems: LazyPagingItems<FavoriteAndCocktail>,
     isEmpty: Boolean,
     openRecipe: (cocktailId: String) -> Unit,
 ) {
@@ -93,15 +93,15 @@ private fun LazyListScope.collectionTitle() {
 
 @OptIn(ExperimentalFoundationApi::class)
 private fun LazyListScope.collectionList(
-    list: LazyPagingItems<Favorite>,
+    list: LazyPagingItems<FavoriteAndCocktail>,
     onItemClick: (cocktailId: String) -> Unit
 ) {
-    var lastFavorite: Favorite? = null
+    var lastFavoriteAndCocktail: FavoriteAndCocktail? = null
     for (index in list.itemSnapshotList.indices) {
         val favorite = list.peek(index)
-        if (lastFavorite?.catalog != favorite?.catalog) {
+        if (lastFavoriteAndCocktail?.favorite?.id != favorite?.favorite?.id) {
             stickyHeader {
-                SectionHeader(favorite!!.catalog)
+                SectionHeader(favorite!!.favorite.catalogName)
             }
         }
 
@@ -112,7 +112,7 @@ private fun LazyListScope.collectionList(
             )
         }
 
-        lastFavorite = favorite
+        lastFavoriteAndCocktail = favorite
     }
 }
 

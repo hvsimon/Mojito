@@ -1,10 +1,14 @@
 package com.kiwi.data.db
 
+import androidx.paging.PagingSource
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
+import androidx.room.Transaction
 import com.kiwi.data.entities.Cocktail
+import com.kiwi.data.entities.Favorite
+import com.kiwi.data.entities.FavoriteAndCocktail
 
 @Dao
 interface CocktailDao {
@@ -13,8 +17,15 @@ interface CocktailDao {
     suspend fun insertCocktails(vararg cocktail: Cocktail)
 
     @Query("SELECT * FROM Cocktail WHERE cocktail_id = :cocktailId")
-    fun getCocktailBy(cocktailId: String): Cocktail
+    suspend fun getCocktailBy(cocktailId: String): Cocktail
 
     @Query("SELECT * FROM Cocktail ORDER BY RANDOM() LIMIT 1")
-    fun getRandomCocktail(): Cocktail
+    suspend fun getRandomCocktail(): Cocktail
+
+    @Transaction
+    @Query("SELECT * FROM favorite")
+    fun getFavoritePagingData(): PagingSource<Int, FavoriteAndCocktail>
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun insertFavorite(vararg favorite: Favorite)
 }

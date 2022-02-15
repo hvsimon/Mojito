@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "2e8a12eefdbb9b96ecdbd97b4f7f778e",
+    "identityHash": "489cf1f6f04db20f292fe978fefcc6dc",
     "entities": [
       {
         "tableName": "Cocktail",
@@ -59,12 +59,44 @@
         },
         "indices": [],
         "foreignKeys": []
+      },
+      {
+        "tableName": "Favorite",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `catalog_name` TEXT NOT NULL, `cocktail_id` TEXT NOT NULL)",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "catalogName",
+            "columnName": "catalog_name",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "cocktailId",
+            "columnName": "cocktail_id",
+            "affinity": "TEXT",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "id"
+          ],
+          "autoGenerate": true
+        },
+        "indices": [],
+        "foreignKeys": []
       }
     ],
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '2e8a12eefdbb9b96ecdbd97b4f7f778e')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '489cf1f6f04db20f292fe978fefcc6dc')"
     ]
   }
 }

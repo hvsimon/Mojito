@@ -8,6 +8,7 @@ import androidx.sqlite.db.SupportSQLiteDatabase
 import com.kiwi.data.db.CocktailDao
 import com.kiwi.data.db.KiwiDatabase
 import com.kiwi.data.entities.Cocktail
+import com.kiwi.data.entities.Favorite
 import dagger.Lazy
 import dagger.Module
 import dagger.Provides
@@ -18,7 +19,6 @@ import java.io.BufferedReader
 import javax.inject.Singleton
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 import kotlinx.serialization.builtins.ListSerializer
 import kotlinx.serialization.json.Json
@@ -37,23 +37,29 @@ object RoomDatabaseModule {
         val builder = Room.databaseBuilder(context, KiwiDatabase::class.java, "kiwi.db")
             .fallbackToDestructiveMigration()
             .addCallback(object : RoomDatabase.Callback() {
+
                 override fun onCreate(db: SupportSQLiteDatabase) {
-                    GlobalScope.launch {
+                    GlobalScope.launch(ioDispatcher) {
                         val cocktailDao = cocktailDaoLazy.get()
-                        val insertCocktailsDeferred = async(ioDispatcher) {
-                            val cocktails = context.assets
-                                .open("cocktails.json")
-                                .bufferedReader()
-                                .use(BufferedReader::readText)
-                                .let { cocktailsJson ->
-                                    Json.decodeFromString(
-                                        ListSerializer(Cocktail.serializer()),
-                                        cocktailsJson
-                                    )
-                                }
-                            cocktailDao.insertCocktails(*cocktails.toTypedArray())
+                        val cocktails = context.assets
+                            .open("cocktails.json")
+                            .bufferedReader()
+                            .use(BufferedReader::readText)
+                            .let { cocktailsJson ->
+                                Json.decodeFromString(
+                                    ListSerializer(Cocktail.serializer()),
+                                    cocktailsJson
+                                )
+                            }
+                        cocktailDao.insertCocktails(*cocktails.toTypedArray())
+                        val favorites = cocktails.map {
+                            Favorite(
+                                catalogName = "My",
+                                cocktailId = it.cocktailId
+                            )
                         }
-                        insertCocktailsDeferred.await()
+                        cocktailDao.insertFavorite(*favorites.toTypedArray())
+
                     }
                 }
             })
