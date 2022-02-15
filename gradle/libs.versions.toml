@@ -24,7 +24,7 @@ composecompiler = "1.1.0" # rc02 works with Kotlin 1.6.10
 
 # Google
 material = "1.5.0-rc01"
-accompanist = "0.21.5-rc"
+accompanist = "0.23.0"
 dagger = "2.40.5"
 
 # UI
