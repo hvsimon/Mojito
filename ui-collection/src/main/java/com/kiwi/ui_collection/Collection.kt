@@ -28,6 +28,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
+import androidx.paging.compose.items
 import com.airbnb.lottie.compose.LottieAnimation
 import com.airbnb.lottie.compose.LottieCompositionSpec
 import com.airbnb.lottie.compose.LottieConstants
@@ -35,7 +36,6 @@ import com.airbnb.lottie.compose.rememberLottieComposition
 import com.google.accompanist.insets.statusBarsPadding
 import com.kiwi.common_ui_compose.rememberFlowWithLifecycle
 import com.kiwi.data.entities.Cocktail
-import com.kiwi.data.entities.FavoriteAndCocktail
 import com.kiwi.data.entities.Ingredient
 import java.util.UUID
 
@@ -56,7 +56,7 @@ fun Collection(
 
 @Composable
 private fun Collection(
-    lazyPagingItems: LazyPagingItems<FavoriteAndCocktail>,
+    lazyPagingItems: LazyPagingItems<UiModel>,
     isEmpty: Boolean,
     openRecipe: (cocktailId: String) -> Unit,
 ) {
@@ -93,26 +93,32 @@ private fun LazyListScope.collectionTitle() {
 
 @OptIn(ExperimentalFoundationApi::class)
 private fun LazyListScope.collectionList(
-    list: LazyPagingItems<FavoriteAndCocktail>,
+    list: LazyPagingItems<UiModel>,
     onItemClick: (cocktailId: String) -> Unit
 ) {
-    var lastFavoriteAndCocktail: FavoriteAndCocktail? = null
     for (index in list.itemSnapshotList.indices) {
-        val favorite = list.peek(index)
-        if (lastFavoriteAndCocktail?.favorite?.id != favorite?.favorite?.id) {
-            stickyHeader {
-                SectionHeader(favorite!!.favorite.catalogName)
+        when (val uiModel = list.peek(index)) {
+            is UiModel.HeaderModel -> {
+                val catalogName = uiModel.name
+                this@collectionList.stickyHeader {
+                    SectionHeader(catalogName)
+                }
             }
+            is UiModel.FavoriteModel -> {
+                val cocktail = uiModel.cocktail
+                item {
+                    CollectionItem(
+                        cocktail = cocktail,
+                        onClick = { onItemClick(cocktail.cocktailId) }
+                    )
+                }
+            }
+            null -> {}
         }
+    }
 
-        item {
-            CollectionItem(
-                cocktail = favorite!!.cocktail,
-                onClick = { onItemClick(favorite.cocktail.cocktailId) }
-            )
-        }
+    items(list) {
 
-        lastFavoriteAndCocktail = favorite
     }
 }
 
