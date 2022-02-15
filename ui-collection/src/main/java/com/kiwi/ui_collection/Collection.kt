@@ -13,10 +13,10 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.scale
@@ -33,21 +33,33 @@ import com.airbnb.lottie.compose.LottieCompositionSpec
 import com.airbnb.lottie.compose.LottieConstants
 import com.airbnb.lottie.compose.rememberLottieComposition
 import com.google.accompanist.insets.statusBarsPadding
-import com.kiwi.common_ui_compose.KiwisBarTheme
 import com.kiwi.common_ui_compose.rememberFlowWithLifecycle
 import com.kiwi.data.entities.Cocktail
 import com.kiwi.data.entities.Favorite
-
+import com.kiwi.data.entities.Ingredient
+import java.util.UUID
 
 @Composable
 fun Collection(
     viewModel: CollectionViewModel = hiltViewModel(),
     openRecipe: (cocktailId: String) -> Unit,
 ) {
-
     val lazyPagingItems = rememberFlowWithLifecycle(viewModel.pagedList).collectAsLazyPagingItems()
     val isEmpty = lazyPagingItems.itemCount == 0
 
+    Collection(
+        lazyPagingItems = lazyPagingItems,
+        isEmpty = isEmpty,
+        openRecipe = openRecipe,
+    )
+}
+
+@Composable
+private fun Collection(
+    lazyPagingItems: LazyPagingItems<Favorite>,
+    isEmpty: Boolean,
+    openRecipe: (cocktailId: String) -> Unit,
+) {
     Column(Modifier.fillMaxSize()) {
         LazyColumn(
             modifier = Modifier
@@ -66,6 +78,7 @@ fun Collection(
             Empty(modifier = Modifier.weight(1f))
         }
     }
+
 }
 
 private fun LazyListScope.collectionTitle() {
@@ -120,9 +133,9 @@ private fun CollectionItem(
     onClick: () -> Unit,
 ) {
 
-//    val ingredients = rememberSaveable {
-//        cocktail.ingredients.joinToString(prefix = "(", postfix = ")") { it.name }
-//    }
+    val ingredients = rememberSaveable {
+        cocktail.ingredients.joinToString(prefix = "(", postfix = ")") { it.name }
+    }
     Column(
         verticalArrangement = Arrangement.Center,
         modifier = Modifier
@@ -134,9 +147,9 @@ private fun CollectionItem(
             text = cocktail.name,
             style = MaterialTheme.typography.titleLarge
         )
-//        Text(
-//            text = ingredients
-//        )
+        Text(
+            text = ingredients
+        )
     }
 }
 
@@ -171,10 +184,49 @@ private fun Empty(modifier: Modifier = Modifier) {
 
 @Preview
 @Composable
-private fun OnboardingPreview() {
-    KiwisBarTheme {
-        Surface {
-//            Collection({})
-        }
-    }
+private fun PreviewCollectionItem() {
+    CollectionItem(
+        cocktail = Cocktail(
+            cocktailId = UUID.randomUUID().toString(),
+            name = "Mojito2",
+            gallery = listOf("https://images.unsplash.com/photo-1609345265499-2133bbeb6ce5?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1994&q=80"),
+            intro = "The refreshingly minty-citrus flavours of Cuba's Mojito cocktail perfectly compliment white Rum & is wonderful on a hot summer's day. Highly popular, yet tricky to get right & often served too sweet - the key to a good Mojito is to use plenty of fresh Mint & Lime juice but not too much Sugar.",
+            ingredients = listOf(
+                Ingredient(
+                    name = "\uD83C\uDF78 白蘭姆酒",
+                    amount = "2 shots"
+                ),
+                Ingredient(
+                    name = "\uD83E\uDDC2 糖漿",
+                    amount = "0.5 shot"
+                ),
+                Ingredient(
+                    name = "\uD83C\uDF4B 萊姆片",
+                    amount = "4"
+                ),
+                Ingredient(
+                    name = "\uD83C\uDF3F 新鮮薄荷",
+                    amount = "12 leaves"
+                ),
+                Ingredient(
+                    name = "\uD83E\uDD64 蘇打水",
+                    amount = "fill to top"
+                ),
+            ),
+            steps = listOf(
+                "1. Place the Mint, Sugar Syrup & Lime wedges into a highball glass & lightly muddle the ingredients together. The Lime wedges & Mint leaves should be bruised to release their juices & essential oils.",
+                "2. Fill the glass with crushed ice, pour over the White Rum & stir.",
+                "3. Top up with Soda Water & stir well from the bottom up.",
+                "4. Garnish with a sprig of Mint & serve with a straw.",
+            ),
+            tips = setOf(
+                "Given that the Mojito is reliant on fresh Limes & Mint that are available in different sizes & flavour intensity, it is a cocktail that really rewards you if you tune the quantities to accommodate the ingredients you have available & most importantly, your own personal tastes.",
+                "If you make a Mojito & find it too sweet, you could try adding Angostura bitters to cut down on the sweetness.",
+                "Don't have any Limes to hand? Try using Lemons for a twist on the classic Mojito but note that you might need to add a little more Sugar Syrup or use a little less Lemon to balance out the extra sourness.",
+                "If you're out of Sugar syrup, you can use half a teaspoon of fine caster Sugar instead. If using Sugar, you might like to add the White Rum & stir to dissolve the Sugar before adding the crushed Ice.",
+                "Don't have crushed ice? Originally, Cuban bartenders mixed the drink using cubed ice, including mint stalks as well as leaves - try this for an equally tasty yet more rustic feel.",
+            )
+        ),
+        onClick = {}
+    )
 }

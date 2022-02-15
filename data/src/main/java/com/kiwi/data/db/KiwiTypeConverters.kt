@@ -28,4 +28,15 @@ object KiwiTypeConverters {
     fun toStringSet(value: String): Set<String> {
         return Json.decodeFromString(SetSerializer(String.serializer()), value)
     }
+
+    @TypeConverter
+    fun fromIngredientList(value: List<Ingredient>): String {
+        return Json.encodeToString(ListSerializer(Ingredient.serializer()), value)
+    }
+
+    @TypeConverter
+    fun toIngredientList(value: String): List<Ingredient> {
+        return Json.decodeFromString(ListSerializer(Ingredient.serializer()), value)
+    }
+
 }

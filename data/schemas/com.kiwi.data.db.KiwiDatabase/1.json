@@ -2,15 +2,15 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "be2c3456b8353714c5b026598b1ac3da",
+    "identityHash": "2e8a12eefdbb9b96ecdbd97b4f7f778e",
     "entities": [
       {
         "tableName": "Cocktail",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`cocktailId` TEXT NOT NULL, `name` TEXT NOT NULL, `gallery` TEXT NOT NULL, `intro` TEXT NOT NULL, `steps` TEXT NOT NULL, `tips` TEXT NOT NULL, PRIMARY KEY(`cocktailId`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`cocktail_id` TEXT NOT NULL, `name` TEXT NOT NULL, `gallery` TEXT NOT NULL, `intro` TEXT NOT NULL, `ingredients` TEXT NOT NULL, `steps` TEXT NOT NULL, `tips` TEXT NOT NULL, PRIMARY KEY(`cocktail_id`))",
         "fields": [
           {
             "fieldPath": "cocktailId",
-            "columnName": "cocktailId",
+            "columnName": "cocktail_id",
             "affinity": "TEXT",
             "notNull": true
           },
@@ -33,6 +33,12 @@
             "notNull": true
           },
           {
+            "fieldPath": "ingredients",
+            "columnName": "ingredients",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
             "fieldPath": "steps",
             "columnName": "steps",
             "affinity": "TEXT",
@@ -47,66 +53,7 @@
         ],
         "primaryKey": {
           "columnNames": [
-            "cocktailId"
-          ],
-          "autoGenerate": false
-        },
-        "indices": [],
-        "foreignKeys": []
-      },
-      {
-        "tableName": "Ingredient",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`ingredientId` TEXT NOT NULL, `name` TEXT NOT NULL, `amount` TEXT NOT NULL, PRIMARY KEY(`ingredientId`))",
-        "fields": [
-          {
-            "fieldPath": "ingredientId",
-            "columnName": "ingredientId",
-            "affinity": "TEXT",
-            "notNull": true
-          },
-          {
-            "fieldPath": "name",
-            "columnName": "name",
-            "affinity": "TEXT",
-            "notNull": true
-          },
-          {
-            "fieldPath": "amount",
-            "columnName": "amount",
-            "affinity": "TEXT",
-            "notNull": true
-          }
-        ],
-        "primaryKey": {
-          "columnNames": [
-            "ingredientId"
-          ],
-          "autoGenerate": false
-        },
-        "indices": [],
-        "foreignKeys": []
-      },
-      {
-        "tableName": "CocktailIngredientCrossRef",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`cocktailId` TEXT NOT NULL, `ingredientId` TEXT NOT NULL, PRIMARY KEY(`cocktailId`, `ingredientId`))",
-        "fields": [
-          {
-            "fieldPath": "cocktailId",
-            "columnName": "cocktailId",
-            "affinity": "TEXT",
-            "notNull": true
-          },
-          {
-            "fieldPath": "ingredientId",
-            "columnName": "ingredientId",
-            "affinity": "TEXT",
-            "notNull": true
-          }
-        ],
-        "primaryKey": {
-          "columnNames": [
-            "cocktailId",
-            "ingredientId"
+            "cocktail_id"
           ],
           "autoGenerate": false
         },
@@ -117,7 +64,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'be2c3456b8353714c5b026598b1ac3da')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '2e8a12eefdbb9b96ecdbd97b4f7f778e')"
     ]
   }
 }

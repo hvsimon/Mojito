@@ -4,14 +4,10 @@ import androidx.room.Database
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import com.kiwi.data.entities.Cocktail
-import com.kiwi.data.entities.CocktailIngredientCrossRef
-import com.kiwi.data.entities.Ingredient
 
 @Database(
     entities = [
         Cocktail::class,
-        Ingredient::class,
-        CocktailIngredientCrossRef::class,
     ],
     views = [],
     version = 1,

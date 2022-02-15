@@ -6,7 +6,6 @@ import com.kiwi.data.di.IoDispatcher
 import com.kiwi.data.entities.BaseWine
 import com.kiwi.data.entities.Cocktail
 import com.kiwi.data.entities.Favorite
-import com.kiwi.data.entities.RecipeEntity
 import dagger.Reusable
 import java.util.UUID
 import javax.inject.Inject
@@ -18,9 +17,6 @@ class KiwiRepository @Inject constructor(
     private val cocktailDao: CocktailDao,
     @IoDispatcher private val ioDispatcher: CoroutineDispatcher,
 ) {
-    suspend fun getRecipeByCocktailId(cocktailId: String): RecipeEntity = withContext(ioDispatcher) {
-        cocktailDao.getRecipeBy(cocktailId)
-    }
 
     suspend fun getCocktailBy(cocktailId: String): Cocktail = withContext(ioDispatcher) {
         cocktailDao.getCocktailBy(cocktailId)
@@ -95,6 +91,7 @@ private val cocktails = cocktailNames.map {
         name = it,
         intro = "",
         gallery = emptyList(),
+        ingredients = emptyList(),
         steps = emptyList(),
         tips = emptySet(),
     )

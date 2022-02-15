@@ -221,6 +221,7 @@ private fun PreviewOnboarding() {
                 name = "",
                 gallery = listOf(""),
                 intro = "",
+                ingredients = emptyList(),
                 steps = emptyList(),
                 tips = emptySet(),
             ),
