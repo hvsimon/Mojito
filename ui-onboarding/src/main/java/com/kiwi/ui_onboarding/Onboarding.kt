@@ -23,7 +23,6 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.ElevatedButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -42,19 +41,29 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.rememberImagePainter
 import coil.size.OriginalSize
 import com.google.accompanist.insets.statusBarsPadding
-import com.kiwi.common_ui_compose.KiwisBarTheme
 import com.kiwi.common_ui_compose.rememberFlowWithLifecycle
+import com.kiwi.data.entities.BaseWine
 import com.kiwi.data.entities.Cocktail
 
-@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun Onboarding(
     viewModel: OnboardingViewModel = hiltViewModel(),
     openRecipe: (cocktailId: String) -> Unit,
 ) {
-
     val uiState by rememberFlowWithLifecycle(viewModel.uiState).collectAsState(initial = OnboardingUiState())
 
+    Onboarding(
+        uiState = uiState,
+        openRecipe = openRecipe,
+    )
+}
+
+@OptIn(ExperimentalFoundationApi::class)
+@Composable
+private fun Onboarding(
+    uiState: OnboardingUiState,
+    openRecipe: (cocktailId: String) -> Unit,
+) {
     LazyVerticalGrid(
         cells = GridCells.Fixed(2)
     ) {
@@ -80,10 +89,11 @@ fun Onboarding(
             )
         }
     }
+
 }
 
 @Composable
-fun Header(
+private fun Header(
     cocktail: Cocktail?,
     onRandomClick: (cocktailId: String) -> Unit,
     modifier: Modifier = Modifier
@@ -146,7 +156,7 @@ fun Header(
 }
 
 @Composable
-fun SearchBar(
+private fun SearchBar(
     modifier: Modifier = Modifier
 ) {
     ElevatedButton(
@@ -162,7 +172,7 @@ fun SearchBar(
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
-fun WineCard(
+private fun WineCard(
     imageData: Any,
     wineName: String,
     modifier: Modifier = Modifier
@@ -204,12 +214,29 @@ fun WineCard(
 
 @Preview
 @Composable
-fun OnboardingPreview() {
-    KiwisBarTheme {
-        Surface {
-            Onboarding(
-                openRecipe = {}
+private fun PreviewOnboarding() {
+    Onboarding(
+        uiState = OnboardingUiState(
+            coverCocktail = Cocktail(
+                name = "",
+                gallery = listOf(""),
+                intro = "",
+                steps = emptyList(),
+                tips = emptySet(),
+            ),
+            baseWines = listOf(
+                BaseWine(
+                    id = "rum",
+                    imageUrl = "https://images.unsplash.com/photo-1614313511387-1436a4480ebb?ixlib=rb-1.2.1&ixid=Mnw" +
+                        "xMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1760&q=80",
+                ),
+                BaseWine(
+                    id = "gin",
+                    imageUrl = "https://images.unsplash.com/photo-1608885898957-a559228e8749?ixlib=rb-1.2.1&ixid=Mnw" +
+                        "xMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=987&q=80",
+                ),
             )
-        }
-    }
+        ),
+        openRecipe = {}
+    )
 }
