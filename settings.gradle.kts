@@ -18,4 +18,5 @@ include(
     ":ui-onboarding",
     ":ui-recipe",
     ":ui-collection",
+    ":ui-cocktail-list",
 )

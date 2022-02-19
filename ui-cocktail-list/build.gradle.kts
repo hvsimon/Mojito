@@ -1,5 +1,5 @@
 plugins {
-    id("com.android.application")
+    id("com.android.library")
     id("kotlin-android")
     id("kotlin-kapt")
     id("dagger.hilt.android.plugin")
@@ -9,25 +9,9 @@ android {
     compileSdk = libs.versions.compileSdk.get().toInt()
 
     defaultConfig {
-        applicationId = "com.kiwi.cocktail"
         minSdk = libs.versions.minSdk.get().toInt()
-        targetSdk = libs.versions.targetSdk.get().toInt()
-        versionCode = 1
-        versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-    }
-
-    buildTypes {
-        getByName("debug") {
-        }
-        getByName("release") {
-            isMinifyEnabled = true
-            proguardFiles(
-                getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro"
-            )
-        }
     }
 
     compileOptions {
@@ -52,10 +36,6 @@ dependencies {
     implementation(project(":data"))
     implementation(project(":common-ui-resources"))
     implementation(project(":common-ui-compose"))
-    implementation(project(":ui-onboarding"))
-    implementation(project(":ui-collection"))
-    implementation(project(":ui-recipe"))
-    implementation(project(":ui-cocktail-list"))
 
     // Jetbrains
 
@@ -64,6 +44,12 @@ dependencies {
     implementation(libs.appcompat)
     implementation(libs.bundles.activity)
     implementation(libs.navigation.compose)
+    implementation(libs.lifecycle.viewmodel.ktx)
+    implementation(libs.lifecycle.viewmodel.compose)
+
+    implementation(libs.paging.runtime)
+    implementation(libs.paging.common)
+    implementation(libs.paging.compose)
 
     // Compose
     implementation(libs.bundles.compose)
@@ -81,9 +67,12 @@ dependencies {
 
     // UI
     implementation(libs.coil.compose)
+    implementation(libs.lottie.compose)
 
     // Test
     testImplementation("junit:junit:4.+")
     androidTestImplementation("androidx.test.ext:junit:1.1.3")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.4.0")
+    androidTestImplementation("androidx.compose.ui:ui-test-junit4:1.1.0-rc01")
+    debugImplementation("androidx.compose.ui:ui-test-manifest:1.1.0-rc01")
 }
