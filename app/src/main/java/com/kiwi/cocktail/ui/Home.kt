@@ -1,6 +1,10 @@
 package com.kiwi.cocktail.ui
 
 import androidx.annotation.DrawableRes
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.slideInVertically
+import androidx.compose.animation.slideOutVertically
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -14,6 +18,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
@@ -29,12 +34,29 @@ import com.kiwi.cocktail.Screen
 @Composable
 fun Home() {
     val navController = rememberNavController()
+    val mainScreen = listOf(
+        Screen.Onboarding.route,
+        Screen.Collection.route,
+        Screen.Watched.route,
+    )
+    val showBottomBar = navController
+        .currentBackStackEntryAsState().value?.destination?.route in mainScreen
 
     Scaffold(
         modifier = Modifier.navigationBarsPadding(),
-        bottomBar = { HomeBottomNavigation(navController) },
+        bottomBar = {
+            AnimatedVisibility(
+                visible = showBottomBar,
+                enter = slideInVertically(initialOffsetY = { it }),
+                exit = slideOutVertically(targetOffsetY = { it }),
+                content = {
+                    HomeBottomNavigation(navController)
+                }
+            )
+        },
     ) { innerPadding ->
-        AppNavigation(navController = navController, modifier = Modifier.padding(innerPadding))
+        val paddingBottom = if (showBottomBar) innerPadding else PaddingValues(0.dp)
+        AppNavigation(navController = navController, modifier = Modifier.padding(paddingBottom))
     }
 }
 
@@ -47,8 +69,8 @@ fun HomeBottomNavigation(
         val currentDestination = navBackStackEntry?.destination
 
         HomeNavigationItems.forEach { item ->
-
-            val selected = currentDestination?.hierarchy?.any { it.route == item.screen.route } == true
+            val selected =
+                currentDestination?.hierarchy?.any { it.route == item.screen.route } == true
             // <div>Icons made by <a href="https://www.freepik.com" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div>
             val iconRes = if (selected) item.selectedIconResId else item.iconResId
             NavigationBarItem(

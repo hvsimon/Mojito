@@ -67,13 +67,13 @@ private fun Onboarding(
     openCocktailList: () -> Unit,
 ) {
     LazyVerticalGrid(
-        cells = GridCells.Fixed(2)
+        cells = GridCells.Fixed(2),
     ) {
         item(span = { GridItemSpan(2) }) {
             Header(
                 cocktail = uiState.coverCocktail,
                 onRandomClick = openRecipe,
-                modifier = Modifier.fillParentMaxHeight(0.75f)
+                modifier = Modifier.aspectRatio(0.75f)
             )
         }
         item(span = { GridItemSpan(2) }) {

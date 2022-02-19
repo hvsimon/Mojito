@@ -52,7 +52,7 @@ internal fun AppNavigation(
     NavHost(
         navController = navController,
         startDestination = Screen.Onboarding.route,
-        modifier = modifier
+        modifier = modifier,
     ) {
         composable(Screen.Onboarding.route) {
             Onboarding(
@@ -61,7 +61,7 @@ internal fun AppNavigation(
                 },
                 openCocktailList = {
                     navController.navigate("cocktail_list")
-                }
+                },
             )
         }
 
