@@ -54,8 +54,8 @@ dependencies {
     // Compose
     implementation(libs.bundles.compose)
     // TODO: 2021/12/23 choose one?
-    implementation("androidx.compose.material:material:1.1.0-rc01")
-    implementation("androidx.compose.material3:material3:1.0.0-alpha02")
+//    implementation("androidx.compose.material:material:1.1.0-rc01")
+    implementation("androidx.compose.material3:material3:1.0.0-alpha05")
 
     // Google
     implementation(libs.material)

@@ -1,6 +1,5 @@
 package com.kiwi.ui_onboarding
 
-import android.widget.Toast
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -49,12 +48,14 @@ import com.kiwi.data.entities.Cocktail
 fun Onboarding(
     viewModel: OnboardingViewModel = hiltViewModel(),
     openRecipe: (cocktailId: String) -> Unit,
+    openCocktailList: () -> Unit,
 ) {
     val uiState by rememberFlowWithLifecycle(viewModel.uiState).collectAsState(initial = OnboardingUiState())
 
     Onboarding(
         uiState = uiState,
         openRecipe = openRecipe,
+        openCocktailList = openCocktailList,
     )
 }
 
@@ -63,6 +64,7 @@ fun Onboarding(
 private fun Onboarding(
     uiState: OnboardingUiState,
     openRecipe: (cocktailId: String) -> Unit,
+    openCocktailList: () -> Unit,
 ) {
     LazyVerticalGrid(
         cells = GridCells.Fixed(2)
@@ -86,6 +88,7 @@ private fun Onboarding(
             WineCard(
                 imageData = it.imageUrl,
                 wineName = it.id,
+                onCardClick = openCocktailList,
             )
         }
     }
@@ -175,11 +178,12 @@ private fun SearchBar(
 private fun WineCard(
     imageData: Any,
     wineName: String,
+    onCardClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     val context = LocalContext.current
     Card(
-        onClick = { Toast.makeText(context, wineName, Toast.LENGTH_SHORT).show() },
+        onClick = onCardClick,
         modifier = modifier
             .padding(4.dp)
             .aspectRatio(1f),
@@ -238,6 +242,7 @@ private fun PreviewOnboarding() {
                 ),
             )
         ),
-        openRecipe = {}
+        openRecipe = {},
+        openCocktailList = {}
     )
 }

@@ -5,4 +5,5 @@
     <string name="collection_title">Collection</string>
     <string name="watched_shows_title">watched_shows_title</string>
     <string name="recipe_title">recipe_title</string>
+    <string name="cocktail_list_title">cocktail_list</string>
 </resources>

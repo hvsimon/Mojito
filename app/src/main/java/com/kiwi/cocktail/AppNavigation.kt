@@ -9,6 +9,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import com.kiwi.cocktail.ui.Watched
+import com.kiwi.ui_cocktail_list.CocktailList
 import com.kiwi.ui_collection.Collection
 import com.kiwi.ui_onboarding.Onboarding
 import com.kiwi.ui_recipe.Recipe
@@ -36,6 +37,11 @@ internal sealed class Screen(
         "recipe/{cocktailId}",
         R.string.recipe_title,
     )
+
+    object CocktailList : Screen(
+        "cocktail_list",
+        R.string.cocktail_list_title,
+    )
 }
 
 @Composable
@@ -53,8 +59,12 @@ internal fun AppNavigation(
                 openRecipe = { cocktailId ->
                     navController.navigate("recipe/$cocktailId")
                 },
+                openCocktailList = {
+                    navController.navigate("cocktail_list")
+                }
             )
         }
+
         composable(Screen.Collection.route) {
             Collection(
                 openRecipe = { cocktailId ->
@@ -62,6 +72,7 @@ internal fun AppNavigation(
                 },
             )
         }
+
         composable(Screen.Watched.route) { Watched() }
 
         composable(
@@ -72,5 +83,13 @@ internal fun AppNavigation(
                 }
             )
         ) { Recipe() }
+
+        composable(Screen.CocktailList.route) {
+            CocktailList(
+                openRecipe = { cocktailId ->
+                    navController.navigate("recipe/$cocktailId")
+                },
+            )
+        }
     }
 }
