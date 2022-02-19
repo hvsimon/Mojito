@@ -21,6 +21,7 @@ androidxhilt = "1.0.0"
 # Compose
 compose = "1.1.0"
 composecompiler = "1.1.0" # rc02 works with Kotlin 1.6.10
+composematerial3 = "1.0.0-alpha05"
 
 # Google
 material = "1.5.0-rc01"
@@ -66,6 +67,7 @@ compose-compiler = { module = "androidx.compose.compiler:compiler", version.ref 
 compose-ui = { module = "androidx.compose.ui:ui", version.ref = "compose" }
 compose-uitooling = { module = "androidx.compose.ui:ui-tooling", version.ref = "compose" }
 compose-foundation = { module = "androidx.compose.foundation:foundation", version.ref = "compose" }
+compose-material3 = { module = "androidx.compose.material3:material3", version.ref = "composematerial3" }
 
 # Google
 material = { module = "com.google.android.material:material", version.ref = "material" }
@@ -88,5 +90,5 @@ lottie-compose = { module = "com.airbnb.android:lottie-compose", version.ref = "
 
 [bundles]
 activity = ["activity-ktx", "activity-compose"]
-compose = ["compose-runtime", "compose-compiler", "compose-ui", "compose-uitooling", "compose-foundation"]
+compose = ["compose-runtime", "compose-compiler", "compose-ui", "compose-uitooling", "compose-foundation", "compose-material3"]
 accompanist = ["accompanist-insets", "accompanist-systemuicontroller"]
