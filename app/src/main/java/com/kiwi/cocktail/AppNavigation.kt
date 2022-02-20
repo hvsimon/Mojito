@@ -86,6 +86,7 @@ internal fun AppNavigation(
 
         composable(Screen.CocktailList.route) {
             CocktailList(
+                navigateUp = navController::navigateUp,
                 openRecipe = { cocktailId ->
                     navController.navigate("recipe/$cocktailId")
                 },
