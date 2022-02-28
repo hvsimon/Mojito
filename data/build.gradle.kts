@@ -17,6 +17,12 @@ android {
                 argument("room.schemaLocation", "$projectDir/schemas")
             }
         }
+
+        buildConfigField(
+            "String",
+            "API_URL",
+            "\"https://www.thecocktaildb.com/api/json/v1/1/\""
+        )
     }
 
     compileOptions {
@@ -45,4 +51,9 @@ dependencies {
     kapt(libs.dagger.compiler)
     implementation(libs.hilt.library)
     kapt(libs.hilt.compiler)
+
+    implementation(platform(libs.okhttp.bom))
+    implementation(libs.okhttp.core)
+    implementation(libs.retrofit.core)
+    implementation(libs.retrofit.kotlinx.serialization.converter)
 }

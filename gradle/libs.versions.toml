@@ -32,6 +32,11 @@ dagger = "2.40.5"
 coil = "1.4.0"
 lottie = "4.2.2"
 
+# Network
+okhttp-bom = "4.9.3"
+retrofit-core = "2.9.0"
+retrofit-kotlinx-serialization-converter = "0.8.0"
+
 [libraries]
 
 # Jetbrains
@@ -87,6 +92,12 @@ hilt-testing = { module = "com.google.dagger:hilt-android-testing", version.ref 
 # UI
 coil-compose = { module = "io.coil-kt:coil-compose", version.ref = "coil" }
 lottie-compose = { module = "com.airbnb.android:lottie-compose", version.ref = "lottie" }
+
+# Network
+okhttp-bom = { module = "com.squareup.okhttp3:okhttp-bom", version.ref = "okhttp-bom" }
+okhttp-core = { module = "com.squareup.okhttp3:okhttp" }
+retrofit-core = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofit-core" }
+retrofit-kotlinx-serialization-converter = { module = "com.jakewharton.retrofit:retrofit2-kotlinx-serialization-converter", version.ref = "retrofit-kotlinx-serialization-converter" }
 
 [bundles]
 activity = ["activity-ktx", "activity-compose"]
