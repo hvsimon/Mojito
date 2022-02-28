@@ -7,6 +7,8 @@ import com.kiwi.data.db.CocktailDao
 import com.kiwi.data.di.IoDispatcher
 import com.kiwi.data.entities.BaseWine
 import com.kiwi.data.entities.Cocktail
+import com.kiwi.data.entities.FullDrinkDto
+import com.kiwi.data.entities.SimpleDrinkDto
 import dagger.Reusable
 import java.util.UUID
 import javax.inject.Inject
@@ -21,13 +23,14 @@ class KiwiRepository @Inject constructor(
 ) {
 
     // TODO: random cocktail for each date
-    suspend fun randomCocktail() = withContext(ioDispatcher) {
-        cocktailApi.randomCocktail()
+    suspend fun randomCocktail(): FullDrinkDto = withContext(ioDispatcher) {
+        cocktailApi.randomCocktail().drinks.first()
     }
 
-    suspend fun searchByIngredient(ingredientName: String) = withContext(ioDispatcher) {
-        cocktailApi.searchByIngredient(ingredientName)
-    }
+    suspend fun searchByIngredient(ingredientName: String): List<SimpleDrinkDto> =
+        withContext(ioDispatcher) {
+            cocktailApi.searchByIngredient(ingredientName).drinks
+        }
 
     suspend fun getCocktailBy(cocktailId: String): Cocktail = withContext(ioDispatcher) {
         cocktailDao.getCocktailBy(cocktailId)

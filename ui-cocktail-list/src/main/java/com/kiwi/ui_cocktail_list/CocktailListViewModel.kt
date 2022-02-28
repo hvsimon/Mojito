@@ -21,7 +21,7 @@ class CocktailListViewModel @Inject constructor(
     val title: String = savedStateHandle["ingredient"]!!
 
     val list = flow {
-        val data = kiwiRepository.searchByIngredient(title).drinks
+        val data = kiwiRepository.searchByIngredient(title)
         emit(data)
     }.map {
         it.map { drink ->

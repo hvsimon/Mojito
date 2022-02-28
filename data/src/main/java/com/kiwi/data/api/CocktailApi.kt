@@ -18,4 +18,6 @@ interface CocktailApi {
     suspend fun searchByIngredient(
         @Query("i") ingredientName: String
     ): CocktailResponse<SimpleDrinkDto>
+
+
 }

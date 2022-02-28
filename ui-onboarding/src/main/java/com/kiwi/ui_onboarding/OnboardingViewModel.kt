@@ -35,7 +35,7 @@ class OnboardingViewModel @Inject constructor(
 
     fun randomCocktail() {
         viewModelScope.launch {
-            val drink = kiwiRepository.randomCocktail().drinks.first()
+            val drink = kiwiRepository.randomCocktail()
             _uiState.update {
                 it.copy(
                     coverCocktail = Cocktail(
