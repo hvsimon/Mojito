@@ -19,9 +19,6 @@ interface CocktailDao {
     @Query("SELECT * FROM Cocktail WHERE cocktail_id = :cocktailId")
     suspend fun getCocktailBy(cocktailId: String): Cocktail
 
-    @Query("SELECT * FROM Cocktail ORDER BY RANDOM() LIMIT 1")
-    suspend fun getRandomCocktail(): Cocktail
-
     @Transaction
     @Query("SELECT * FROM favorite")
     fun getFavoritePagingData(): PagingSource<Int, FavoriteAndCocktail>

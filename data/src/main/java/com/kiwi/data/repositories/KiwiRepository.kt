@@ -2,6 +2,7 @@ package com.kiwi.data.repositories
 
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
+import com.kiwi.data.api.CocktailApi
 import com.kiwi.data.db.CocktailDao
 import com.kiwi.data.di.IoDispatcher
 import com.kiwi.data.entities.BaseWine
@@ -15,15 +16,17 @@ import kotlinx.coroutines.withContext
 @Reusable
 class KiwiRepository @Inject constructor(
     private val cocktailDao: CocktailDao,
+    private val cocktailApi: CocktailApi,
     @IoDispatcher private val ioDispatcher: CoroutineDispatcher,
 ) {
 
-    suspend fun getCocktailBy(cocktailId: String): Cocktail = withContext(ioDispatcher) {
-        cocktailDao.getCocktailBy(cocktailId)
+    // TODO: random cocktail for each date
+    suspend fun randomCocktail() = withContext(ioDispatcher) {
+        cocktailApi.randomCocktail()
     }
 
-    suspend fun getRandomCocktail(): Cocktail = withContext(ioDispatcher) {
-        cocktailDao.getRandomCocktail()
+    suspend fun getCocktailBy(cocktailId: String): Cocktail = withContext(ioDispatcher) {
+        cocktailDao.getCocktailBy(cocktailId)
     }
 
     suspend fun getBaseWines(): List<BaseWine> = withContext(ioDispatcher) {

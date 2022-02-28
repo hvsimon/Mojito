@@ -54,7 +54,7 @@ fun Onboarding(
 
     Onboarding(
         uiState = uiState,
-        openRecipe = openRecipe,
+        openRecipe = { viewModel.randomCocktail() },
         openCocktailList = openCocktailList,
     )
 }
@@ -95,6 +95,7 @@ private fun Onboarding(
 
 }
 
+// TODO: redesign header due to the drink's image is always square (700x700)
 @Composable
 private fun Header(
     cocktail: Cocktail?,
