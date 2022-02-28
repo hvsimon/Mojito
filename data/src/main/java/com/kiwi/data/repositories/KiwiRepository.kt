@@ -33,12 +33,10 @@ class KiwiRepository @Inject constructor(
 
     suspend fun lookupFullCocktailDetailsById(id: String): CocktailPo =
         withContext(ioDispatcher) {
-            cocktailApi.lookupFullCocktailDetailsById(id).drinks.first().toCocktailPo()
+            return@withContext cocktailDao.getCocktailBy(id)
+                ?: cocktailApi.lookupFullCocktailDetailsById(id).drinks.first().toCocktailPo()
+                    .also { cocktailDao.insertCocktails(it) }
         }
-
-    suspend fun getCocktailBy(cocktailId: String): CocktailPo = withContext(ioDispatcher) {
-        cocktailDao.getCocktailBy(cocktailId)
-    }
 
     suspend fun getBaseWines(): List<BaseWine> = withContext(ioDispatcher) {
         // TODO: 2022/1/6 load from db

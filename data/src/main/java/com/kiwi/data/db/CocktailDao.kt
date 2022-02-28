@@ -17,7 +17,7 @@ interface CocktailDao {
     suspend fun insertCocktails(vararg cocktail: CocktailPo)
 
     @Query("SELECT * FROM CocktailPo WHERE cocktail_id = :cocktailId")
-    suspend fun getCocktailBy(cocktailId: String): CocktailPo
+    suspend fun getCocktailBy(cocktailId: String): CocktailPo?
 
     @Transaction
     @Query("SELECT * FROM favorite")
