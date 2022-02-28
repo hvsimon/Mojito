@@ -4,11 +4,11 @@ import androidx.room.Database
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import com.kiwi.data.entities.Favorite
-import com.kiwi.data.entities.Cocktail
+import com.kiwi.data.entities.CocktailPo
 
 @Database(
     entities = [
-        Cocktail::class,
+        CocktailPo::class,
         Favorite::class,
     ],
     views = [],

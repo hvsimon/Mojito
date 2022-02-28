@@ -42,7 +42,7 @@ import coil.size.OriginalSize
 import com.google.accompanist.insets.statusBarsPadding
 import com.kiwi.common_ui_compose.rememberFlowWithLifecycle
 import com.kiwi.data.entities.BaseWine
-import com.kiwi.data.entities.Cocktail
+import com.kiwi.data.entities.CocktailPo
 
 @Composable
 fun Onboarding(
@@ -98,7 +98,7 @@ private fun Onboarding(
 // TODO: redesign header due to the drink's image is always square (700x700)
 @Composable
 private fun Header(
-    cocktail: Cocktail?,
+    cocktail: CocktailPo?,
     onRandomClick: (cocktailId: String) -> Unit,
     modifier: Modifier = Modifier
 ) {
@@ -221,7 +221,7 @@ private fun WineCard(
 private fun PreviewOnboarding() {
     Onboarding(
         uiState = OnboardingUiState(
-            coverCocktail = Cocktail(
+            coverCocktail = CocktailPo(
                 name = "",
                 gallery = listOf(""),
                 intro = "",

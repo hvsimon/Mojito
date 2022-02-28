@@ -35,7 +35,7 @@ import com.airbnb.lottie.compose.LottieConstants
 import com.airbnb.lottie.compose.rememberLottieComposition
 import com.google.accompanist.insets.statusBarsPadding
 import com.kiwi.common_ui_compose.rememberFlowWithLifecycle
-import com.kiwi.data.entities.Cocktail
+import com.kiwi.data.entities.CocktailPo
 import com.kiwi.data.entities.Ingredient
 import java.util.UUID
 
@@ -135,7 +135,7 @@ private fun SectionHeader(sectionName: String) {
 
 @Composable
 private fun CollectionItem(
-    cocktail: Cocktail,
+    cocktail: CocktailPo,
     onClick: () -> Unit,
 ) {
 
@@ -192,7 +192,7 @@ private fun Empty(modifier: Modifier = Modifier) {
 @Composable
 private fun PreviewCollectionItem() {
     CollectionItem(
-        cocktail = Cocktail(
+        cocktail = CocktailPo(
             cocktailId = UUID.randomUUID().toString(),
             name = "Mojito2",
             gallery = listOf("https://images.unsplash.com/photo-1609345265499-2133bbeb6ce5?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1994&q=80"),

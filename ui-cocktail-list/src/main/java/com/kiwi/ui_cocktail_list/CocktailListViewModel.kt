@@ -3,7 +3,7 @@ package com.kiwi.ui_cocktail_list
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.kiwi.data.entities.Cocktail
+import com.kiwi.data.entities.CocktailPo
 import com.kiwi.data.repositories.KiwiRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
@@ -25,7 +25,7 @@ class CocktailListViewModel @Inject constructor(
         emit(data)
     }.map {
         it.map { drink ->
-            Cocktail(
+            CocktailPo(
                 cocktailId = drink.id,
                 name = drink.drink,
                 gallery = listOf(drink.thumb),

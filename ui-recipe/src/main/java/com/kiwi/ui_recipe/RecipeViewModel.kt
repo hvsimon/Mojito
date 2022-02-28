@@ -3,7 +3,7 @@ package com.kiwi.ui_recipe
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.kiwi.data.entities.Cocktail
+import com.kiwi.data.entities.CocktailPo
 import com.kiwi.data.entities.Ingredient
 import com.kiwi.data.repositories.KiwiRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -23,7 +23,7 @@ class RecipeViewModel @Inject constructor(
 
     val cocktail = flow { emit(kiwiRepository.lookupFullCocktailDetailsById(cocktailId)) }
         .map { drink ->
-            Cocktail(
+            CocktailPo(
                 cocktailId = drink.id,
                 name = drink.drink,
                 gallery = listOf(drink.thumb),

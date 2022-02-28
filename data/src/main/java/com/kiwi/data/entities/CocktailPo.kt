@@ -8,7 +8,7 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 @Entity
-data class Cocktail(
+data class CocktailPo(
     @PrimaryKey
     @ColumnInfo(name = "cocktail_id")
     val cocktailId: String = UUID.randomUUID().toString(),
@@ -30,11 +30,4 @@ data class Cocktail(
 
     @ColumnInfo(name = "tips")
     val tips: Set<String>,
-)
-
-@Serializable
-data class Ingredient(
-    val ingredientId: String = UUID.randomUUID().toString(),
-    val name: String,
-    val amount: String,
 )

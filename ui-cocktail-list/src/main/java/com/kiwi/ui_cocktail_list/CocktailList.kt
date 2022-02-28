@@ -34,7 +34,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.rememberImagePainter
 import com.google.accompanist.insets.statusBarsPadding
 import com.kiwi.common_ui_compose.rememberFlowWithLifecycle
-import com.kiwi.data.entities.Cocktail
+import com.kiwi.data.entities.CocktailPo
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -85,7 +85,7 @@ private fun CocktailListAppBar(
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 private fun CocktailList(
-    list: List<Cocktail>,
+    list: List<CocktailPo>,
     onItemClick: (cocktailId: String) -> Unit
 ) {
     LazyVerticalGrid(
@@ -106,7 +106,7 @@ private fun CocktailList(
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun CocktailCard(
-    cocktail: Cocktail,
+    cocktail: CocktailPo,
     onClick: (cocktailId: String) -> Unit,
 ) {
     Card(
@@ -151,7 +151,7 @@ fun PreviewCocktailListAppBar() {
 @Composable
 fun PreviewCocktailGrid() {
     val list = MutableList(8) {
-        Cocktail(
+        CocktailPo(
             name = "Cocktail Name",
             gallery = listOf("https://images.unsplash.com/photo-1609345265499-2133bbeb6ce5?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1994&q=80"),
             intro = "",
@@ -170,7 +170,7 @@ fun PreviewCocktailGrid() {
 @Composable
 fun PreviewCocktailCard() {
     CocktailCard(
-        cocktail = Cocktail(
+        cocktail = CocktailPo(
             name = "Cocktail Name",
             gallery = listOf("https://images.unsplash.com/photo-1609345265499-2133bbeb6ce5?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1994&q=80"),
             intro = "",

@@ -26,7 +26,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.rememberImagePainter
 import coil.size.OriginalSize
 import com.kiwi.common_ui_compose.rememberFlowWithLifecycle
-import com.kiwi.data.entities.Cocktail
+import com.kiwi.data.entities.CocktailPo
 import com.kiwi.data.entities.Ingredient
 import java.util.UUID
 
@@ -34,14 +34,14 @@ import java.util.UUID
 fun Recipe(
     viewModel: RecipeViewModel = hiltViewModel(),
 ) {
-    val cocktail: Cocktail? by rememberFlowWithLifecycle(viewModel.cocktail).collectAsState(initial = null)
+    val cocktail: CocktailPo? by rememberFlowWithLifecycle(viewModel.cocktail).collectAsState(initial = null)
 
     Recipe(cocktail)
 }
 
 @Composable
 private fun Recipe(
-    cocktail: Cocktail?,
+    cocktail: CocktailPo?,
 ) {
     if (cocktail == null) {
         // show loading view
@@ -170,7 +170,7 @@ private fun Tips(
 @Composable
 fun PreviewRecipe() {
     Recipe(
-        cocktail = Cocktail(
+        cocktail = CocktailPo(
             cocktailId = UUID.randomUUID().toString(),
             name = "Mojito2",
             gallery = listOf("https://images.unsplash.com/photo-1609345265499-2133bbeb6ce5?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1994&q=80"),

@@ -7,7 +7,7 @@ import androidx.room.RoomDatabase
 import androidx.sqlite.db.SupportSQLiteDatabase
 import com.kiwi.data.db.CocktailDao
 import com.kiwi.data.db.KiwiDatabase
-import com.kiwi.data.entities.Cocktail
+import com.kiwi.data.entities.CocktailPo
 import com.kiwi.data.entities.Favorite
 import dagger.Lazy
 import dagger.Module
@@ -47,7 +47,7 @@ object RoomDatabaseModule {
                             .use(BufferedReader::readText)
                             .let { cocktailsJson ->
                                 Json.decodeFromString(
-                                    ListSerializer(Cocktail.serializer()),
+                                    ListSerializer(CocktailPo.serializer()),
                                     cocktailsJson
                                 )
                             }

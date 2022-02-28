@@ -6,7 +6,7 @@ import com.kiwi.data.api.CocktailApi
 import com.kiwi.data.db.CocktailDao
 import com.kiwi.data.di.IoDispatcher
 import com.kiwi.data.entities.BaseWine
-import com.kiwi.data.entities.Cocktail
+import com.kiwi.data.entities.CocktailPo
 import com.kiwi.data.entities.FullDrinkDto
 import com.kiwi.data.entities.SimpleDrinkDto
 import dagger.Reusable
@@ -37,7 +37,7 @@ class KiwiRepository @Inject constructor(
             cocktailApi.lookupFullCocktailDetailsById(id).drinks.first()
         }
 
-    suspend fun getCocktailBy(cocktailId: String): Cocktail = withContext(ioDispatcher) {
+    suspend fun getCocktailBy(cocktailId: String): CocktailPo = withContext(ioDispatcher) {
         cocktailDao.getCocktailBy(cocktailId)
     }
 
@@ -102,7 +102,7 @@ private val categories =
     listOf("Unforgettable Cocktails", "Contemporary Classic Cocktails", "New Era Cocktails")
 
 private val cocktails = cocktailNames.map {
-    Cocktail(
+    CocktailPo(
         cocktailId = UUID.randomUUID().toString(),
         name = it,
         intro = "",

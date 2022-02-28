@@ -26,5 +26,5 @@ data class FavoriteAndCocktail(
         parentColumn = "cocktail_id",
         entityColumn = "cocktail_id"
     )
-    val cocktail: Cocktail
+    val cocktail: CocktailPo
 )
