@@ -7,8 +7,7 @@ import com.kiwi.data.db.CocktailDao
 import com.kiwi.data.di.IoDispatcher
 import com.kiwi.data.entities.BaseWine
 import com.kiwi.data.entities.CocktailPo
-import com.kiwi.data.entities.FullDrinkDto
-import com.kiwi.data.entities.SimpleDrinkDto
+import com.kiwi.data.mapper.toCocktailPo
 import dagger.Reusable
 import java.util.UUID
 import javax.inject.Inject
@@ -23,18 +22,18 @@ class KiwiRepository @Inject constructor(
 ) {
 
     // TODO: random cocktail for each date
-    suspend fun randomCocktail(): FullDrinkDto = withContext(ioDispatcher) {
-        cocktailApi.randomCocktail().drinks.first()
+    suspend fun randomCocktail(): CocktailPo = withContext(ioDispatcher) {
+        cocktailApi.randomCocktail().drinks.first().toCocktailPo()
     }
 
-    suspend fun searchByIngredient(ingredientName: String): List<SimpleDrinkDto> =
+    suspend fun searchByIngredient(ingredientName: String): List<CocktailPo> =
         withContext(ioDispatcher) {
-            cocktailApi.searchByIngredient(ingredientName).drinks
+            cocktailApi.searchByIngredient(ingredientName).drinks.map { it.toCocktailPo() }
         }
 
-    suspend fun lookupFullCocktailDetailsById(id: String): FullDrinkDto =
+    suspend fun lookupFullCocktailDetailsById(id: String): CocktailPo =
         withContext(ioDispatcher) {
-            cocktailApi.lookupFullCocktailDetailsById(id).drinks.first()
+            cocktailApi.lookupFullCocktailDetailsById(id).drinks.first().toCocktailPo()
         }
 
     suspend fun getCocktailBy(cocktailId: String): CocktailPo = withContext(ioDispatcher) {

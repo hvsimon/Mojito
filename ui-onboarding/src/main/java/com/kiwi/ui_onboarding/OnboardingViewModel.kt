@@ -3,7 +3,6 @@ package com.kiwi.ui_onboarding
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.kiwi.data.entities.CocktailPo
 import com.kiwi.data.repositories.KiwiRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
@@ -35,19 +34,9 @@ class OnboardingViewModel @Inject constructor(
 
     fun randomCocktail() {
         viewModelScope.launch {
-            val drink = kiwiRepository.randomCocktail()
+            val cocktail = kiwiRepository.randomCocktail()
             _uiState.update {
-                it.copy(
-                    coverCocktail = CocktailPo(
-                        cocktailId = drink.id,
-                        name = drink.drink,
-                        gallery = listOf(drink.thumb),
-                        intro = drink.instructions,
-                        ingredients = listOf(),
-                        steps = listOf(),
-                        tips = setOf(),
-                    )
-                )
+                it.copy(coverCocktail = cocktail)
             }
         }
     }
