@@ -48,7 +48,7 @@ import com.kiwi.data.entities.Cocktail
 fun Onboarding(
     viewModel: OnboardingViewModel = hiltViewModel(),
     openRecipe: (cocktailId: String) -> Unit,
-    openCocktailList: () -> Unit,
+    openCocktailList: (String) -> Unit,
 ) {
     val uiState by rememberFlowWithLifecycle(viewModel.uiState).collectAsState(initial = OnboardingUiState())
 
@@ -64,7 +64,7 @@ fun Onboarding(
 private fun Onboarding(
     uiState: OnboardingUiState,
     openRecipe: (cocktailId: String) -> Unit,
-    openCocktailList: () -> Unit,
+    openCocktailList: (String) -> Unit,
 ) {
     LazyVerticalGrid(
         cells = GridCells.Fixed(2),
@@ -179,14 +179,14 @@ private fun SearchBar(
 private fun WineCard(
     imageData: Any,
     wineName: String,
-    onCardClick: () -> Unit,
+    onCardClick: (String) -> Unit,
     modifier: Modifier = Modifier
 ) {
     Card(
         modifier = modifier
             .padding(4.dp)
             .aspectRatio(1f)
-            .clickable { onCardClick.invoke() },
+            .clickable { onCardClick.invoke(wineName) },
     ) {
         Box {
             Image(

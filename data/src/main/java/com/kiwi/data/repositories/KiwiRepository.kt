@@ -25,6 +25,10 @@ class KiwiRepository @Inject constructor(
         cocktailApi.randomCocktail()
     }
 
+    suspend fun searchByIngredient(ingredientName: String) = withContext(ioDispatcher) {
+        cocktailApi.searchByIngredient(ingredientName)
+    }
+
     suspend fun getCocktailBy(cocktailId: String): Cocktail = withContext(ioDispatcher) {
         cocktailDao.getCocktailBy(cocktailId)
     }

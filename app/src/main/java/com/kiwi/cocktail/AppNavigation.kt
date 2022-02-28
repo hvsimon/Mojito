@@ -39,7 +39,7 @@ internal sealed class Screen(
     )
 
     object CocktailList : Screen(
-        "cocktail_list",
+        "cocktail_list/{ingredient}",
         R.string.cocktail_list_title,
     )
 }
@@ -59,8 +59,8 @@ internal fun AppNavigation(
                 openRecipe = { cocktailId ->
                     navController.navigate("recipe/$cocktailId")
                 },
-                openCocktailList = {
-                    navController.navigate("cocktail_list")
+                openCocktailList = { ingredient ->
+                    navController.navigate("cocktail_list/$ingredient")
                 },
             )
         }
