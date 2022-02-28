@@ -119,6 +119,7 @@ private fun Header(
         SearchBar(
             modifier = Modifier
                 .align(Alignment.TopCenter)
+                .padding(top = 16.dp)
                 .statusBarsPadding()
         )
         cocktail?.let { cocktail ->
