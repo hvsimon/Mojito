@@ -19,5 +19,9 @@ interface CocktailApi {
         @Query("i") ingredientName: String
     ): CocktailResponse<SimpleDrinkDto>
 
-
+    @Headers("Accept-Encoding: identity")
+    @GET("lookup.php")
+    suspend fun lookupFullCocktailDetailsById(
+        @Query("i") id: String
+    ): CocktailResponse<FullDrinkDto>
 }

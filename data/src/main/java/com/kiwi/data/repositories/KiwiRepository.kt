@@ -32,6 +32,11 @@ class KiwiRepository @Inject constructor(
             cocktailApi.searchByIngredient(ingredientName).drinks
         }
 
+    suspend fun lookupFullCocktailDetailsById(id: String): FullDrinkDto =
+        withContext(ioDispatcher) {
+            cocktailApi.lookupFullCocktailDetailsById(id).drinks.first()
+        }
+
     suspend fun getCocktailBy(cocktailId: String): Cocktail = withContext(ioDispatcher) {
         cocktailDao.getCocktailBy(cocktailId)
     }
