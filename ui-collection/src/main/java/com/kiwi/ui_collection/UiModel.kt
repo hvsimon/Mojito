@@ -1,9 +1,9 @@
 package com.kiwi.ui_collection
 
 import com.kiwi.data.entities.CocktailPo
-import com.kiwi.data.entities.Favorite
+import com.kiwi.data.entities.FollowedRecipe
 
 sealed class UiModel {
     class HeaderModel(val name: String) : UiModel()
-    class FavoriteModel(val favorite: Favorite, val cocktail: CocktailPo) : UiModel()
+    class FollowedModel(val followedRecipe: FollowedRecipe, val cocktail: CocktailPo) : UiModel()
 }

@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "7bcc65847687d37b9337546b8118cb1f",
+    "identityHash": "811d54105f5903f96c1c060e16fd5f9b",
     "entities": [
       {
         "tableName": "CocktailPo",
@@ -61,8 +61,8 @@
         "foreignKeys": []
       },
       {
-        "tableName": "Favorite",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `catalog_name` TEXT NOT NULL, `cocktail_id` TEXT NOT NULL)",
+        "tableName": "FollowedRecipe",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `catalog_name` TEXT NOT NULL, `cocktail_id` TEXT NOT NULL, `followed_at` TEXT)",
         "fields": [
           {
             "fieldPath": "id",
@@ -81,6 +81,12 @@
             "columnName": "cocktail_id",
             "affinity": "TEXT",
             "notNull": true
+          },
+          {
+            "fieldPath": "followedAt",
+            "columnName": "followed_at",
+            "affinity": "TEXT",
+            "notNull": false
           }
         ],
         "primaryKey": {
@@ -89,14 +95,24 @@
           ],
           "autoGenerate": true
         },
-        "indices": [],
+        "indices": [
+          {
+            "name": "index_FollowedRecipe_cocktail_id",
+            "unique": true,
+            "columnNames": [
+              "cocktail_id"
+            ],
+            "orders": [],
+            "createSql": "CREATE UNIQUE INDEX IF NOT EXISTS `index_FollowedRecipe_cocktail_id` ON `${TABLE_NAME}` (`cocktail_id`)"
+          }
+        ],
         "foreignKeys": []
       }
     ],
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '7bcc65847687d37b9337546b8118cb1f')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '811d54105f5903f96c1c060e16fd5f9b')"
     ]
   }
 }

@@ -41,12 +41,12 @@ import java.util.UUID
 fun Recipe(
     viewModel: RecipeViewModel = hiltViewModel(),
 ) {
-    val cocktail: CocktailPo? by rememberFlowWithLifecycle(viewModel.cocktail).collectAsState(
-        initial = null
-    )
+    val uiState by rememberFlowWithLifecycle(viewModel.uiState)
+        .collectAsState(initial = RecipeUiState())
 
     Recipe(
-        cocktail = cocktail,
+        cocktail = uiState.cocktail,
+        isFollowed = uiState.isFollowed,
         onToggleFollowed = { viewModel.toggleFollow() }
     )
 }
@@ -55,6 +55,7 @@ fun Recipe(
 @Composable
 private fun Recipe(
     cocktail: CocktailPo?,
+    isFollowed: Boolean,
     onToggleFollowed: () -> Unit,
 ) {
     if (cocktail == null) {
@@ -66,7 +67,7 @@ private fun Recipe(
     Scaffold(
         floatingActionButton = {
             ToggleFollowFloatingActionButton(
-                isFollowed = false,
+                isFollowed = isFollowed,
                 onClick = onToggleFollowed
             )
         }
@@ -254,6 +255,7 @@ fun PreviewRecipe() {
                 "Don't have crushed ice? Originally, Cuban bartenders mixed the drink using cubed ice, including mint stalks as well as leaves - try this for an equally tasty yet more rustic feel.",
             )
         ),
+        isFollowed = false,
         onToggleFollowed = {}
     )
 }

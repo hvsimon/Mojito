@@ -6,7 +6,7 @@ import androidx.lifecycle.viewModelScope
 import androidx.paging.cachedIn
 import androidx.paging.insertSeparators
 import androidx.paging.map
-import com.kiwi.data.repositories.KiwiRepository
+import com.kiwi.data.repositories.FollowedRecipesRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 import kotlinx.coroutines.flow.map
@@ -14,15 +14,15 @@ import kotlinx.coroutines.flow.map
 @HiltViewModel
 class CollectionViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
-    kiwiRepository: KiwiRepository,
+    followedRecipesRepository: FollowedRecipesRepository,
 ) : ViewModel() {
 
-    val pagedList = kiwiRepository.getFavoritePagingData()
+    val pagedList = followedRecipesRepository.getFollowedPagingData()
         .map { pagingData ->
             pagingData
                 .map {
-                    UiModel.FavoriteModel(
-                        favorite = it.favorite,
+                    UiModel.FollowedModel(
+                        followedRecipe = it.followedRecipe,
                         cocktail = it.cocktail,
                     )
                 }
@@ -32,12 +32,12 @@ class CollectionViewModel @Inject constructor(
                     }
 
                     if (before == null && after != null) {
-                        return@insertSeparators UiModel.HeaderModel(after.favorite.catalogName)
+                        return@insertSeparators UiModel.HeaderModel(after.followedRecipe.catalogName)
                     }
 
                     if (before != null && after != null) {
-                        if (before.favorite.catalogName != after.favorite.catalogName) {
-                            return@insertSeparators UiModel.HeaderModel(after.favorite.catalogName)
+                        if (before.followedRecipe.catalogName != after.followedRecipe.catalogName) {
+                            return@insertSeparators UiModel.HeaderModel(after.followedRecipe.catalogName)
                         }
                     }
 

@@ -1,7 +1,5 @@
 package com.kiwi.data.repositories
 
-import androidx.paging.Pager
-import androidx.paging.PagingConfig
 import com.kiwi.data.api.CocktailApi
 import com.kiwi.data.db.CocktailDao
 import com.kiwi.data.di.IoDispatcher
@@ -15,7 +13,7 @@ import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext
 
 @Reusable
-class KiwiRepository @Inject constructor(
+class CocktailRepository @Inject constructor(
     private val cocktailDao: CocktailDao,
     private val cocktailApi: CocktailApi,
     @IoDispatcher private val ioDispatcher: CoroutineDispatcher,
@@ -73,16 +71,6 @@ class KiwiRepository @Inject constructor(
             ),
         )
     }
-
-    fun getFavoritePagingData() = Pager(
-        config = PagingConfig(pageSize = 50),
-    ) {
-        cocktailDao.getFavoritePagingData()
-    }.flow
-
-//    suspend fun foo() = withContext(ioDispatcher) {
-//        cocktailDao.getFavoritePagingData()
-//    }
 }
 
 private val cocktailNames = listOf(

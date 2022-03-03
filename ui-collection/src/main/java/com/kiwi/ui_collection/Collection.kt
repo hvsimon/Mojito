@@ -84,7 +84,7 @@ private fun Collection(
 private fun LazyListScope.collectionTitle() {
     item {
         Text(
-            text = stringResource(R.string.favorite_title),
+            text = stringResource(R.string.follow_title),
             style = MaterialTheme.typography.displayLarge,
             modifier = Modifier.padding(16.dp)
         )
@@ -104,7 +104,7 @@ private fun LazyListScope.collectionList(
                     SectionHeader(catalogName)
                 }
             }
-            is UiModel.FavoriteModel -> {
+            is UiModel.FollowedModel -> {
                 val cocktail = uiModel.cocktail
                 item {
                     CollectionItem(
@@ -177,7 +177,7 @@ private fun Empty(modifier: Modifier = Modifier) {
         )
         Text(
             textAlign = TextAlign.Center,
-            text = stringResource(R.string.favorite_empty_message),
+            text = stringResource(R.string.follow_empty_message),
             modifier = Modifier
                 .padding(horizontal = 16.dp)
                 .padding(bottom = 8.dp)

@@ -2,12 +2,22 @@ package com.kiwi.data.db
 
 import androidx.room.TypeConverter
 import com.kiwi.data.entities.Ingredient
+import java.time.OffsetDateTime
+import java.time.format.DateTimeFormatter
 import kotlinx.serialization.builtins.ListSerializer
 import kotlinx.serialization.builtins.SetSerializer
 import kotlinx.serialization.builtins.serializer
 import kotlinx.serialization.json.Json
 
 object KiwiTypeConverters {
+
+    private val formatter = DateTimeFormatter.ISO_OFFSET_DATE_TIME
+
+    @TypeConverter
+    fun toOffsetDateTime(value: String?) = value?.let { formatter.parse(value, OffsetDateTime::from) }
+
+    @TypeConverter
+    fun fromOffsetDateTime(date: OffsetDateTime?): String? = date?.format(formatter)
 
     @TypeConverter
     fun fromStringList(value: List<String>): String {

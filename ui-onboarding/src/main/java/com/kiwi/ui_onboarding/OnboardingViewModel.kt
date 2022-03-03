@@ -3,7 +3,7 @@ package com.kiwi.ui_onboarding
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.kiwi.data.repositories.KiwiRepository
+import com.kiwi.data.repositories.CocktailRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -15,7 +15,7 @@ import kotlinx.coroutines.launch
 @HiltViewModel
 class OnboardingViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
-    private val kiwiRepository: KiwiRepository,
+    private val cocktailRepository: CocktailRepository,
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(OnboardingUiState())
@@ -25,7 +25,7 @@ class OnboardingViewModel @Inject constructor(
         randomCocktail()
 
         viewModelScope.launch {
-            val list = kiwiRepository.getBaseWines()
+            val list = cocktailRepository.getBaseWines()
             _uiState.update {
                 it.copy(baseWines = list)
             }
@@ -34,7 +34,7 @@ class OnboardingViewModel @Inject constructor(
 
     fun randomCocktail() {
         viewModelScope.launch {
-            val cocktail = kiwiRepository.randomCocktail()
+            val cocktail = cocktailRepository.randomCocktail()
             _uiState.update {
                 it.copy(coverCocktail = cocktail)
             }

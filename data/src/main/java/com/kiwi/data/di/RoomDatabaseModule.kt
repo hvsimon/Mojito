@@ -30,4 +30,8 @@ object RoomDatabaseModule {
 
     @Provides
     fun provideCocktailDao(db: KiwiDatabase) = db.cocktailDao()
+
+
+    @Provides
+    fun provideFollowedCocktailDao(db: KiwiDatabase) = db.followedCocktailDao()
 }
