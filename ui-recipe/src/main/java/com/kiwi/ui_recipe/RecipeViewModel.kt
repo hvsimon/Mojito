@@ -9,6 +9,7 @@ import javax.inject.Inject
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.launch
 
 @HiltViewModel
 class RecipeViewModel @Inject constructor(
@@ -24,4 +25,10 @@ class RecipeViewModel @Inject constructor(
             started = SharingStarted.WhileSubscribed(5000),
             initialValue = null,
         )
+
+    fun toggleFollow() {
+        viewModelScope.launch {
+            // TODO:
+        }
+    }
 }

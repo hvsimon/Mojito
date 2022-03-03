@@ -11,8 +11,15 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Favorite
+import androidx.compose.material.icons.filled.FavoriteBorder
 import androidx.compose.material3.Divider
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.FloatingActionButton
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -34,14 +41,21 @@ import java.util.UUID
 fun Recipe(
     viewModel: RecipeViewModel = hiltViewModel(),
 ) {
-    val cocktail: CocktailPo? by rememberFlowWithLifecycle(viewModel.cocktail).collectAsState(initial = null)
+    val cocktail: CocktailPo? by rememberFlowWithLifecycle(viewModel.cocktail).collectAsState(
+        initial = null
+    )
 
-    Recipe(cocktail)
+    Recipe(
+        cocktail = cocktail,
+        onToggleFollowed = { viewModel.toggleFollow() }
+    )
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun Recipe(
     cocktail: CocktailPo?,
+    onToggleFollowed: () -> Unit,
 ) {
     if (cocktail == null) {
         // show loading view
@@ -49,30 +63,39 @@ private fun Recipe(
     }
 
     val scrollState = rememberScrollState()
-    Column(
-        modifier = Modifier
-            .verticalScroll(scrollState)
-    ) {
-        Image(
-            painter = rememberImagePainter(
-                data = cocktail.gallery.firstOrNull(),
-                builder = {
-                    size(OriginalSize)
-                },
-            ),
-            contentDescription = null,
-            modifier = Modifier
-                .fillMaxWidth()
-                .aspectRatio(1f)
-        )
-        Column {
-            Introduction(
-                cocktailName = cocktail.name,
-                cocktailIntro = cocktail.intro
+    Scaffold(
+        floatingActionButton = {
+            ToggleFollowFloatingActionButton(
+                isFollowed = false,
+                onClick = onToggleFollowed
             )
-            Ingredient(cocktail.ingredients)
-            Step(cocktail.steps)
-            Tips(cocktail.tips)
+        }
+    ) {
+        Column(
+            modifier = Modifier
+                .verticalScroll(scrollState)
+        ) {
+            Image(
+                painter = rememberImagePainter(
+                    data = cocktail.gallery.firstOrNull(),
+                    builder = {
+                        size(OriginalSize)
+                    },
+                ),
+                contentDescription = null,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .aspectRatio(1f)
+            )
+            Column {
+                Introduction(
+                    cocktailName = cocktail.name,
+                    cocktailIntro = cocktail.intro
+                )
+                Ingredient(cocktail.ingredients)
+                Step(cocktail.steps)
+                Tips(cocktail.tips)
+            }
         }
     }
 }
@@ -166,6 +189,26 @@ private fun Tips(
     }
 }
 
+@Composable
+private fun ToggleFollowFloatingActionButton(
+    isFollowed: Boolean,
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier,
+) {
+    FloatingActionButton(
+        onClick = onClick,
+        modifier = modifier
+    ) {
+        Icon(
+            imageVector = when {
+                isFollowed -> Icons.Default.Favorite
+                else -> Icons.Default.FavoriteBorder
+            },
+            contentDescription = null,
+        )
+    }
+}
+
 @Preview
 @Composable
 fun PreviewRecipe() {
@@ -210,6 +253,16 @@ fun PreviewRecipe() {
                 "If you're out of Sugar syrup, you can use half a teaspoon of fine caster Sugar instead. If using Sugar, you might like to add the White Rum & stir to dissolve the Sugar before adding the crushed Ice.",
                 "Don't have crushed ice? Originally, Cuban bartenders mixed the drink using cubed ice, including mint stalks as well as leaves - try this for an equally tasty yet more rustic feel.",
             )
-        )
+        ),
+        onToggleFollowed = {}
+    )
+}
+
+@Preview
+@Composable
+private fun PreviewFollowFAB() {
+    ToggleFollowFloatingActionButton(
+        isFollowed = false,
+        onClick = {},
     )
 }
