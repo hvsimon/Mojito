@@ -1,5 +1,7 @@
 package com.kiwi.data.api
 
+import com.kiwi.data.entities.CategoryDto
+import com.kiwi.data.entities.CocktailIngredientDto
 import com.kiwi.data.entities.CocktailResponse
 import com.kiwi.data.entities.FullDrinkDto
 import com.kiwi.data.entities.SimpleDrinkDto
@@ -14,6 +16,12 @@ interface CocktailApi {
     suspend fun randomCocktail(): CocktailResponse<FullDrinkDto>
 
     @Headers("Accept-Encoding: identity")
+    @GET("search.php")
+    suspend fun searchCocktailByName(
+        @Query("s") cocktailName: String,
+    ): CocktailResponse<FullDrinkDto>
+
+    @Headers("Accept-Encoding: identity")
     @GET("filter.php")
     suspend fun searchByIngredient(
         @Query("i") ingredientName: String
@@ -24,4 +32,12 @@ interface CocktailApi {
     suspend fun lookupFullCocktailDetailsById(
         @Query("i") id: String
     ): CocktailResponse<FullDrinkDto>
+
+    @Headers("Accept-Encoding: identity")
+    @GET("list.php?c=list")
+    suspend fun listCategories(): CocktailResponse<CategoryDto>
+
+    @Headers("Accept-Encoding: identity")
+    @GET("list.php?i=list")
+    suspend fun listIngredients(): CocktailResponse<CocktailIngredientDto>
 }

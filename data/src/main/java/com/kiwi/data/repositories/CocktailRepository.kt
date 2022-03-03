@@ -24,6 +24,11 @@ class CocktailRepository @Inject constructor(
         cocktailApi.randomCocktail().drinks.first().toCocktailPo()
     }
 
+    suspend fun searchCocktailByName(cocktailName: String): List<CocktailPo> =
+        withContext(ioDispatcher) {
+            cocktailApi.searchCocktailByName(cocktailName).drinks.map { it.toCocktailPo() }
+        }
+
     suspend fun searchByIngredient(ingredientName: String): List<CocktailPo> =
         withContext(ioDispatcher) {
             cocktailApi.searchByIngredient(ingredientName).drinks.map { it.toCocktailPo() }
@@ -70,6 +75,14 @@ class CocktailRepository @Inject constructor(
                     "xMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=986&q=80",
             ),
         )
+    }
+
+    suspend fun listCategories() = withContext(ioDispatcher) {
+        cocktailApi.listCategories().drinks.map { it.categoryName }
+    }
+
+    suspend fun listIngredients() = withContext(ioDispatcher) {
+        cocktailApi.listIngredients().drinks.map { it.ingredientName }
     }
 }
 
