@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.material3.Button
@@ -29,7 +30,6 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
-import androidx.paging.compose.items
 import coil.compose.rememberImagePainter
 import coil.size.Precision
 import coil.transform.RoundedCornersTransformation
@@ -69,7 +69,9 @@ private fun Collection(
             verticalArrangement = Arrangement.spacedBy(8.dp),
             modifier = Modifier.statusBarsPadding()
         ) {
-            collectionTitle()
+            item {
+                CollectionTitle()
+            }
 
             if (!isEmpty) {
                 collectionList(
@@ -84,14 +86,16 @@ private fun Collection(
     }
 }
 
-private fun LazyListScope.collectionTitle() {
-    item {
-        Text(
-            text = stringResource(R.string.follow_title),
-            style = MaterialTheme.typography.displayLarge,
-            modifier = Modifier.padding(16.dp)
-        )
-    }
+@Composable
+private fun CollectionTitle() {
+    Text(
+        text = stringResource(R.string.follow_title),
+        style = MaterialTheme.typography.displayLarge,
+        modifier = Modifier
+            .fillMaxWidth()
+            .wrapContentHeight()
+            .padding(16.dp)
+    )
 }
 
 @OptIn(ExperimentalFoundationApi::class)
@@ -119,10 +123,6 @@ private fun LazyListScope.collectionList(
             null -> {}
         }
     }
-
-    items(list) {
-
-    }
 }
 
 @Composable
@@ -132,7 +132,8 @@ private fun SectionHeader(sectionName: String) {
         Modifier
             .background(color = MaterialTheme.colorScheme.surfaceVariant)
             .padding(16.dp)
-            .fillMaxSize()
+            .fillMaxWidth()
+            .wrapContentHeight()
     )
 }
 
@@ -202,6 +203,18 @@ private fun Empty(modifier: Modifier = Modifier) {
             Text(text = stringResource(R.string.browse_cocktails))
         }
     }
+}
+
+@Preview
+@Composable
+fun PreviewCollectionTitle() {
+    CollectionTitle()
+}
+
+@Preview
+@Composable
+private fun PreviewSectionHeader() {
+    SectionHeader(sectionName = "Section Name")
 }
 
 @Preview
