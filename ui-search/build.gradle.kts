@@ -49,6 +49,7 @@ dependencies {
     // Google
     implementation(libs.material)
     implementation(libs.bundles.accompanist)
+    implementation(libs.accompanist.flowlayout)
 
     implementation(libs.androidx.hilt.compose)
     implementation(libs.hilt.library)
