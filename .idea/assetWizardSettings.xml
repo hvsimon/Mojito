@@ -28,8 +28,9 @@
                         </option>
                         <option name="values">
                           <map>
-                            <entry key="outputName" value="ic_person_outline" />
-                            <entry key="sourceFile" value="C:\Users\Simon\AndroidStudioProjects\KiwisBar" />
+                            <entry key="assetSourceType" value="FILE" />
+                            <entry key="outputName" value="ic_tenerife_dog" />
+                            <entry key="sourceFile" value="C:\Users\Simon\Downloads\圖畫-1.svg" />
                           </map>
                         </option>
                       </PersistentState>

@@ -91,8 +91,23 @@ private fun Onboarding(
                 onCardClick = openCocktailList,
             )
         }
-    }
 
+        item {
+            WineCard(
+                imageData = R.drawable.ic_glass_poring,
+                wineName = "戴眼鏡的波利",
+                onCardClick = {},
+            )
+        }
+
+        item {
+            WineCard(
+                imageData = R.drawable.ic_tenerife_dog,
+                wineName = "狗勾",
+                onCardClick = {},
+            )
+        }
+    }
 }
 
 // TODO: redesign header due to the drink's image is always square (700x700)
@@ -191,12 +206,7 @@ private fun WineCard(
     ) {
         Box {
             Image(
-                painter = rememberImagePainter(
-                    data = imageData,
-                    builder = {
-                        size(OriginalSize)
-                    },
-                ),
+                painter = rememberImagePainter(data = imageData),
                 contentScale = ContentScale.Crop,
                 contentDescription = null,
                 modifier = Modifier.fillMaxWidth(),
