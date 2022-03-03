@@ -47,6 +47,7 @@ import com.kiwi.data.entities.CocktailPo
 @Composable
 fun Onboarding(
     viewModel: OnboardingViewModel = hiltViewModel(),
+    openSearch: () -> Unit,
     openRecipe: (cocktailId: String) -> Unit,
     openCocktailList: (String) -> Unit,
 ) {
@@ -54,6 +55,7 @@ fun Onboarding(
 
     Onboarding(
         uiState = uiState,
+        openSearch = openSearch,
         openRecipe = { viewModel.randomCocktail() },
         openCocktailList = openCocktailList,
     )
@@ -63,6 +65,7 @@ fun Onboarding(
 @Composable
 private fun Onboarding(
     uiState: OnboardingUiState,
+    openSearch: () -> Unit,
     openRecipe: (cocktailId: String) -> Unit,
     openCocktailList: (String) -> Unit,
 ) {
@@ -72,6 +75,7 @@ private fun Onboarding(
         item(span = { GridItemSpan(2) }) {
             Header(
                 cocktail = uiState.coverCocktail,
+                onSearchClick = openSearch,
                 onRandomClick = openRecipe,
                 modifier = Modifier.aspectRatio(0.75f)
             )
@@ -114,6 +118,7 @@ private fun Onboarding(
 @Composable
 private fun Header(
     cocktail: CocktailPo?,
+    onSearchClick: () -> Unit,
     onRandomClick: (cocktailId: String) -> Unit,
     modifier: Modifier = Modifier
 ) {
@@ -132,6 +137,7 @@ private fun Header(
                 .fillMaxSize()
         )
         SearchBar(
+            onSearchClick = onSearchClick,
             modifier = Modifier
                 .align(Alignment.TopCenter)
                 .padding(top = 16.dp)
@@ -177,10 +183,11 @@ private fun Header(
 
 @Composable
 private fun SearchBar(
+    onSearchClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     ElevatedButton(
-        onClick = { },
+        onClick = onSearchClick,
         modifier = modifier
             .fillMaxWidth()
             .padding(horizontal = 16.dp),
@@ -253,6 +260,7 @@ private fun PreviewOnboarding() {
                 ),
             )
         ),
+        openSearch = {},
         openRecipe = {},
         openCocktailList = {}
     )

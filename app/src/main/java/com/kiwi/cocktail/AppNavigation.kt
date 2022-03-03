@@ -13,6 +13,7 @@ import com.kiwi.ui_cocktail_list.CocktailList
 import com.kiwi.ui_collection.Collection
 import com.kiwi.ui_onboarding.Onboarding
 import com.kiwi.ui_recipe.Recipe
+import com.kiwi.ui_search.Search
 
 internal sealed class Screen(
     val route: String,
@@ -42,6 +43,11 @@ internal sealed class Screen(
         "cocktail_list/{ingredient}",
         R.string.cocktail_list_title,
     )
+
+    object Search : Screen(
+        "search",
+        R.string.search,
+    )
 }
 
 @Composable
@@ -56,6 +62,9 @@ internal fun AppNavigation(
     ) {
         composable(Screen.Onboarding.route) {
             Onboarding(
+                openSearch = {
+                    navController.navigate("search")
+                },
                 openRecipe = { cocktailId ->
                     navController.navigate("recipe/$cocktailId")
                 },
@@ -91,6 +100,10 @@ internal fun AppNavigation(
                     navController.navigate("recipe/$cocktailId")
                 },
             )
+        }
+
+        composable(Screen.Search.route) {
+            Search()
         }
     }
 }
