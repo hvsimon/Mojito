@@ -19,4 +19,5 @@ include(
     ":ui-recipe",
     ":ui-collection",
     ":ui-cocktail-list",
+    ":ui-search"
 )

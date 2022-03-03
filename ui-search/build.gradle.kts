@@ -1,5 +1,5 @@
 plugins {
-    id("com.android.application")
+    id("com.android.library")
     id("kotlin-android")
     id("kotlin-kapt")
     id("dagger.hilt.android.plugin")
@@ -9,25 +9,7 @@ android {
     compileSdk = libs.versions.compileSdk.get().toInt()
 
     defaultConfig {
-        applicationId = "com.kiwi.cocktail"
         minSdk = libs.versions.minSdk.get().toInt()
-        targetSdk = libs.versions.targetSdk.get().toInt()
-        versionCode = 1
-        versionName = "1.0"
-
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-    }
-
-    buildTypes {
-        getByName("debug") {
-        }
-        getByName("release") {
-            isMinifyEnabled = true
-            proguardFiles(
-                getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro"
-            )
-        }
     }
 
     compileOptions {
@@ -52,11 +34,6 @@ dependencies {
     implementation(project(":data"))
     implementation(project(":common-ui-resources"))
     implementation(project(":common-ui-compose"))
-    implementation(project(":ui-onboarding"))
-    implementation(project(":ui-collection"))
-    implementation(project(":ui-recipe"))
-    implementation(project(":ui-cocktail-list"))
-    implementation(project(":ui-search"))
 
     // Jetbrains
 
@@ -68,9 +45,6 @@ dependencies {
 
     // Compose
     implementation(libs.bundles.compose)
-    // TODO: 2021/12/23 choose one?
-    implementation("androidx.compose.material:material:1.1.0-rc01")
-    implementation("androidx.compose.material3:material3:1.0.0-alpha02")
 
     // Google
     implementation(libs.material)
