@@ -1,10 +1,12 @@
 package com.kiwi.ui_collection
 
 import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -16,7 +18,6 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.scale
@@ -29,6 +30,9 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
 import androidx.paging.compose.items
+import coil.compose.rememberImagePainter
+import coil.size.Precision
+import coil.transform.RoundedCornersTransformation
 import com.airbnb.lottie.compose.LottieAnimation
 import com.airbnb.lottie.compose.LottieCompositionSpec
 import com.airbnb.lottie.compose.LottieConstants
@@ -62,8 +66,8 @@ private fun Collection(
 ) {
     Column(Modifier.fillMaxSize()) {
         LazyColumn(
-            modifier = Modifier
-                .statusBarsPadding()
+            verticalArrangement = Arrangement.spacedBy(8.dp),
+            modifier = Modifier.statusBarsPadding()
         ) {
             collectionTitle()
 
@@ -78,7 +82,6 @@ private fun Collection(
             Empty(modifier = Modifier.weight(1f))
         }
     }
-
 }
 
 private fun LazyListScope.collectionTitle() {
@@ -138,24 +141,37 @@ private fun CollectionItem(
     cocktail: CocktailPo,
     onClick: () -> Unit,
 ) {
-
-    val ingredients = rememberSaveable {
-        cocktail.ingredients.joinToString(prefix = "(", postfix = ")") { it.name }
-    }
-    Column(
-        verticalArrangement = Arrangement.Center,
+    Row(
+        horizontalArrangement = Arrangement.spacedBy(8.dp),
+        verticalAlignment = Alignment.CenterVertically,
         modifier = Modifier
-            .fillMaxSize()
+            .fillMaxWidth()
+            .padding(horizontal = 8.dp)
             .clickable(onClick = onClick)
-            .padding(horizontal = 16.dp, vertical = 8.dp)
     ) {
-        Text(
-            text = cocktail.name,
-            style = MaterialTheme.typography.titleLarge
+        Image(
+            painter = rememberImagePainter(
+                data = cocktail.gallery.firstOrNull(),
+                builder = {
+                    crossfade(true)
+                    transformations(RoundedCornersTransformation(radius = 16.dp.value))
+                    placeholder(R.drawable.ic_cat)
+                    precision(Precision.EXACT)
+                },
+            ),
+            contentScale = ContentScale.Crop,
+            contentDescription = null,
+            modifier = Modifier.size(56.dp)
         )
-        Text(
-            text = ingredients
-        )
+        Column(modifier = Modifier.fillMaxWidth()) {
+            Text(
+                text = cocktail.name,
+                style = MaterialTheme.typography.titleLarge
+            )
+            Text(
+                text = cocktail.ingredients.joinToString(prefix = "(", postfix = ")") { it.name }
+            )
+        }
     }
 }
 
@@ -205,18 +221,6 @@ private fun PreviewCollectionItem() {
                 Ingredient(
                     name = "\uD83E\uDDC2 糖漿",
                     amount = "0.5 shot"
-                ),
-                Ingredient(
-                    name = "\uD83C\uDF4B 萊姆片",
-                    amount = "4"
-                ),
-                Ingredient(
-                    name = "\uD83C\uDF3F 新鮮薄荷",
-                    amount = "12 leaves"
-                ),
-                Ingredient(
-                    name = "\uD83E\uDD64 蘇打水",
-                    amount = "fill to top"
                 ),
             ),
             steps = listOf(
