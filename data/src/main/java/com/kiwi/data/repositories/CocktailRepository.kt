@@ -4,6 +4,7 @@ import com.kiwi.data.api.CocktailApi
 import com.kiwi.data.db.CocktailDao
 import com.kiwi.data.di.IoDispatcher
 import com.kiwi.data.entities.BaseWine
+import com.kiwi.data.entities.Category
 import com.kiwi.data.entities.CocktailPo
 import com.kiwi.data.mapper.toCocktailPo
 import dagger.Reusable
@@ -72,6 +73,23 @@ class CocktailRepository @Inject constructor(
                 id = "brandy",
                 imageUrl = "https://images.unsplash.com/photo-1619451050621-83cb7aada2d7?ixlib=rb-1.2.1&ixid=Mnw" +
                     "xMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=986&q=80",
+            ),
+        )
+    }
+
+    suspend fun getCategories(): List<Category> = withContext(ioDispatcher) {
+        listOf(
+            Category(
+                name = "The Unforgettables",
+                imageUrl = "https://images.unsplash.com/photo-1574056067299-a11c5b576e69?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2148&q=80",
+            ),
+            Category(
+                name = "Contemporary Classics",
+                imageUrl = "https://images.unsplash.com/photo-1597290282695-edc43d0e7129?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2375&q=80",
+            ),
+            Category(
+                name = "New Era Drinks",
+                imageUrl = "https://images.unsplash.com/photo-1553484604-9f524520c793?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2378&q=80",
             ),
         )
     }

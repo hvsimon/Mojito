@@ -96,6 +96,25 @@ private fun Onboarding(
             )
         }
 
+        item(span = { GridItemSpan(2) }) {
+            Text(
+                text = stringResource(id = R.string.iba_official_cocktail_list),
+                style = MaterialTheme.typography.displaySmall,
+                modifier = Modifier.padding(16.dp)
+            )
+        }
+
+        items(
+            items = uiState.categories,
+            spans = { GridItemSpan(2) },
+        ) {
+            CategoryCard(
+                imageData = it.imageUrl,
+                categoryName = it.name,
+                onCardClick = { /* TODO */},
+            )
+        }
+
         item {
             WineCard(
                 imageData = R.drawable.ic_glass_poring,
@@ -233,6 +252,44 @@ private fun WineCard(
         }
     }
 }
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+private fun CategoryCard(
+    imageData: Any,
+    categoryName: String,
+    onCardClick: (String) -> Unit,
+    modifier: Modifier = Modifier
+) {
+    Card(
+        modifier = modifier
+            .padding(4.dp)
+            .aspectRatio(2f)
+            .clickable { onCardClick.invoke(categoryName) },
+    ) {
+        Box {
+            Image(
+                painter = rememberImagePainter(data = imageData),
+                contentScale = ContentScale.Crop,
+                contentDescription = null,
+                modifier = Modifier.fillMaxWidth(),
+            )
+            Box(
+                contentAlignment = Alignment.Center,
+                modifier = Modifier
+                    .fillMaxSize()
+                    .background(color = Color.Black.copy(alpha = 0.5f))
+            ) {
+                Text(
+                    text = categoryName,
+                    color = Color.White,
+                    style = MaterialTheme.typography.titleLarge,
+                )
+            }
+        }
+    }
+}
+
 
 @Preview
 @Composable

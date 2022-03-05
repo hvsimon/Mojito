@@ -30,6 +30,13 @@ class OnboardingViewModel @Inject constructor(
                 it.copy(baseWines = list)
             }
         }
+
+        viewModelScope.launch {
+            val list = cocktailRepository.getCategories()
+            _uiState.update {
+                it.copy(categories = list)
+            }
+        }
     }
 
     fun randomCocktail() {

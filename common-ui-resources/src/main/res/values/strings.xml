@@ -12,6 +12,11 @@
     <string name="whiskey">威士忌</string>
     <string name="brandy">白蘭地</string>
 
+    <string name="iba_official_cocktail_list">IBA Official Cocktail list</string>
+    <string name="the_unforgettables">The Unforgettables</string>
+    <string name="contemporary_classics">Contemporary Classics</string>
+    <string name="new_era_drinks">New Era Drinks</string>
+
     <!--  Recipe  -->
     <string name="ingredients">原料</string>
     <string name="step">How to Make</string>
