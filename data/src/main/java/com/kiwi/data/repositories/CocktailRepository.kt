@@ -7,7 +7,6 @@ import com.kiwi.data.entities.BaseWine
 import com.kiwi.data.entities.CocktailPo
 import com.kiwi.data.mapper.toCocktailPo
 import dagger.Reusable
-import java.util.UUID
 import javax.inject.Inject
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext
@@ -85,29 +84,3 @@ class CocktailRepository @Inject constructor(
         cocktailApi.listIngredients().drinks.map { it.ingredientName }
     }
 }
-
-private val cocktailNames = listOf(
-    "Alexander",
-    "Daiquiri",
-    "Negroni",
-    "Screwdriver",
-    "Americano",
-    "Derby",
-    "Old Fashioned",
-)
-
-private val categories =
-    listOf("Unforgettable Cocktails", "Contemporary Classic Cocktails", "New Era Cocktails")
-
-private val cocktails = cocktailNames.map {
-    CocktailPo(
-        cocktailId = UUID.randomUUID().toString(),
-        name = it,
-        intro = "",
-        gallery = emptyList(),
-        ingredients = emptyList(),
-        steps = emptyList(),
-        tips = emptySet(),
-    )
-}
-
