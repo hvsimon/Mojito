@@ -57,7 +57,9 @@ fun CocktailList(
                 scrollBehavior = scrollBehavior,
             )
         },
-        modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection)
+        modifier = Modifier
+            .statusBarsPadding()
+            .nestedScroll(scrollBehavior.nestedScrollConnection)
     ) {
         CocktailList(
             list = cocktails,
@@ -85,7 +87,7 @@ private fun CocktailListAppBar(
             }
         },
         scrollBehavior = scrollBehavior,
-        modifier = modifier.statusBarsPadding(),
+        modifier = modifier,
     )
 }
 

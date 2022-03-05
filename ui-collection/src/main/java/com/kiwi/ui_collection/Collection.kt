@@ -65,10 +65,13 @@ private fun Collection(
     isEmpty: Boolean,
     openRecipe: (cocktailId: String) -> Unit,
 ) {
-    Column(Modifier.fillMaxSize()) {
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .statusBarsPadding()
+    ) {
         LazyColumn(
             verticalArrangement = Arrangement.spacedBy(8.dp),
-            modifier = Modifier.statusBarsPadding()
         ) {
             item {
                 CollectionTitle()
