@@ -5,5 +5,6 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class CocktailResponse<T>(
-    @SerialName("drinks") val drinks: List<T>,
+    @SerialName("drinks") val drinks: List<T> = emptyList(),
+    @SerialName("ingredients") val ingredients: List<T> = emptyList(),
 )

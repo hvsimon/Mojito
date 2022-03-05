@@ -4,6 +4,7 @@ import com.kiwi.data.entities.CategoryDto
 import com.kiwi.data.entities.CocktailIngredientDto
 import com.kiwi.data.entities.CocktailResponse
 import com.kiwi.data.entities.FullDrinkDto
+import com.kiwi.data.entities.FullIngredientDto
 import com.kiwi.data.entities.SimpleDrinkDto
 import retrofit2.http.GET
 import retrofit2.http.Headers
@@ -20,6 +21,12 @@ interface CocktailApi {
     suspend fun searchCocktailByName(
         @Query("s") cocktailName: String,
     ): CocktailResponse<FullDrinkDto>
+
+    @Headers("Accept-Encoding: identity")
+    @GET("search.php")
+    suspend fun searchIngredientByName(
+        @Query("i") ingredientName: String,
+    ): CocktailResponse<FullIngredientDto>
 
     @Headers("Accept-Encoding: identity")
     @GET("filter.php")

@@ -6,6 +6,7 @@ import com.kiwi.data.di.IoDispatcher
 import com.kiwi.data.entities.BaseWine
 import com.kiwi.data.entities.Category
 import com.kiwi.data.entities.CocktailPo
+import com.kiwi.data.entities.FullIngredientDto
 import com.kiwi.data.mapper.toCocktailPo
 import dagger.Reusable
 import javax.inject.Inject
@@ -27,6 +28,11 @@ class CocktailRepository @Inject constructor(
     suspend fun searchCocktailByName(cocktailName: String): List<CocktailPo> =
         withContext(ioDispatcher) {
             cocktailApi.searchCocktailByName(cocktailName).drinks.map { it.toCocktailPo() }
+        }
+
+    suspend fun searchIngredientByName(ingredientName: String): FullIngredientDto =
+        withContext(ioDispatcher) {
+            cocktailApi.searchIngredientByName(ingredientName).ingredients.first()
         }
 
     suspend fun searchByIngredient(ingredientName: String): List<CocktailPo> =
