@@ -1,0 +1,130 @@
+[
+  {
+    "group_name": "Rum",
+    "group_image_url": "https://images.unsplash.com/photo-1614313511387-1436a4480ebb?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1760&q=80",
+    "base_wine_list": [
+      {
+        "id": "179",
+        "name": "Dark Rum"
+      },
+      {
+        "id": "3",
+        "name": "Rum"
+      },
+      {
+        "id": "305",
+        "name": "Light Rum"
+      },
+      {
+        "id": "37",
+        "name": "Añejo Rum"
+      },
+      {
+        "id": "464",
+        "name": "Spiced rum"
+      }
+    ]
+  },
+  {
+    "group_name": "Gin",
+    "group_image_url": "https://images.unsplash.com/photo-1608885898957-a559228e8749?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=987&q=80",
+    "base_wine_list": [
+      {
+        "id": "2",
+        "name": "Gin"
+      }
+    ]
+  },
+  {
+    "group_name": "Vodka",
+    "group_image_url": "https://images.unsplash.com/photo-1550985543-f47f38aeee65?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1335&q=80",
+    "base_wine_list": [
+      {
+        "id": "1",
+        "name": "Vodka"
+      },
+      {
+        "id": "380",
+        "name": "Peach Vodka"
+      },
+      {
+        "id": "574",
+        "name": "Absolut citron"
+      }
+    ]
+  },
+  {
+    "group_name": "Tequila",
+    "group_image_url": "https://images.unsplash.com/photo-1516535794938-6063878f08cc?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=988&q=80",
+    "base_wine_list": [
+      {
+        "id": "4",
+        "name": "Tequila"
+      }
+    ]
+  },
+  {
+    "group_name": "Whiskey",
+    "group_image_url": "https://images.unsplash.com/photo-1527281400683-1aae777175f8?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=987&q=80",
+    "base_wine_list": [
+      {
+        "id": "273",
+        "name": "Irish Whiskey"
+      },
+      {
+        "id": "280",
+        "name": "Johnnie Walker"
+      },
+      {
+        "id": "66",
+        "name": "Blended Whiskey"
+      },
+      {
+        "id": "71",
+        "name": "Bourbon"
+      },
+      {
+        "id": "600",
+        "name": "Whiskey"
+      }
+    ]
+  },
+  {
+    "group_name": "Brandy",
+    "group_image_url": "https://images.unsplash.com/photo-1619451050621-83cb7aada2d7?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=986&q=80",
+    "base_wine_list": [
+      {
+        "id": "137",
+        "name": "Coffee Brandy"
+      },
+      {
+        "id": "141",
+        "name": "Cognac"
+      },
+      {
+        "id": "26",
+        "name": "Apple Brandy"
+      },
+      {
+        "id": "32",
+        "name": "Apricot Brandy"
+      },
+      {
+        "id": "400",
+        "name": "Pisco"
+      },
+      {
+        "id": "61",
+        "name": "Blackberry Brandy"
+      },
+      {
+        "id": "74",
+        "name": "Brandy"
+      },
+      {
+        "id": "100",
+        "name": "Cherry brandy"
+      }
+    ]
+  }
+]

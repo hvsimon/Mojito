@@ -41,7 +41,6 @@ import coil.compose.rememberImagePainter
 import coil.size.OriginalSize
 import com.google.accompanist.insets.statusBarsPadding
 import com.kiwi.common_ui_compose.rememberFlowWithLifecycle
-import com.kiwi.data.entities.BaseWine
 import com.kiwi.data.entities.CocktailPo
 
 @Composable
@@ -88,10 +87,10 @@ private fun Onboarding(
             )
         }
 
-        items(uiState.baseWines) {
+        items(uiState.baseWineGroups) {
             WineCard(
-                imageData = it.imageUrl,
-                wineName = it.id,
+                imageData = it.groupImageUrl,
+                label = it.groupName,
                 onCardClick = openCocktailList,
             )
         }
@@ -111,14 +110,14 @@ private fun Onboarding(
             CategoryCard(
                 imageData = it.imageUrl,
                 categoryName = it.name,
-                onCardClick = { /* TODO */},
+                onCardClick = { /* TODO */ },
             )
         }
 
         item {
             WineCard(
                 imageData = R.drawable.ic_glass_poring,
-                wineName = "戴眼鏡的波利",
+                label = "戴眼鏡的波利",
                 onCardClick = {},
             )
         }
@@ -126,7 +125,7 @@ private fun Onboarding(
         item {
             WineCard(
                 imageData = R.drawable.ic_tenerife_dog,
-                wineName = "狗勾",
+                label = "狗勾",
                 onCardClick = {},
             )
         }
@@ -220,7 +219,7 @@ private fun SearchBar(
 @Composable
 private fun WineCard(
     imageData: Any,
-    wineName: String,
+    label: String,
     onCardClick: (String) -> Unit,
     modifier: Modifier = Modifier
 ) {
@@ -228,7 +227,7 @@ private fun WineCard(
         modifier = modifier
             .padding(4.dp)
             .aspectRatio(1f)
-            .clickable { onCardClick.invoke(wineName) },
+            .clickable { onCardClick.invoke(label) },
     ) {
         Box {
             Image(
@@ -244,7 +243,7 @@ private fun WineCard(
                     .background(color = Color.Black.copy(alpha = 0.5f))
             ) {
                 Text(
-                    text = wineName,
+                    text = label,
                     color = Color.White,
                     style = MaterialTheme.typography.titleLarge,
                 )
@@ -290,7 +289,6 @@ private fun CategoryCard(
     }
 }
 
-
 @Preview
 @Composable
 private fun PreviewOnboarding() {
@@ -304,18 +302,7 @@ private fun PreviewOnboarding() {
                 steps = emptyList(),
                 tips = emptySet(),
             ),
-            baseWines = listOf(
-                BaseWine(
-                    id = "rum",
-                    imageUrl = "https://images.unsplash.com/photo-1614313511387-1436a4480ebb?ixlib=rb-1.2.1&ixid=Mnw" +
-                        "xMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1760&q=80",
-                ),
-                BaseWine(
-                    id = "gin",
-                    imageUrl = "https://images.unsplash.com/photo-1608885898957-a559228e8749?ixlib=rb-1.2.1&ixid=Mnw" +
-                        "xMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=987&q=80",
-                ),
-            )
+            baseWineGroups = listOf()
         ),
         openSearch = {},
         openRecipe = {},
