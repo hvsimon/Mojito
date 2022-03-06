@@ -291,21 +291,24 @@ private fun CategoryCard(
 
 @Preview
 @Composable
-private fun PreviewOnboarding() {
-    Onboarding(
-        uiState = OnboardingUiState(
-            coverCocktail = CocktailPo(
-                name = "",
-                gallery = listOf(""),
-                intro = "",
-                ingredients = emptyList(),
-                steps = emptyList(),
-                tips = emptySet(),
-            ),
-            baseWineGroups = listOf()
-        ),
-        openSearch = {},
-        openRecipe = {},
-        openCocktailList = {}
-    )
+private fun PreviewSearchBar() {
+    SearchBar(onSearchClick = {})
+}
+
+@Preview
+@Composable
+private fun PreviewHeader() {
+    Header(cocktail = null, onSearchClick = {}, onRandomClick = {})
+}
+
+@Preview
+@Composable
+private fun PreviewWineCard() {
+    WineCard(imageData = "", label = "Rum", onCardClick = {})
+}
+
+@Preview
+@Composable
+private fun PreviewCategoryCard() {
+    CategoryCard(imageData = "", categoryName = "The Unforgettables", onCardClick = {})
 }
