@@ -2,6 +2,7 @@ package com.kiwi.ui_cocktail_list
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -9,6 +10,7 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.lazy.GridCells
 import androidx.compose.foundation.lazy.LazyVerticalGrid
 import androidx.compose.foundation.lazy.items
@@ -154,6 +156,24 @@ fun PreviewCocktailListAppBar() {
         title = "Title",
         navigateUp = { },
     )
+}
+
+@Composable
+private fun SectionHeader(sectionName: String) {
+    Text(
+        text = sectionName,
+        Modifier
+            .background(color = MaterialTheme.colorScheme.surfaceVariant)
+            .padding(16.dp)
+            .fillMaxWidth()
+            .wrapContentHeight()
+    )
+}
+
+@Preview
+@Composable
+private fun PreviewSectionHeader() {
+    SectionHeader(sectionName = "Section Name")
 }
 
 @Preview
