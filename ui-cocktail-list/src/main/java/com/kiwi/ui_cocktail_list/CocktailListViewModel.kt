@@ -6,6 +6,8 @@ import androidx.lifecycle.viewModelScope
 import com.kiwi.data.repositories.CocktailRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
+import kotlinx.coroutines.async
+import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.stateIn
@@ -16,10 +18,16 @@ class CocktailListViewModel @Inject constructor(
     cocktailRepository: CocktailRepository,
 ) : ViewModel() {
 
-    val title: String = savedStateHandle["ingredient"]!!
+    val groupName: String = savedStateHandle["ingredient"]!!
 
     val list = flow {
-        val data = cocktailRepository.searchByIngredient(title)
-        emit(data)
+        val group = cocktailRepository.getBaseWineGroups()
+            .find { it.groupName == groupName } ?: error("Not match group name")
+
+        group.baseWineList
+            .map { viewModelScope.async { cocktailRepository.searchByIngredient(it.name) } }
+            .awaitAll()
+            .flatten()
+            .run { emit(this) }
     }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), emptyList())
 }

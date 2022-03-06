@@ -55,6 +55,7 @@ class CocktailRepository @Inject constructor(
         }
 
     suspend fun getBaseWineGroups(): List<BaseWineGroup> = withContext(ioDispatcher) {
+        // TODO: Implement cache mechanism
         application.assets
             .open("base_wine.json")
             .source()

@@ -54,7 +54,7 @@ fun CocktailList(
     Scaffold(
         topBar = {
             CocktailListAppBar(
-                title = viewModel.title.uppercase(),
+                title = viewModel.groupName.uppercase(),
                 navigateUp = navigateUp,
                 scrollBehavior = scrollBehavior,
             )
