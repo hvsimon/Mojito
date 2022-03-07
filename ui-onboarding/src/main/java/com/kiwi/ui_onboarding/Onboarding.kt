@@ -105,7 +105,7 @@ private fun Onboarding(
 
         items(
             items = uiState.categories,
-            spans = { GridItemSpan(2) },
+            span = { GridItemSpan(2) },
         ) {
             CategoryCard(
                 imageData = it.imageUrl,

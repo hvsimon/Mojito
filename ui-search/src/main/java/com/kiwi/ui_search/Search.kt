@@ -1,11 +1,16 @@
 package com.kiwi.ui_search
 
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material.Chip
+import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.OutlinedTextField
 import androidx.compose.material.TextFieldDefaults
 import androidx.compose.material.icons.Icons
@@ -72,8 +77,17 @@ private fun Search(
     ) {
         Column(
             modifier = Modifier
+                .fillMaxSize()
+                .padding(horizontal = 16.dp),
+            verticalArrangement = Arrangement.spacedBy(8.dp),
         ) {
-            TagGroup(data = uiState.categories)
+            Text(
+                text = "Categories",
+            )
+            TagGroup(
+                data = uiState.categories,
+                onChipClick = onSearchQuery,
+            )
         }
     }
 }
@@ -150,19 +164,26 @@ private fun SearchBar(
     )
 }
 
+@OptIn(ExperimentalMaterialApi::class)
 @Composable
 private fun TagGroup(
     modifier: Modifier = Modifier,
     data: List<String>,
+    onChipClick: (String) -> Unit,
 ) {
     FlowRow(
-        modifier = modifier.padding(16.dp),
+        modifier = modifier.wrapContentHeight(),
         mainAxisSpacing = 8.dp,
         crossAxisSpacing = 8.dp,
     ) {
         data.forEach {
             // TODO: change to material3.chip when it released
-            Text(text = it)
+            Chip(
+                modifier = Modifier.height(32.dp),
+                onClick = { onChipClick(it) },
+            ) {
+                Text(text = it)
+            }
         }
     }
 }
@@ -179,11 +200,14 @@ private fun PreviewTopBar() {
 
 @Preview
 @Composable
-private fun PreviewCategoryGroup() {
+private fun PreviewTagGroup() {
     val repeatRange = 1..10
-    val list = listOf('a'..'z')
+    val list = listOf('a'..'g')
         .flatten()
         .map { it.toString().repeat(repeatRange.random()) }
 
-    TagGroup(data = list)
+    TagGroup(
+        data = list,
+        onChipClick = {},
+    )
 }
