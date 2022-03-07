@@ -41,7 +41,6 @@ fun About() {
             painter = rememberVectorPainter(Icons.Default.Edit),
             onItemClick = { /*TODO*/ }
         )
-        Divider()
         AboutItem(
             text = stringResource(id = R.string.licenses),
             painter = painterResource(id = R.drawable.ic_baseline_copyright_24),
@@ -69,28 +68,33 @@ fun AboutItem(
     painter: Painter,
     onItemClick: () -> Unit,
 ) {
-    Row(
-        verticalAlignment = Alignment.CenterVertically,
-        modifier = modifier
-            .clickable(onClick = onItemClick)
-            .fillMaxWidth()
-            .height(56.dp)
-            .padding(horizontal = 16.dp)
+    Column(
+        modifier = modifier.padding(horizontal = 16.dp)
     ) {
-        Icon(
-            painter = painter,
-            contentDescription = null
-        )
-        Text(
-            modifier = Modifier
-                .weight(1f)
-                .padding(horizontal = 24.dp),
-            text = text
-        )
-        Icon(
-            painter = painterResource(id = R.drawable.ic_baseline_navigate_next_24),
-            contentDescription = null
-        )
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+            modifier = modifier
+                .clickable(onClick = onItemClick)
+                .padding(horizontal = 16.dp)
+                .fillMaxWidth()
+                .height(56.dp)
+        ) {
+            Icon(
+                painter = painter,
+                contentDescription = null
+            )
+            Text(
+                modifier = Modifier
+                    .weight(1f)
+                    .padding(horizontal = 24.dp),
+                text = text
+            )
+            Icon(
+                painter = painterResource(id = R.drawable.ic_baseline_navigate_next_24),
+                contentDescription = null
+            )
+        }
+        Divider()
     }
 }
 
