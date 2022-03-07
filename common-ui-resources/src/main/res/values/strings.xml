@@ -1,5 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!--  Common  -->
+    <string name="app_name">Kiwi\'s Bar</string>
+
+    <string name="onboarding_title">Onboarding</string>
+    <string name="collection_title">Collection</string>
+    <string name="about_title">About</string>
+    <string name="recipe_title">Recipe</string>
+    <string name="cocktail_list_title">Cocktail List</string>
+    <string name="search">Search</string>
+
     <!--  OnBoarding  -->
     <string name="drink_something">想喝什麼呢 ?</string>
     <string name="flexible">隨心所欲</string>
