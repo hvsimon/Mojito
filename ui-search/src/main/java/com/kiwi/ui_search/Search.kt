@@ -17,6 +17,7 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.Chip
+import androidx.compose.material.ChipDefaults
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.OutlinedTextField
 import androidx.compose.material.TextFieldDefaults
@@ -214,6 +215,9 @@ private fun TagGroup(
             Chip(
                 modifier = Modifier.height(32.dp),
                 onClick = { onChipClick(it) },
+                colors = ChipDefaults.chipColors(
+                    backgroundColor = MaterialTheme.colorScheme.surfaceVariant
+                ),
             ) {
                 Text(text = it)
             }
