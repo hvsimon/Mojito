@@ -8,7 +8,7 @@ import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
-import com.kiwi.cocktail.ui.Watched
+import com.kiwi.ui_about.About
 import com.kiwi.ui_cocktail_list.CocktailList
 import com.kiwi.ui_collection.Collection
 import com.kiwi.ui_onboarding.Onboarding
@@ -29,9 +29,9 @@ internal sealed class Screen(
         R.string.collection_title,
     )
 
-    object Watched : Screen(
-        "watched",
-        R.string.watched_shows_title,
+    object About : Screen(
+        "about",
+        R.string.about_title,
     )
 
     object Recipe : Screen(
@@ -82,7 +82,9 @@ internal fun AppNavigation(
             )
         }
 
-        composable(Screen.Watched.route) { Watched() }
+        composable(Screen.About.route) {
+            About()
+        }
 
         composable(
             route = Screen.Recipe.route,

@@ -37,7 +37,7 @@ fun Home() {
     val mainScreen = listOf(
         Screen.Onboarding.route,
         Screen.Collection.route,
-        Screen.Watched.route,
+        Screen.About.route,
     )
     val showBottomBar = navController
         .currentBackStackEntryAsState().value?.destination?.route in mainScreen
@@ -107,7 +107,7 @@ private val HomeNavigationItems = listOf(
         selectedIconResId = R.drawable.ic_favorite_filled,
     ),
     HomeNavigationItem(
-        screen = Screen.Watched,
+        screen = Screen.About,
         iconResId = R.drawable.ic_person_outline,
         selectedIconResId = R.drawable.ic_person_filled,
     )
