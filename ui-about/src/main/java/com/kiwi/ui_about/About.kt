@@ -7,12 +7,14 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material3.Divider
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -33,6 +35,7 @@ fun About() {
             .verticalScroll(rememberScrollState())
             .fillMaxSize()
     ) {
+        Title()
         AboutItem(
             text = stringResource(id = R.string.feed_back),
             painter = rememberVectorPainter(Icons.Default.Edit),
@@ -45,6 +48,18 @@ fun About() {
             onItemClick = { /*TODO*/ }
         )
     }
+}
+
+@Composable
+private fun Title() {
+    Text(
+        text = stringResource(R.string.about_title),
+        style = MaterialTheme.typography.displayLarge,
+        modifier = Modifier
+            .fillMaxWidth()
+            .wrapContentHeight()
+            .padding(16.dp)
+    )
 }
 
 @Composable
@@ -77,6 +92,12 @@ fun AboutItem(
             contentDescription = null
         )
     }
+}
+
+@Preview
+@Composable
+private fun PreviewAbout() {
+    About()
 }
 
 @Preview
