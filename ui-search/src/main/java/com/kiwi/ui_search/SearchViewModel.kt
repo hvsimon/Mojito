@@ -30,6 +30,12 @@ class SearchViewModel @Inject constructor(
                 it.copy(ingredients = cocktailRepository.listIngredients())
             }
         }
+
+        viewModelScope.launch {
+            _uiState.update {
+                it.copy(randomCocktails = cocktailRepository.randomCocktail(10, false))
+            }
+        }
     }
 
     fun search(query: String) {

@@ -105,6 +105,9 @@ internal fun AppNavigation(
         composable(Screen.Search.route) {
             Search(
                 navigateUp = navController::navigateUp,
+                openRecipe = { cocktailId ->
+                    navController.navigate("recipe/$cocktailId")
+                },
             )
         }
     }
