@@ -21,7 +21,9 @@ class SearchViewModel @Inject constructor(
     init {
         viewModelScope.launch {
             _uiState.update {
-                it.copy(categories = cocktailRepository.listCategories())
+                it.copy(
+                    categories = cocktailRepository.listCategories()
+                        .map { cocktailCategoryPo -> cocktailCategoryPo.name })
             }
         }
 
