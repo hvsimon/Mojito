@@ -31,4 +31,10 @@ class SearchViewModel @Inject constructor(
             }
         }
     }
+
+    fun search(query: String) {
+        _uiState.update {
+            it.copy(query = query)
+        }
+    }
 }

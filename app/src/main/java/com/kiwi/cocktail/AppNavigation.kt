@@ -103,7 +103,9 @@ internal fun AppNavigation(
         }
 
         composable(Screen.Search.route) {
-            Search()
+            Search(
+                navigateUp = navController::navigateUp,
+            )
         }
     }
 }
