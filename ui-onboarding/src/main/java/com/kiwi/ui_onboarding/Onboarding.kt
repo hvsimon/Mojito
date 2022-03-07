@@ -104,7 +104,7 @@ private fun Onboarding(
         }
 
         items(
-            items = uiState.categories,
+            items = uiState.ibaCategories,
             span = { GridItemSpan(2) },
         ) {
             CategoryCard(
