@@ -41,7 +41,7 @@ class OnboardingViewModel @Inject constructor(
 
     fun randomCocktail() {
         viewModelScope.launch {
-            val cocktail = cocktailRepository.randomCocktail()
+            val cocktail = cocktailRepository.randomCocktail(num = 1, loadFromRemote = true).first()
             _uiState.update {
                 it.copy(coverCocktail = cocktail)
             }

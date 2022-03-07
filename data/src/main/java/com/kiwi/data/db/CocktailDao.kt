@@ -14,4 +14,14 @@ interface CocktailDao {
 
     @Query("SELECT * FROM CocktailPo WHERE cocktail_id = :cocktailId")
     suspend fun getCocktailBy(cocktailId: String): CocktailPo?
+
+    @Query(
+        """
+        SELECT * 
+        FROM CocktailPo 
+        WHERE cocktail_id 
+        IN (SELECT cocktail_id FROM CocktailPo ORDER BY RANDOM() LIMIT :num)
+    """
+    )
+    suspend fun randomCocktail(num: Int): List<CocktailPo>
 }

@@ -13,6 +13,9 @@ import dagger.Reusable
 import java.nio.charset.Charset
 import javax.inject.Inject
 import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.async
+import kotlinx.coroutines.awaitAll
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import kotlinx.serialization.builtins.ListSerializer
 import kotlinx.serialization.json.Json
@@ -27,10 +30,21 @@ class CocktailRepository @Inject constructor(
     @IoDispatcher private val ioDispatcher: CoroutineDispatcher,
 ) {
 
-    // TODO: random cocktail for each date
-    suspend fun randomCocktail(): CocktailPo = withContext(ioDispatcher) {
-        cocktailApi.randomCocktail().drinks.first().toCocktailPo()
-    }
+    suspend fun randomCocktail(num: Int, loadFromRemote: Boolean): List<CocktailPo> =
+        withContext(ioDispatcher) {
+            if (loadFromRemote) {
+                (1..num)
+                    .map { async { cocktailApi.randomCocktail().drinks.first().toCocktailPo() } }
+                    .awaitAll()
+                    .also {
+                        launch {
+                            cocktailDao.insertCocktails(*it.toTypedArray())
+                        }
+                    }
+            } else {
+                cocktailDao.randomCocktail(num)
+            }
+        }
 
     suspend fun searchCocktailByName(cocktailName: String): List<CocktailPo> =
         withContext(ioDispatcher) {
