@@ -19,8 +19,7 @@ paging = "3.1.0"
 androidxhilt = "1.0.0"
 
 # Compose
-compose = "1.1.0"
-composecompiler = "1.1.0" # rc02 works with Kotlin 1.6.10
+compose = "1.1.1"
 # TODO: replace material with material3 when it ready
 composematerial = "1.2.0-alpha04"
 composematerial3 = "1.0.0-alpha05"
