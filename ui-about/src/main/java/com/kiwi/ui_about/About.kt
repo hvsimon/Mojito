@@ -84,14 +84,15 @@ private fun AboutItem(
 ) {
     Column(
         modifier = modifier
+            .clickable(onClick = onItemClick)
+            .padding(horizontal = 16.dp)
     ) {
         Row(
             verticalAlignment = Alignment.CenterVertically,
             modifier = modifier
-                .clickable(onClick = onItemClick)
-                .padding(horizontal = 16.dp)
                 .fillMaxWidth()
                 .height(56.dp)
+                .padding(horizontal = 4.dp)
         ) {
             Icon(
                 painter = painter,
