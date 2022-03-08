@@ -57,6 +57,7 @@ dependencies {
 
     // UI
     implementation(libs.coil.compose)
+    implementation(libs.bundles.aboutlibraries)
 
     // Test
     testImplementation("junit:junit:4.+")

@@ -33,6 +33,7 @@ dagger = "2.40.5"
 # UI
 coil = "1.4.0"
 lottie = "4.2.2"
+aboutlibraries = "10.0.0"
 
 # Network
 okhttp-bom = "4.9.3"
@@ -98,6 +99,8 @@ hilt-testing = { module = "com.google.dagger:hilt-android-testing", version.ref 
 # UI
 coil-compose = { module = "io.coil-kt:coil-compose", version.ref = "coil" }
 lottie-compose = { module = "com.airbnb.android:lottie-compose", version.ref = "lottie" }
+aboutlibraries-core = { module = "com.mikepenz:aboutlibraries-core", version.ref = "aboutlibraries" }
+aboutlibraries-compose = { module = "com.mikepenz:aboutlibraries-compose", version.ref = "aboutlibraries" }
 
 # Network
 okhttp-bom = { module = "com.squareup.okhttp3:okhttp-bom", version.ref = "okhttp-bom" }
@@ -109,3 +112,4 @@ retrofit-kotlinx-serialization-converter = { module = "com.jakewharton.retrofit:
 activity = ["activity-ktx", "activity-compose"]
 compose = ["compose-runtime", "compose-compiler", "compose-ui", "compose-uitooling", "compose-foundation", "compose-material", "compose-material3"]
 accompanist = ["accompanist-insets", "accompanist-systemuicontroller"]
+aboutlibraries = ["aboutlibraries-core", "aboutlibraries-compose"]

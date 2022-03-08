@@ -16,6 +16,7 @@ private val DarkBlue40 = Color(0xff3e41f4)
 private val Yellow40 = Color(0xff7d5700)
 // Remaining colors from tonal palettes
 
+// TODO: Create color palettes to this app
 val LightColorScheme = lightColorScheme(
     primary = Blue40,
     secondary = DarkBlue40,
@@ -46,3 +47,5 @@ fun kiwiColorScheme(
         else -> LightColorScheme
     }
 }
+
+

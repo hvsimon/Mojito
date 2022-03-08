@@ -31,7 +31,9 @@ import androidx.core.content.pm.PackageInfoCompat
 import com.google.accompanist.insets.statusBarsPadding
 
 @Composable
-fun About() {
+fun About(
+    openLicenses: () -> Unit,
+) {
     Column(
         modifier = Modifier
             .statusBarsPadding()
@@ -47,7 +49,7 @@ fun About() {
         AboutItem(
             text = stringResource(id = R.string.licenses),
             painter = painterResource(id = R.drawable.ic_baseline_copyright_24),
-            onItemClick = { /*TODO*/ }
+            onItemClick = openLicenses
         )
 
         val packageInfo = LocalContext.current
@@ -81,7 +83,7 @@ private fun AboutItem(
     onItemClick: () -> Unit,
 ) {
     Column(
-        modifier = modifier.padding(horizontal = 16.dp)
+        modifier = modifier
     ) {
         Row(
             verticalAlignment = Alignment.CenterVertically,
@@ -136,7 +138,9 @@ private fun VersionItem(
 @Preview
 @Composable
 private fun PreviewAbout() {
-    About()
+    About(
+        openLicenses = {}
+    )
 }
 
 @Preview

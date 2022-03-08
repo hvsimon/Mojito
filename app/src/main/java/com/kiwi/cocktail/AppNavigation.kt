@@ -9,6 +9,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import com.kiwi.ui_about.About
+import com.kiwi.ui_about.Licenses
 import com.kiwi.ui_cocktail_list.CocktailList
 import com.kiwi.ui_collection.Collection
 import com.kiwi.ui_onboarding.Onboarding
@@ -48,6 +49,11 @@ internal sealed class Screen(
         "search",
         R.string.search,
     )
+
+    object Licenses : Screen(
+        "licenses",
+        R.string.licenses,
+    )
 }
 
 @Composable
@@ -83,7 +89,9 @@ internal fun AppNavigation(
         }
 
         composable(Screen.About.route) {
-            About()
+            About(
+                openLicenses = { navController.navigate("licenses") }
+            )
         }
 
         composable(
@@ -110,6 +118,12 @@ internal fun AppNavigation(
                 openRecipe = { cocktailId ->
                     navController.navigate("recipe/$cocktailId")
                 },
+            )
+        }
+
+        composable(Screen.Licenses.route) {
+            Licenses(
+                navigateUp = navController::navigateUp
             )
         }
     }

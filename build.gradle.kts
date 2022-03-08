@@ -8,6 +8,7 @@ buildscript {
         classpath("com.android.tools.build:gradle:7.1.2")
         classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:1.6.10")
         classpath("com.google.dagger:hilt-android-gradle-plugin:2.40.5")
+        classpath("com.mikepenz.aboutlibraries.plugin:aboutlibraries-plugin:10.0.0")
     }
 }
 
