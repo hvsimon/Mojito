@@ -117,9 +117,10 @@ private fun VersionItem(
     versionCode: Long,
 ) {
     Row(
-        modifier = modifier.fillMaxWidth(),
+        modifier = modifier
+            .fillMaxWidth()
+            .padding(16.dp),
         horizontalArrangement = Arrangement.Center,
-
     ) {
 
         Text(
