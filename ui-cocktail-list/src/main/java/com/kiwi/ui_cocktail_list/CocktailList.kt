@@ -182,7 +182,12 @@ fun PreviewCocktailGrid() {
     val list = MutableList(8) {
         CocktailPo(
             name = "Cocktail Name",
-            gallery = listOf("https://images.unsplash.com/photo-1609345265499-2133bbeb6ce5?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1994&q=80"),
+            gallery = listOf(
+                "https://images.unsplash.com/" +
+                    "photo-1609345265499-2133bbeb6ce5?ixlib=rb-1.2.1" +
+                    "&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8" +
+                    "&auto=format&fit=crop&w=1994&q=80"
+            ),
             intro = "",
             ingredients = emptyList(),
             steps = emptyList(),
@@ -201,7 +206,12 @@ fun PreviewCocktailCard() {
     CocktailCard(
         cocktail = CocktailPo(
             name = "Cocktail Name",
-            gallery = listOf("https://images.unsplash.com/photo-1609345265499-2133bbeb6ce5?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1994&q=80"),
+            gallery = listOf(
+                "https://images.unsplash.com/" +
+                    "photo-1609345265499-2133bbeb6ce5?ixlib=rb-1.2.1" +
+                    "&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8" +
+                    "&auto=format&fit=crop&w=1994&q=80"
+            ),
             intro = "",
             ingredients = emptyList(),
             steps = emptyList(),

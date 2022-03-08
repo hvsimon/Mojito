@@ -32,12 +32,16 @@ class CollectionViewModel @Inject constructor(
                     }
 
                     if (before == null && after != null) {
-                        return@insertSeparators UiModel.HeaderModel(after.followedRecipe.catalogName)
+                        return@insertSeparators UiModel.HeaderModel(
+                            after.followedRecipe.catalogName
+                        )
                     }
 
                     if (before != null && after != null) {
                         if (before.followedRecipe.catalogName != after.followedRecipe.catalogName) {
-                            return@insertSeparators UiModel.HeaderModel(after.followedRecipe.catalogName)
+                            return@insertSeparators UiModel.HeaderModel(
+                                after.followedRecipe.catalogName
+                            )
                         }
                     }
 

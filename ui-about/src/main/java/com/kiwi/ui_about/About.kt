@@ -119,7 +119,9 @@ private fun VersionItem(
     Row(
         modifier = modifier.fillMaxWidth(),
         horizontalArrangement = Arrangement.Center,
+
     ) {
+
         Text(
             text = stringResource(
                 id = R.string.settings_app_version_summary,

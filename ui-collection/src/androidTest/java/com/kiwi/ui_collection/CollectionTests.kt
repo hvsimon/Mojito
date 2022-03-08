@@ -17,7 +17,7 @@ class CollectionTests {
     fun myTest() {
         composeTestRule.setContent {
             KiwisBarTheme {
-            // TODO:
+                // TODO:
             }
         }
         composeTestRule.onRoot(useUnmergedTree = false).printToLog("currentLabelExists")

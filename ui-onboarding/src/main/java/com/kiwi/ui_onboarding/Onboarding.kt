@@ -50,7 +50,8 @@ fun Onboarding(
     openRecipe: (cocktailId: String) -> Unit,
     openCocktailList: (String) -> Unit,
 ) {
-    val uiState by rememberFlowWithLifecycle(viewModel.uiState).collectAsState(initial = OnboardingUiState())
+    val uiState by rememberFlowWithLifecycle(viewModel.uiState)
+        .collectAsState(initial = OnboardingUiState())
 
     Onboarding(
         uiState = uiState,

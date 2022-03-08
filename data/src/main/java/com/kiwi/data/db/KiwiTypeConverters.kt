@@ -14,7 +14,9 @@ object KiwiTypeConverters {
     private val formatter = DateTimeFormatter.ISO_OFFSET_DATE_TIME
 
     @TypeConverter
-    fun toOffsetDateTime(value: String?) = value?.let { formatter.parse(value, OffsetDateTime::from) }
+    fun toOffsetDateTime(value: String?) = value?.let {
+        formatter.parse(value, OffsetDateTime::from)
+    }
 
     @TypeConverter
     fun fromOffsetDateTime(date: OffsetDateTime?): String? = date?.format(formatter)
@@ -48,5 +50,4 @@ object KiwiTypeConverters {
     fun toIngredientList(value: String): List<Ingredient> {
         return Json.decodeFromString(ListSerializer(Ingredient.serializer()), value)
     }
-
 }

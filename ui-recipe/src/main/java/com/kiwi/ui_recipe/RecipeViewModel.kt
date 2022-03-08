@@ -34,11 +34,12 @@ class RecipeViewModel @Inject constructor(
             }
         }
         viewModelScope.launch {
-            followedRecipesRepository.recipeFollowedObservable(cocktailId).collectLatest { isFollowed ->
-                _uiState.update {
-                    it.copy(isFollowed = isFollowed)
+            followedRecipesRepository.recipeFollowedObservable(cocktailId)
+                .collectLatest { isFollowed ->
+                    _uiState.update {
+                        it.copy(isFollowed = isFollowed)
+                    }
                 }
-            }
         }
     }
 

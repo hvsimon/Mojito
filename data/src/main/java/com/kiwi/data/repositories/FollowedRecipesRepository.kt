@@ -48,4 +48,3 @@ class FollowedRecipesRepository @Inject constructor(
         followedRecipesDao.getFollowedPagingData()
     }.flow
 }
-

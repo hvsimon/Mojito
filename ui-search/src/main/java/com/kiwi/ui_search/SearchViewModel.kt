@@ -23,7 +23,8 @@ class SearchViewModel @Inject constructor(
             _uiState.update {
                 it.copy(
                     categories = cocktailRepository.listCategories()
-                        .map { cocktailCategoryPo -> cocktailCategoryPo.name })
+                        .map { cocktailCategoryPo -> cocktailCategoryPo.name }
+                )
             }
         }
 

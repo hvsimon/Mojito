@@ -1,4 +1,3 @@
 package com.kiwi.data
 
-interface MyDatabase {
-}
+interface MyDatabase

@@ -283,7 +283,6 @@ private fun CocktailCard(
     }
 }
 
-
 @Preview
 @Composable
 private fun PreviewTopBar() {
