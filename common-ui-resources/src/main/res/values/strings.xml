@@ -40,4 +40,5 @@
     <!--  About  -->
     <string name="feed_back">提供意見</string>
     <string name="licenses">授權</string>
+    <string name="settings_app_version_summary">版本 v%s (%d)</string>
 </resources>

@@ -1,6 +1,7 @@
 package com.kiwi.ui_about
 
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
@@ -21,10 +22,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.graphics.vector.rememberVectorPainter
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.core.content.pm.PackageInfoCompat
 import com.google.accompanist.insets.statusBarsPadding
 
 @Composable
@@ -46,6 +49,15 @@ fun About() {
             painter = painterResource(id = R.drawable.ic_baseline_copyright_24),
             onItemClick = { /*TODO*/ }
         )
+
+        val packageInfo = LocalContext.current
+            .packageManager
+            .getPackageInfo(LocalContext.current.packageName, 0)
+
+        VersionItem(
+            versionName = packageInfo.versionName,
+            versionCode = PackageInfoCompat.getLongVersionCode(packageInfo),
+        )
     }
 }
 
@@ -62,7 +74,7 @@ private fun Title() {
 }
 
 @Composable
-fun AboutItem(
+private fun AboutItem(
     modifier: Modifier = Modifier,
     text: String,
     painter: Painter,
@@ -98,6 +110,26 @@ fun AboutItem(
     }
 }
 
+@Composable
+private fun VersionItem(
+    modifier: Modifier = Modifier,
+    versionName: String,
+    versionCode: Long,
+) {
+    Row(
+        modifier = modifier.fillMaxWidth(),
+        horizontalArrangement = Arrangement.Center,
+    ) {
+        Text(
+            text = stringResource(
+                id = R.string.settings_app_version_summary,
+                versionName,
+                versionCode
+            )
+        )
+    }
+}
+
 @Preview
 @Composable
 private fun PreviewAbout() {
@@ -112,4 +144,10 @@ private fun PreviewAboutItem() {
         painter = rememberVectorPainter(Icons.Default.Edit),
         onItemClick = {},
     )
+}
+
+@Preview
+@Composable
+fun PreviewVersionItem() {
+    VersionItem(versionName = "1.0", versionCode = 1)
 }
