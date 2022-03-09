@@ -37,6 +37,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarColors
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.TopAppBarScrollBehavior
+import androidx.compose.material3.contentColorFor
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.collectAsState
@@ -60,6 +61,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.rememberImagePainter
 import com.google.accompanist.insets.statusBarsPadding
 import com.google.accompanist.swiperefresh.SwipeRefresh
+import com.google.accompanist.swiperefresh.SwipeRefreshIndicator
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 import com.kiwi.common_ui_compose.rememberFlowWithLifecycle
 import com.kiwi.data.entities.CocktailPo
@@ -114,6 +116,14 @@ private fun Onboarding(
         SwipeRefresh(
             state = rememberSwipeRefreshState(uiState.isRefreshing),
             onRefresh = onRefresh,
+            indicator = { s, trigger ->
+                SwipeRefreshIndicator(
+                    state = s,
+                    refreshTriggerDistance = trigger,
+                    backgroundColor = MaterialTheme.colorScheme.surface,
+                    contentColor = contentColorFor(MaterialTheme.colorScheme.surface)
+                )
+            },
         ) {
             LazyVerticalGrid(
                 cells = GridCells.Fixed(2),
