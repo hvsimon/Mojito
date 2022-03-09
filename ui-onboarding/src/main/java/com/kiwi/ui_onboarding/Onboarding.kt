@@ -31,17 +31,27 @@ import androidx.compose.material3.ElevatedButton
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBarColors
+import androidx.compose.material3.TopAppBarDefaults
+import androidx.compose.material3.TopAppBarScrollBehavior
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.compositeOver
+import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
@@ -74,7 +84,7 @@ fun Onboarding(
     )
 }
 
-@OptIn(ExperimentalFoundationApi::class)
+@OptIn(ExperimentalFoundationApi::class, ExperimentalMaterial3Api::class)
 @Composable
 private fun Onboarding(
     uiState: OnboardingUiState,
@@ -83,67 +93,88 @@ private fun Onboarding(
     openCocktailList: (String) -> Unit,
     onRefresh: () -> Unit,
 ) {
-    LazyVerticalGrid(
-        cells = GridCells.Fixed(2),
-    ) {
-        item(span = { GridItemSpan(2) }) {
-            Header(
-                cocktail = uiState.coverCocktail,
+    val scrollBehavior = remember { TopAppBarDefaults.pinnedScrollBehavior() }
+
+    Scaffold(
+        modifier = Modifier
+            .nestedScroll(scrollBehavior.nestedScrollConnection),
+        topBar = {
+            SearchBar(
                 onSearchClick = openSearch,
-                onRandomClick = openRecipe,
-                onRefresh = onRefresh,
-                isRefreshing = uiState.isRefreshing,
+                scrollBehavior = scrollBehavior,
+                colors = TopAppBarDefaults.smallTopAppBarColors(
+                    containerColor = Color.Black,
+                    scrolledContainerColor = MaterialTheme.colorScheme.surface.compositeOver(
+                        MaterialTheme.colorScheme.primary
+                    ),
+                )
             )
         }
-        item(span = { GridItemSpan(2) }) {
-            Text(
-                text = stringResource(id = R.string.six_base_wine),
-                style = MaterialTheme.typography.displaySmall,
-                modifier = Modifier.padding(16.dp)
-            )
-        }
-
-        items(uiState.baseWineGroups) {
-            WineCard(
-                imageData = it.groupImageUrl,
-                label = it.groupName,
-                onCardClick = openCocktailList,
-            )
-        }
-
-        item(span = { GridItemSpan(2) }) {
-            Text(
-                text = stringResource(id = R.string.iba_official_cocktail_list),
-                style = MaterialTheme.typography.displaySmall,
-                modifier = Modifier.padding(16.dp)
-            )
-        }
-
-        items(
-            items = uiState.ibaCategories,
-            span = { GridItemSpan(2) },
+    ) {
+        SwipeRefresh(
+            state = rememberSwipeRefreshState(uiState.isRefreshing),
+            onRefresh = onRefresh,
         ) {
-            CategoryCard(
-                imageData = it.imageUrl,
-                categoryName = it.name,
-                onCardClick = { /* TODO */ },
-            )
-        }
+            LazyVerticalGrid(
+                cells = GridCells.Fixed(2),
+            ) {
+                item(span = { GridItemSpan(2) }) {
+                    Header(
+                        cocktail = uiState.coverCocktail,
+                        onRandomClick = openRecipe,
+                    )
+                }
+                item(span = { GridItemSpan(2) }) {
+                    Text(
+                        text = stringResource(id = R.string.six_base_wine),
+                        style = MaterialTheme.typography.displaySmall,
+                        modifier = Modifier.padding(16.dp)
+                    )
+                }
 
-        item {
-            WineCard(
-                imageData = R.drawable.ic_glass_poring,
-                label = "戴眼鏡的波利",
-                onCardClick = {},
-            )
-        }
+                items(uiState.baseWineGroups) {
+                    WineCard(
+                        imageData = it.groupImageUrl,
+                        label = it.groupName,
+                        onCardClick = openCocktailList,
+                    )
+                }
 
-        item {
-            WineCard(
-                imageData = R.drawable.ic_tenerife_dog,
-                label = "狗勾",
-                onCardClick = {},
-            )
+                item(span = { GridItemSpan(2) }) {
+                    Text(
+                        text = stringResource(id = R.string.iba_official_cocktail_list),
+                        style = MaterialTheme.typography.displaySmall,
+                        modifier = Modifier.padding(16.dp)
+                    )
+                }
+
+                items(
+                    items = uiState.ibaCategories,
+                    span = { GridItemSpan(2) },
+                ) {
+                    CategoryCard(
+                        imageData = it.imageUrl,
+                        categoryName = it.name,
+                        onCardClick = { /* TODO */ },
+                    )
+                }
+
+                item {
+                    WineCard(
+                        imageData = R.drawable.ic_glass_poring,
+                        label = "戴眼鏡的波利",
+                        onCardClick = {},
+                    )
+                }
+
+                item {
+                    WineCard(
+                        imageData = R.drawable.ic_tenerife_dog,
+                        label = "狗勾",
+                        onCardClick = {},
+                    )
+                }
+            }
         }
     }
 }
@@ -151,27 +182,15 @@ private fun Onboarding(
 @Composable
 private fun Header(
     cocktail: CocktailPo?,
-    onSearchClick: () -> Unit,
     onRandomClick: (cocktailId: String) -> Unit,
-    onRefresh: () -> Unit,
-    isRefreshing: Boolean,
 ) {
 
     Column(
         modifier = Modifier
             .background(Color.Black)
-            .statusBarsPadding()
+            .fillMaxWidth()
     ) {
-        SearchBar(
-            onSearchClick = onSearchClick,
-            modifier = Modifier
-                .padding(8.dp)
-        )
-        RandomCocktail(
-            cocktail = cocktail,
-            onRefresh = onRefresh,
-            isRefreshing = isRefreshing,
-        )
+        RandomCocktail(cocktail = cocktail)
         IngredientCardRow(cocktail?.ingredients ?: emptyList())
         RandomButton(
             onClick = { cocktail?.let { onRandomClick(it.cocktailId) } }
@@ -182,48 +201,41 @@ private fun Header(
 @Composable
 private fun RandomCocktail(
     cocktail: CocktailPo? = null,
-    onRefresh: () -> Unit,
-    isRefreshing: Boolean,
 ) {
-    SwipeRefresh(
-        state = rememberSwipeRefreshState(isRefreshing),
-        onRefresh = onRefresh,
+    Box(
+        modifier = Modifier
+            .clip(RoundedCornerShape(topStart = 16.dp, topEnd = 16.dp))
+            .fillMaxWidth()
+            .aspectRatio(1f)
+            .verticalScroll(rememberScrollState())
     ) {
-        Box(
+        Image(
+            painter = rememberImagePainter(
+                data = cocktail?.gallery?.random(),
+                builder = { crossfade(true) },
+            ),
+            contentScale = ContentScale.Crop,
+            contentDescription = null,
             modifier = Modifier
-                .clip(RoundedCornerShape(topStart = 16.dp, topEnd = 16.dp))
                 .fillMaxWidth()
                 .aspectRatio(1f)
-                .verticalScroll(rememberScrollState())
-        ) {
-            Image(
-                painter = rememberImagePainter(
-                    data = cocktail?.gallery?.random(),
-                    builder = { crossfade(true) },
-                ),
-                contentScale = ContentScale.Crop,
-                contentDescription = null,
+        )
+        cocktail?.let { cocktail ->
+            Text(
+                text = cocktail.name,
+                color = Color.White,
+                style = MaterialTheme.typography.headlineLarge,
+                textAlign = TextAlign.Center,
                 modifier = Modifier
+                    .align(Alignment.BottomCenter)
                     .fillMaxWidth()
-                    .aspectRatio(1f)
-            )
-            cocktail?.let { cocktail ->
-                Text(
-                    text = cocktail.name,
-                    color = Color.White,
-                    style = MaterialTheme.typography.headlineLarge,
-                    textAlign = TextAlign.Center,
-                    modifier = Modifier
-                        .align(Alignment.BottomCenter)
-                        .fillMaxWidth()
-                        .background(
-                            brush = Brush.verticalGradient(
-                                colors = listOf(Color.Transparent, Color.Black),
-                            )
+                    .background(
+                        brush = Brush.verticalGradient(
+                            colors = listOf(Color.Transparent, Color.Black),
                         )
-                        .padding(16.dp)
-                )
-            }
+                    )
+                    .padding(16.dp)
+            )
         }
     }
 }
@@ -254,17 +266,35 @@ private fun IngredientCardRow(
 
 @Composable
 private fun SearchBar(
+    modifier: Modifier = Modifier,
     onSearchClick: () -> Unit,
-    modifier: Modifier = Modifier
+    colors: TopAppBarColors = TopAppBarDefaults.smallTopAppBarColors(),
+    scrollBehavior: TopAppBarScrollBehavior? = null,
 ) {
-    ElevatedButton(
-        onClick = onSearchClick,
-        modifier = modifier
-            .fillMaxWidth()
-            .padding(horizontal = 16.dp),
+    val offsetLimit = with(LocalDensity.current) { -64.0.dp.toPx() }
+    SideEffect {
+        if (scrollBehavior?.offsetLimit != offsetLimit) {
+            scrollBehavior?.offsetLimit = offsetLimit
+        }
+    }
+
+    val scrollFraction = scrollBehavior?.scrollFraction ?: 0f
+    val appBarContainerColor by colors.containerColor(scrollFraction)
+
+    Surface(
+        color = appBarContainerColor,
+        shadowElevation = 3.dp
     ) {
-        Icon(imageVector = Icons.Default.Search, contentDescription = null)
-        Text(text = stringResource(id = R.string.drink_something))
+        ElevatedButton(
+            onClick = onSearchClick,
+            modifier = modifier
+                .fillMaxWidth()
+                .statusBarsPadding()
+                .padding(horizontal = 16.dp, vertical = 8.dp),
+        ) {
+            Icon(imageVector = Icons.Default.Search, contentDescription = null)
+            Text(text = stringResource(id = R.string.drink_something))
+        }
     }
 }
 
