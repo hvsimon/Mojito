@@ -27,6 +27,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.paging.compose.LazyPagingItems
@@ -39,10 +40,9 @@ import com.airbnb.lottie.compose.LottieCompositionSpec
 import com.airbnb.lottie.compose.LottieConstants
 import com.airbnb.lottie.compose.rememberLottieComposition
 import com.google.accompanist.insets.statusBarsPadding
+import com.kiwi.common_ui_compose.SampleCocktailPoProvider
 import com.kiwi.common_ui_compose.rememberFlowWithLifecycle
 import com.kiwi.data.entities.CocktailPo
-import com.kiwi.data.entities.Ingredient
-import java.util.UUID
 
 @Composable
 fun Collection(
@@ -227,24 +227,11 @@ private fun PreviewSectionHeader() {
 
 @Preview
 @Composable
-private fun PreviewCollectionItem() {
+private fun PreviewCollectionItem(
+    @PreviewParameter(SampleCocktailPoProvider::class) cocktailPo: CocktailPo
+) {
     CollectionItem(
-        cocktail = CocktailPo(
-            cocktailId = UUID.randomUUID().toString(),
-            name = "Mojito2",
-            gallery = listOf(),
-            ingredients = listOf(
-                Ingredient(
-                    name = "\uD83C\uDF78 白蘭姆酒",
-                    amount = "2 shots"
-                ),
-                Ingredient(
-                    name = "\uD83E\uDDC2 糖漿",
-                    amount = "0.5 shot"
-                ),
-            ),
-            steps = listOf()
-        ),
+        cocktail = cocktailPo,
         onClick = {}
     )
 }

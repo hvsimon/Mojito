@@ -29,6 +29,8 @@ android {
 }
 
 dependencies {
+    implementation(project(":data"))
+
     implementation(libs.lifecycle.runtime)
 
     // Compose

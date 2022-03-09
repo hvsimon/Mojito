@@ -5,7 +5,9 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.aspectRatio
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -40,18 +42,23 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.compositeOver
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.TextFieldValue
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.rememberImagePainter
 import com.google.accompanist.flowlayout.FlowRow
 import com.google.accompanist.insets.statusBarsPadding
+import com.kiwi.common_ui_compose.SampleCocktailPoProvider
 import com.kiwi.common_ui_compose.rememberFlowWithLifecycle
 import com.kiwi.data.entities.CocktailPo
 
@@ -98,7 +105,10 @@ private fun Search(
                 RecommendResult(uiState, onSearchQuery, openRecipe)
             }
         } else {
-            SearchResult(uiState)
+            SearchResult(
+                uiState = uiState,
+                onItemClick = openRecipe
+            )
         }
     }
 }
@@ -188,12 +198,88 @@ private fun NoResult() {
     }
 }
 
-// TODO: Design Search Result
 @Composable
-private fun SearchResult(uiState: SearchUiState) {
-    LazyColumn {
+private fun SearchResult(
+    uiState: SearchUiState,
+    onItemClick: (String) -> Unit,
+) {
+    LazyColumn(
+        verticalArrangement = Arrangement.spacedBy(8.dp),
+        contentPadding = PaddingValues(8.dp),
+        modifier = Modifier.fillMaxSize()
+    ) {
         items(uiState.searchResult) {
-            Text(text = it.name)
+            ResultCard(
+                cocktailPo = it,
+                onCardClick = { onItemClick(it.cocktailId) },
+            )
+        }
+    }
+}
+
+@OptIn(ExperimentalMaterial3Api::class, ExperimentalMaterialApi::class)
+@Composable
+private fun ResultCard(
+    cocktailPo: CocktailPo,
+    onCardClick: () -> Unit,
+) {
+    Card(
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(128.dp)
+            .clickable(onClick = onCardClick)
+    ) {
+        Row(
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            Image(
+                painter = rememberImagePainter(
+                    data = cocktailPo.gallery.firstOrNull(),
+                    builder = {
+                        crossfade(true)
+                    }
+                ),
+                contentDescription = null,
+                modifier = Modifier
+                    .fillMaxHeight()
+                    .aspectRatio(1f)
+            )
+            Column(
+                modifier = Modifier
+                    .padding(8.dp)
+                    .fillMaxSize(),
+                verticalArrangement = Arrangement.Center
+            ) {
+                Text(
+                    text = cocktailPo.name,
+                    style = MaterialTheme.typography.titleLarge,
+                )
+                Text(
+                    text = cocktailPo.ingredients.joinToString { it.name },
+                    overflow = TextOverflow.Ellipsis,
+                    maxLines = 1,
+                    style = MaterialTheme.typography.bodyMedium,
+                )
+                Text(
+                    text = cocktailPo.steps.random(),
+                    overflow = TextOverflow.Ellipsis,
+                    maxLines = 2,
+                    modifier = Modifier.padding(top = 8.dp)
+                )
+                Chip(
+                    onClick = { },
+                    colors = ChipDefaults.chipColors(
+                        backgroundColor = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.12f)
+                            .compositeOver(MaterialTheme.colorScheme.surfaceVariant)
+                    ),
+                    modifier = Modifier.align(Alignment.End)
+                ) {
+                    Text(
+                        text = cocktailPo.category,
+                        style = MaterialTheme.typography.labelSmall,
+                    )
+                }
+            }
         }
     }
 }
@@ -350,5 +436,16 @@ private fun PreviewTagGroup() {
     TagGroup(
         data = list,
         onChipClick = {},
+    )
+}
+
+@Preview
+@Composable
+private fun PreviewResultCard(
+    @PreviewParameter(SampleCocktailPoProvider::class) cocktailPo: CocktailPo
+) {
+    ResultCard(
+        cocktailPo = cocktailPo,
+        onCardClick = {},
     )
 }

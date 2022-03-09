@@ -34,10 +34,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.rememberImagePainter
 import com.google.accompanist.insets.statusBarsPadding
+import com.kiwi.common_ui_compose.SampleCocktailPoProvider
 import com.kiwi.common_ui_compose.rememberFlowWithLifecycle
 import com.kiwi.data.entities.CocktailPo
 
@@ -178,16 +180,10 @@ private fun PreviewSectionHeader() {
 
 @Preview
 @Composable
-fun PreviewCocktailGrid() {
-    val list = MutableList(8) {
-        CocktailPo(
-            cocktailId = "",
-            name = "Cocktail Name",
-            gallery = listOf(),
-            ingredients = emptyList(),
-            steps = emptyList(),
-        )
-    }
+private fun PreviewCocktailGrid(
+    @PreviewParameter(SampleCocktailPoProvider::class) cocktailPo: CocktailPo
+) {
+    val list = MutableList(8) { cocktailPo }
     CocktailList(
         list = list,
         onItemClick = {},
@@ -196,15 +192,11 @@ fun PreviewCocktailGrid() {
 
 @Preview
 @Composable
-fun PreviewCocktailCard() {
+private fun PreviewCocktailCard(
+    @PreviewParameter(SampleCocktailPoProvider::class) cocktailPo: CocktailPo
+) {
     CocktailCard(
-        cocktail = CocktailPo(
-            cocktailId = "",
-            name = "Cocktail Name",
-            gallery = listOf(),
-            ingredients = emptyList(),
-            steps = emptyList(),
-        ),
+        cocktail = cocktailPo,
         onClick = {},
     )
 }

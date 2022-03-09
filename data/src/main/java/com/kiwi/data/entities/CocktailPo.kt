@@ -19,6 +19,9 @@ data class CocktailPo(
     @ColumnInfo(name = "gallery")
     val gallery: List<String>,
 
+    @ColumnInfo(name = "category")
+    val category: String,
+
     @ColumnInfo(name = "ingredients")
     val ingredients: List<Ingredient>,
 

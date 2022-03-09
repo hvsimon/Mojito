@@ -29,14 +29,15 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.rememberImagePainter
 import coil.size.OriginalSize
+import com.kiwi.common_ui_compose.SampleCocktailPoProvider
 import com.kiwi.common_ui_compose.rememberFlowWithLifecycle
 import com.kiwi.data.entities.CocktailPo
 import com.kiwi.data.entities.Ingredient
-import java.util.UUID
 
 @Composable
 fun Recipe(
@@ -189,36 +190,11 @@ private fun ToggleFollowFloatingActionButton(
 
 @Preview
 @Composable
-fun PreviewRecipe() {
+fun PreviewRecipe(
+    @PreviewParameter(SampleCocktailPoProvider::class) cocktailPo: CocktailPo
+) {
     Recipe(
-        cocktail = CocktailPo(
-            cocktailId = UUID.randomUUID().toString(),
-            name = "Mojito2",
-            gallery = listOf(),
-            ingredients = listOf(
-                Ingredient(
-                    name = "\uD83C\uDF78 白蘭姆酒",
-                    amount = "2 shots"
-                ),
-                Ingredient(
-                    name = "\uD83E\uDDC2 糖漿",
-                    amount = "0.5 shot"
-                ),
-                Ingredient(
-                    name = "\uD83C\uDF4B 萊姆片",
-                    amount = "4"
-                ),
-                Ingredient(
-                    name = "\uD83C\uDF3F 新鮮薄荷",
-                    amount = "12 leaves"
-                ),
-                Ingredient(
-                    name = "\uD83E\uDD64 蘇打水",
-                    amount = "fill to top"
-                ),
-            ),
-            steps = listOf("1. ", "2.")
-        ),
+        cocktail = cocktailPo,
         isFollowed = false,
         onToggleFollowed = {}
     )

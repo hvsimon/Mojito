@@ -2,11 +2,11 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "c4b7ef46bff37302d49f4e9d36f62190",
+    "identityHash": "fd46dabcb6bc0338ab22b6404f57f8fa",
     "entities": [
       {
         "tableName": "CocktailPo",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`cocktail_id` TEXT NOT NULL, `name` TEXT NOT NULL, `gallery` TEXT NOT NULL, `ingredients` TEXT NOT NULL, `steps` TEXT NOT NULL, PRIMARY KEY(`cocktail_id`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`cocktail_id` TEXT NOT NULL, `name` TEXT NOT NULL, `gallery` TEXT NOT NULL, `category` TEXT NOT NULL, `ingredients` TEXT NOT NULL, `steps` TEXT NOT NULL, PRIMARY KEY(`cocktail_id`))",
         "fields": [
           {
             "fieldPath": "cocktailId",
@@ -23,6 +23,12 @@
           {
             "fieldPath": "gallery",
             "columnName": "gallery",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "category",
+            "columnName": "category",
             "affinity": "TEXT",
             "notNull": true
           },
@@ -120,7 +126,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'c4b7ef46bff37302d49f4e9d36f62190')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'fd46dabcb6bc0338ab22b6404f57f8fa')"
     ]
   }
 }
