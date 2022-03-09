@@ -233,7 +233,6 @@ private fun PreviewCollectionItem() {
             cocktailId = UUID.randomUUID().toString(),
             name = "Mojito2",
             gallery = listOf(),
-            intro = "intro",
             ingredients = listOf(
                 Ingredient(
                     name = "\uD83C\uDF78 白蘭姆酒",
@@ -244,8 +243,7 @@ private fun PreviewCollectionItem() {
                     amount = "0.5 shot"
                 ),
             ),
-            steps = listOf(),
-            tips = setOf()
+            steps = listOf()
         ),
         onClick = {}
     )

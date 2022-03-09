@@ -10,7 +10,6 @@ fun FullDrinkDto.toCocktailPo(): CocktailPo {
         cocktailId = this.id,
         name = this.drink,
         gallery = listOf(this.thumb),
-        intro = "TODO",
         ingredients = this.ingredients.zip(this.measures) { ingredient, measure ->
             Ingredient(
                 name = ingredient,
@@ -18,7 +17,6 @@ fun FullDrinkDto.toCocktailPo(): CocktailPo {
             )
         },
         steps = listOf(this.instructions),
-        tips = setOf(),
     )
 }
 
@@ -27,9 +25,7 @@ fun SimpleDrinkDto.toCocktailPo(): CocktailPo {
         cocktailId = this.id,
         name = this.drink,
         gallery = listOf(this.thumb),
-        intro = "TODO",
         ingredients = listOf(),
         steps = listOf(),
-        tips = setOf(),
     )
 }

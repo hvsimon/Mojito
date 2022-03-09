@@ -91,11 +91,9 @@ private fun Recipe(
             Column {
                 Introduction(
                     cocktailName = cocktail.name,
-                    cocktailIntro = cocktail.intro
                 )
                 Ingredient(cocktail.ingredients)
                 Step(cocktail.steps)
-                Tips(cocktail.tips)
             }
         }
     }
@@ -104,17 +102,11 @@ private fun Recipe(
 @Composable
 private fun Introduction(
     cocktailName: String,
-    cocktailIntro: String,
 ) {
     Column(modifier = Modifier.padding(16.dp)) {
         Text(
             text = cocktailName,
             style = MaterialTheme.typography.displaySmall,
-        )
-
-        Text(
-            text = cocktailIntro,
-            style = MaterialTheme.typography.bodyLarge,
         )
     }
 }
@@ -172,25 +164,6 @@ private fun Step(
 }
 
 @Composable
-private fun Tips(
-    tips: Set<String>,
-) {
-    Column(
-        modifier = Modifier.padding(16.dp)
-    ) {
-        Text(
-            text = stringResource(id = R.string.tips),
-            style = MaterialTheme.typography.headlineLarge,
-        )
-
-        Text(
-            text = tips.joinToString(separator = "\n"),
-            style = MaterialTheme.typography.bodyLarge,
-        )
-    }
-}
-
-@Composable
 private fun ToggleFollowFloatingActionButton(
     isFollowed: Boolean,
     onClick: () -> Unit,
@@ -218,7 +191,6 @@ fun PreviewRecipe() {
             cocktailId = UUID.randomUUID().toString(),
             name = "Mojito2",
             gallery = listOf(),
-            intro = "intro",
             ingredients = listOf(
                 Ingredient(
                     name = "\uD83C\uDF78 白蘭姆酒",
@@ -241,8 +213,7 @@ fun PreviewRecipe() {
                     amount = "fill to top"
                 ),
             ),
-            steps = listOf("1. ", "2."),
-            tips = setOf("+", "+", "+")
+            steps = listOf("1. ", "2.")
         ),
         isFollowed = false,
         onToggleFollowed = {}

@@ -180,13 +180,6 @@ private fun Header(
                     color = Color.White,
                     style = MaterialTheme.typography.titleLarge,
                 )
-                Text(
-                    text = cocktail.intro,
-                    color = Color.White,
-                    style = MaterialTheme.typography.bodyLarge,
-                    maxLines = 2,
-                    overflow = TextOverflow.Ellipsis,
-                )
                 Button(
                     onClick = { onRandomClick(cocktail.cocktailId) },
                     modifier = Modifier

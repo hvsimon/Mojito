@@ -2,11 +2,11 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "da1a287b29e4b3dc09cf868ed8b0468d",
+    "identityHash": "c4b7ef46bff37302d49f4e9d36f62190",
     "entities": [
       {
         "tableName": "CocktailPo",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`cocktail_id` TEXT NOT NULL, `name` TEXT NOT NULL, `gallery` TEXT NOT NULL, `intro` TEXT NOT NULL, `ingredients` TEXT NOT NULL, `steps` TEXT NOT NULL, `tips` TEXT NOT NULL, PRIMARY KEY(`cocktail_id`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`cocktail_id` TEXT NOT NULL, `name` TEXT NOT NULL, `gallery` TEXT NOT NULL, `ingredients` TEXT NOT NULL, `steps` TEXT NOT NULL, PRIMARY KEY(`cocktail_id`))",
         "fields": [
           {
             "fieldPath": "cocktailId",
@@ -27,12 +27,6 @@
             "notNull": true
           },
           {
-            "fieldPath": "intro",
-            "columnName": "intro",
-            "affinity": "TEXT",
-            "notNull": true
-          },
-          {
             "fieldPath": "ingredients",
             "columnName": "ingredients",
             "affinity": "TEXT",
@@ -41,12 +35,6 @@
           {
             "fieldPath": "steps",
             "columnName": "steps",
-            "affinity": "TEXT",
-            "notNull": true
-          },
-          {
-            "fieldPath": "tips",
-            "columnName": "tips",
             "affinity": "TEXT",
             "notNull": true
           }
@@ -132,7 +120,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'da1a287b29e4b3dc09cf868ed8b0468d')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'c4b7ef46bff37302d49f4e9d36f62190')"
     ]
   }
 }
