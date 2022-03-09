@@ -7,4 +7,5 @@ data class SearchUiState(
     val categories: List<String> = emptyList(),
     val ingredients: List<String> = emptyList(),
     val randomCocktails: List<CocktailPo> = emptyList(),
+    val searchResult: List<CocktailPo> = emptyList(),
 )

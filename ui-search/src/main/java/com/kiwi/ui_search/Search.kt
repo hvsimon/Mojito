@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentHeight
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.text.KeyboardActions
@@ -91,37 +92,13 @@ private fun Search(
             .fillMaxSize()
             .statusBarsPadding()
     ) {
-        Column(
-            modifier = Modifier
-                .fillMaxSize(),
-            verticalArrangement = Arrangement.spacedBy(8.dp),
-        ) {
-            if (uiState.categories.isNotEmpty()) {
-                Text(
-                    modifier = Modifier
-                        .padding(top = 8.dp)
-                        .padding(horizontal = 16.dp),
-                    text = "Categories",
-                )
-                TagGroup(
-                    modifier = Modifier.padding(horizontal = 16.dp),
-                    data = uiState.categories,
-                    onChipClick = onSearchQuery,
-                )
+        if (uiState.searchResult.isEmpty()) {
+            Column(modifier = Modifier.fillMaxWidth()) {
+                if (uiState.query.isNotBlank()) NoResult()
+                RecommendResult(uiState, onSearchQuery, openRecipe)
             }
-
-            if (uiState.randomCocktails.isNotEmpty()) {
-                Text(
-                    modifier = Modifier
-                        .padding(top = 8.dp)
-                        .padding(horizontal = 16.dp),
-                    text = "Drink again?",
-                )
-                CocktailRow(
-                    data = uiState.randomCocktails,
-                    onItemClick = openRecipe
-                )
-            }
+        } else {
+            SearchResult(uiState)
         }
     }
 }
@@ -196,6 +173,69 @@ private fun SearchBar(
             unfocusedBorderColor = Color.Transparent,
         ),
     )
+}
+
+// TODO: Redesign
+@Composable
+private fun NoResult() {
+    Column(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(horizontal = 16.dp)
+    ) {
+        Text(text = "沒有結果")
+        Text(text = "請試試看其他關鍵字")
+    }
+}
+
+// TODO: Design Search Result
+@Composable
+private fun SearchResult(uiState: SearchUiState) {
+    LazyColumn {
+        items(uiState.searchResult) {
+            Text(text = it.name)
+        }
+    }
+}
+
+@Composable
+private fun RecommendResult(
+    uiState: SearchUiState,
+    onSearchQuery: (String) -> Unit,
+    openRecipe: (cocktailId: String) -> Unit
+) {
+    Column(
+        modifier = Modifier
+            .fillMaxSize(),
+        verticalArrangement = Arrangement.spacedBy(8.dp),
+    ) {
+        if (uiState.categories.isNotEmpty()) {
+            Text(
+                modifier = Modifier
+                    .padding(top = 8.dp)
+                    .padding(horizontal = 16.dp),
+                text = "Categories",
+            )
+            TagGroup(
+                modifier = Modifier.padding(horizontal = 16.dp),
+                data = uiState.categories,
+                onChipClick = onSearchQuery,
+            )
+        }
+
+        if (uiState.randomCocktails.isNotEmpty()) {
+            Text(
+                modifier = Modifier
+                    .padding(top = 8.dp)
+                    .padding(horizontal = 16.dp),
+                text = "Drink again?",
+            )
+            CocktailRow(
+                data = uiState.randomCocktails,
+                onItemClick = openRecipe
+            )
+        }
+    }
 }
 
 @OptIn(ExperimentalMaterialApi::class)
@@ -291,6 +331,12 @@ private fun PreviewTopBar() {
         query = "Query",
         onSearch = {},
     )
+}
+
+@Preview
+@Composable
+private fun PreviewNoResult() {
+    NoResult()
 }
 
 @Preview

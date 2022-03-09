@@ -28,7 +28,10 @@ object NetworkModule {
     @Singleton
     @Provides
     fun provideJson(): Json {
-        return Json { ignoreUnknownKeys = true }
+        return Json {
+            ignoreUnknownKeys = true
+            coerceInputValues = true
+        }
     }
 
     @Singleton

@@ -12,7 +12,7 @@ import kotlinx.coroutines.launch
 
 @HiltViewModel
 class SearchViewModel @Inject constructor(
-    cocktailRepository: CocktailRepository,
+    private val cocktailRepository: CocktailRepository,
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(SearchUiState())
@@ -42,8 +42,23 @@ class SearchViewModel @Inject constructor(
     }
 
     fun search(query: String) {
-        _uiState.update {
-            it.copy(query = query)
+        if (query.isBlank()) {
+            _uiState.update {
+                it.copy(
+                    query = "",
+                    searchResult = emptyList(),
+                )
+            }
+            return
+        }
+
+        viewModelScope.launch {
+            _uiState.update {
+                it.copy(
+                    query = query,
+                    searchResult = cocktailRepository.searchCocktailByName(query)
+                )
+            }
         }
     }
 }
