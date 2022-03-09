@@ -118,13 +118,13 @@ private fun Onboarding(
             LazyVerticalGrid(
                 cells = GridCells.Fixed(2),
             ) {
-                item(span = { GridItemSpan(2) }) {
+                item(span = { GridItemSpan(maxLineSpan) }) {
                     Header(
                         cocktail = uiState.coverCocktail,
                         onRandomClick = openRecipe,
                     )
                 }
-                item(span = { GridItemSpan(2) }) {
+                item(span = { GridItemSpan(maxLineSpan) }) {
                     Text(
                         text = stringResource(id = R.string.six_base_wine),
                         style = MaterialTheme.typography.displaySmall,
@@ -140,7 +140,7 @@ private fun Onboarding(
                     )
                 }
 
-                item(span = { GridItemSpan(2) }) {
+                item(span = { GridItemSpan(maxLineSpan) }) {
                     Text(
                         text = stringResource(id = R.string.iba_official_cocktail_list),
                         style = MaterialTheme.typography.displaySmall,
@@ -150,7 +150,7 @@ private fun Onboarding(
 
                 items(
                     items = uiState.ibaCategories,
-                    span = { GridItemSpan(2) },
+                    span = { GridItemSpan(maxLineSpan) },
                 ) {
                     CategoryCard(
                         imageData = it.imageUrl,
