@@ -3,6 +3,7 @@ package com.kiwi.cocktail
 import android.os.Bundle
 import androidx.activity.compose.setContent
 import androidx.appcompat.app.AppCompatActivity
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.SideEffect
 import androidx.compose.ui.graphics.Color
@@ -25,10 +26,12 @@ class MainActivity : AppCompatActivity() {
 
         setContent {
             val systemUiController = rememberSystemUiController()
+            val darkTheme = isSystemInDarkTheme()
 
             SideEffect {
                 systemUiController.setStatusBarColor(
                     color = Color.Transparent,
+                    darkIcons = !darkTheme,
                 )
             }
             CompositionLocalProvider {
