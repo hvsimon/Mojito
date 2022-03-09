@@ -1,20 +1,27 @@
 package com.kiwi.ui_onboarding
 
+import android.widget.Toast
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.horizontalScroll
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.aspectRatio
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.lazy.GridCells
 import androidx.compose.foundation.lazy.GridItemSpan
 import androidx.compose.foundation.lazy.LazyVerticalGrid
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.Button
@@ -29,19 +36,21 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.rememberImagePainter
-import coil.size.OriginalSize
 import com.google.accompanist.insets.statusBarsPadding
 import com.kiwi.common_ui_compose.rememberFlowWithLifecycle
 import com.kiwi.data.entities.CocktailPo
+import com.kiwi.data.entities.Ingredient
 
 @Composable
 fun Onboarding(
@@ -56,7 +65,7 @@ fun Onboarding(
     Onboarding(
         uiState = uiState,
         openSearch = openSearch,
-        openRecipe = { viewModel.randomCocktail() },
+        openRecipe = openRecipe,
         openCocktailList = openCocktailList,
     )
 }
@@ -77,7 +86,6 @@ private fun Onboarding(
                 cocktail = uiState.coverCocktail,
                 onSearchClick = openSearch,
                 onRandomClick = openRecipe,
-                modifier = Modifier.aspectRatio(0.75f)
             )
         }
         item(span = { GridItemSpan(2) }) {
@@ -133,20 +141,44 @@ private fun Onboarding(
     }
 }
 
-// TODO: redesign header due to the drink's image is always square (700x700)
 @Composable
 private fun Header(
     cocktail: CocktailPo?,
     onSearchClick: () -> Unit,
     onRandomClick: (cocktailId: String) -> Unit,
-    modifier: Modifier = Modifier
 ) {
-    Box(modifier = modifier) {
+    Column(
+        modifier = Modifier
+            .background(Color.Black)
+            .statusBarsPadding()
+    ) {
+        SearchBar(
+            onSearchClick = onSearchClick,
+            modifier = Modifier
+                .padding(8.dp)
+        )
+        RandomCocktail(cocktail = cocktail)
+        IngredientCardRow(cocktail?.ingredients ?: emptyList())
+        RandomButton(
+            onClick = { cocktail?.let { onRandomClick(it.cocktailId) } }
+        )
+    }
+}
+
+@Composable
+private fun RandomCocktail(
+    cocktail: CocktailPo? = null,
+) {
+    Box(
+        modifier = Modifier
+            .clip(RoundedCornerShape(topStart = 16.dp, topEnd = 16.dp))
+            .fillMaxWidth()
+            .aspectRatio(1f)
+    ) {
         Image(
             painter = rememberImagePainter(
                 data = cocktail?.gallery?.random(),
                 builder = {
-                    size(OriginalSize)
                     crossfade(true)
                 },
             ),
@@ -155,40 +187,46 @@ private fun Header(
             modifier = Modifier
                 .fillMaxSize()
         )
-        SearchBar(
-            onSearchClick = onSearchClick,
-            modifier = Modifier
-                .align(Alignment.TopCenter)
-                .padding(top = 16.dp)
-                .statusBarsPadding()
-        )
         cocktail?.let { cocktail ->
-            Column(
+            Text(
+                text = cocktail.name,
+                color = Color.White,
+                style = MaterialTheme.typography.headlineLarge,
+                textAlign = TextAlign.Center,
                 modifier = Modifier
-                    .fillMaxWidth()
-                    .wrapContentHeight()
                     .align(Alignment.BottomCenter)
+                    .fillMaxWidth()
                     .background(
                         brush = Brush.verticalGradient(
                             colors = listOf(Color.Transparent, Color.Black),
                         )
                     )
                     .padding(16.dp)
-            ) {
-                Text(
-                    text = cocktail.name,
-                    color = Color.White,
-                    style = MaterialTheme.typography.titleLarge,
-                )
-                Button(
-                    onClick = { onRandomClick(cocktail.cocktailId) },
-                    modifier = Modifier
-                        .padding(top = 16.dp)
-                        .align(Alignment.CenterHorizontally)
-                ) {
-                    Text(text = stringResource(id = R.string.flexible))
-                }
-            }
+            )
+        }
+    }
+}
+
+@Composable
+private fun IngredientCardRow(
+    ingredients: List<Ingredient>,
+) {
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(80.dp)
+            .horizontalScroll(rememberScrollState())
+            .padding(horizontal = 8.dp),
+        horizontalArrangement = Arrangement.spacedBy(8.dp),
+    ) {
+        ingredients.forEach {
+            IngredientCard(
+                modifier = Modifier
+                    .fillMaxHeight()
+                    .aspectRatio(1f),
+                imageUrl = stringResource(id = R.string.ingredient_image_url, it.name),
+                name = it.name,
+            )
         }
     }
 }
@@ -206,6 +244,50 @@ private fun SearchBar(
     ) {
         Icon(imageVector = Icons.Default.Search, contentDescription = null)
         Text(text = stringResource(id = R.string.drink_something))
+    }
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+private fun IngredientCard(
+    modifier: Modifier = Modifier,
+    imageUrl: String,
+    name: String,
+) {
+    val context = LocalContext.current
+    Card(
+        modifier = modifier
+            .clickable {
+                Toast.makeText(context, name, Toast.LENGTH_SHORT).show()
+            }
+    ) {
+        Image(
+            painter = rememberImagePainter(
+                data = imageUrl,
+                builder = { crossfade(true) },
+            ),
+            contentDescription = null,
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(8.dp)
+        )
+    }
+}
+
+@Composable
+fun RandomButton(
+    modifier: Modifier = Modifier,
+    onClick: () -> Unit,
+) {
+    Box(
+        contentAlignment = Alignment.Center,
+        modifier = modifier
+            .fillMaxWidth()
+            .padding(8.dp)
+    ) {
+        Button(onClick = onClick) {
+            Text(text = stringResource(id = R.string.flexible))
+        }
     }
 }
 
@@ -291,8 +373,20 @@ private fun PreviewSearchBar() {
 
 @Preview
 @Composable
-private fun PreviewHeader() {
-    Header(cocktail = null, onSearchClick = {}, onRandomClick = {})
+private fun PreviewIngredientCardRow() {
+    IngredientCardRow(
+        listOf(
+            Ingredient(name = "a", amount = "a"),
+        )
+    )
+}
+
+@Preview
+@Composable
+private fun PreviewRandomButton() {
+    RandomButton(
+        onClick = {}
+    )
 }
 
 @Preview
