@@ -22,6 +22,7 @@ import androidx.compose.foundation.lazy.LazyVerticalGrid
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.Button
@@ -48,6 +49,8 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.rememberImagePainter
 import com.google.accompanist.insets.statusBarsPadding
+import com.google.accompanist.swiperefresh.SwipeRefresh
+import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 import com.kiwi.common_ui_compose.rememberFlowWithLifecycle
 import com.kiwi.data.entities.CocktailPo
 import com.kiwi.data.entities.Ingredient
@@ -67,6 +70,7 @@ fun Onboarding(
         openSearch = openSearch,
         openRecipe = openRecipe,
         openCocktailList = openCocktailList,
+        onRefresh = { viewModel.randomCocktail() }
     )
 }
 
@@ -77,6 +81,7 @@ private fun Onboarding(
     openSearch: () -> Unit,
     openRecipe: (cocktailId: String) -> Unit,
     openCocktailList: (String) -> Unit,
+    onRefresh: () -> Unit,
 ) {
     LazyVerticalGrid(
         cells = GridCells.Fixed(2),
@@ -86,6 +91,8 @@ private fun Onboarding(
                 cocktail = uiState.coverCocktail,
                 onSearchClick = openSearch,
                 onRandomClick = openRecipe,
+                onRefresh = onRefresh,
+                isRefreshing = uiState.isRefreshing,
             )
         }
         item(span = { GridItemSpan(2) }) {
@@ -146,7 +153,10 @@ private fun Header(
     cocktail: CocktailPo?,
     onSearchClick: () -> Unit,
     onRandomClick: (cocktailId: String) -> Unit,
+    onRefresh: () -> Unit,
+    isRefreshing: Boolean,
 ) {
+
     Column(
         modifier = Modifier
             .background(Color.Black)
@@ -157,7 +167,11 @@ private fun Header(
             modifier = Modifier
                 .padding(8.dp)
         )
-        RandomCocktail(cocktail = cocktail)
+        RandomCocktail(
+            cocktail = cocktail,
+            onRefresh = onRefresh,
+            isRefreshing = isRefreshing,
+        )
         IngredientCardRow(cocktail?.ingredients ?: emptyList())
         RandomButton(
             onClick = { cocktail?.let { onRandomClick(it.cocktailId) } }
@@ -168,41 +182,48 @@ private fun Header(
 @Composable
 private fun RandomCocktail(
     cocktail: CocktailPo? = null,
+    onRefresh: () -> Unit,
+    isRefreshing: Boolean,
 ) {
-    Box(
-        modifier = Modifier
-            .clip(RoundedCornerShape(topStart = 16.dp, topEnd = 16.dp))
-            .fillMaxWidth()
-            .aspectRatio(1f)
+    SwipeRefresh(
+        state = rememberSwipeRefreshState(isRefreshing),
+        onRefresh = onRefresh,
     ) {
-        Image(
-            painter = rememberImagePainter(
-                data = cocktail?.gallery?.random(),
-                builder = {
-                    crossfade(true)
-                },
-            ),
-            contentScale = ContentScale.Crop,
-            contentDescription = null,
+        Box(
             modifier = Modifier
-                .fillMaxSize()
-        )
-        cocktail?.let { cocktail ->
-            Text(
-                text = cocktail.name,
-                color = Color.White,
-                style = MaterialTheme.typography.headlineLarge,
-                textAlign = TextAlign.Center,
+                .clip(RoundedCornerShape(topStart = 16.dp, topEnd = 16.dp))
+                .fillMaxWidth()
+                .aspectRatio(1f)
+                .verticalScroll(rememberScrollState())
+        ) {
+            Image(
+                painter = rememberImagePainter(
+                    data = cocktail?.gallery?.random(),
+                    builder = { crossfade(true) },
+                ),
+                contentScale = ContentScale.Crop,
+                contentDescription = null,
                 modifier = Modifier
-                    .align(Alignment.BottomCenter)
                     .fillMaxWidth()
-                    .background(
-                        brush = Brush.verticalGradient(
-                            colors = listOf(Color.Transparent, Color.Black),
-                        )
-                    )
-                    .padding(16.dp)
+                    .aspectRatio(1f)
             )
+            cocktail?.let { cocktail ->
+                Text(
+                    text = cocktail.name,
+                    color = Color.White,
+                    style = MaterialTheme.typography.headlineLarge,
+                    textAlign = TextAlign.Center,
+                    modifier = Modifier
+                        .align(Alignment.BottomCenter)
+                        .fillMaxWidth()
+                        .background(
+                            brush = Brush.verticalGradient(
+                                colors = listOf(Color.Transparent, Color.Black),
+                            )
+                        )
+                        .padding(16.dp)
+                )
+            }
         }
     }
 }

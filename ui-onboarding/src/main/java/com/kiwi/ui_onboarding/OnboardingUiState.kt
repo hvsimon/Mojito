@@ -8,4 +8,5 @@ data class OnboardingUiState(
     val coverCocktail: CocktailPo? = null,
     val baseWineGroups: List<BaseWineGroup> = emptyList(),
     val ibaCategories: List<IBACategory> = emptyList(),
+    val isRefreshing: Boolean = false
 )
