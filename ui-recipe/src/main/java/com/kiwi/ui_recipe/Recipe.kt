@@ -5,6 +5,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -94,6 +95,9 @@ private fun Recipe(
                 )
                 Ingredient(cocktail.ingredients)
                 Step(cocktail.steps)
+                Spacer(modifier = Modifier
+                    .fillMaxWidth()
+                    .height(64.dp))
             }
         }
     }
