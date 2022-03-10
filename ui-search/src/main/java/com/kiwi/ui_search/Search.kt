@@ -185,16 +185,19 @@ private fun SearchBar(
     )
 }
 
-// TODO: Redesign
 @Composable
 private fun NoResult() {
     Column(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(horizontal = 16.dp)
+            .padding(16.dp),
+        verticalArrangement = Arrangement.Center,
     ) {
-        Text(text = "沒有結果")
-        Text(text = "請試試看其他關鍵字")
+        Text(
+            text = stringResource(id = R.string.no_result),
+            style = MaterialTheme.typography.titleLarge
+        )
+        Text(text = stringResource(id = R.string.no_result_caption))
     }
 }
 
