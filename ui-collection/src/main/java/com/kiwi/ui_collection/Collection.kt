@@ -70,9 +70,7 @@ private fun Collection(
             .fillMaxSize()
             .statusBarsPadding()
     ) {
-        LazyColumn(
-            verticalArrangement = Arrangement.spacedBy(8.dp),
-        ) {
+        LazyColumn {
             item {
                 CollectionTitle()
             }
@@ -151,8 +149,8 @@ private fun CollectionItem(
         verticalAlignment = Alignment.CenterVertically,
         modifier = Modifier
             .fillMaxWidth()
-            .padding(horizontal = 8.dp)
             .clickable(onClick = onClick)
+            .padding(horizontal = 8.dp, vertical = 4.dp)
     ) {
         Image(
             painter = rememberImagePainter(
