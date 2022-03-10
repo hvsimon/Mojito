@@ -35,6 +35,12 @@ interface CocktailApi {
     ): CocktailResponse<SimpleDrinkDto>
 
     @Headers("Accept-Encoding: identity")
+    @GET("filter.php")
+    suspend fun filterByCategory(
+        @Query("c") category: String
+    ): CocktailResponse<SimpleDrinkDto>
+
+    @Headers("Accept-Encoding: identity")
     @GET("lookup.php")
     suspend fun lookupFullCocktailDetailsById(
         @Query("i") id: String

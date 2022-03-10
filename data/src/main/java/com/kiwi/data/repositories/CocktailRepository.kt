@@ -62,6 +62,11 @@ class CocktailRepository @Inject constructor(
             cocktailApi.searchByIngredient(ingredientName).drinks.map { it.toCocktailPo() }
         }
 
+    suspend fun filterByCategory(category: String): List<CocktailPo> =
+        withContext(ioDispatcher) {
+            cocktailApi.filterByCategory(category).drinks.map { it.toCocktailPo() }
+        }
+
     suspend fun lookupFullCocktailDetailsById(id: String): CocktailPo =
         withContext(ioDispatcher) {
             return@withContext cocktailDao.getCocktailBy(id)
