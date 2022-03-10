@@ -15,10 +15,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.grid.GridCells
-import androidx.compose.foundation.lazy.grid.GridItemSpan
-import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
-import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
@@ -98,6 +94,7 @@ private fun Onboarding(
 
     Scaffold(
         modifier = Modifier
+            .fillMaxSize()
             .nestedScroll(scrollBehavior.nestedScrollConnection),
         topBar = {
             SearchBar(
@@ -123,64 +120,44 @@ private fun Onboarding(
                     contentColor = contentColorFor(MaterialTheme.colorScheme.surface)
                 )
             },
+            modifier = Modifier.fillMaxSize()
         ) {
-            LazyVerticalGrid(
-                columns = GridCells.Fixed(2),
+            Column(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .verticalScroll(rememberScrollState())
             ) {
-                item(span = { GridItemSpan(maxLineSpan) }) {
-                    Header(
-                        cocktail = uiState.coverCocktail,
-                        onRandomClick = openRecipe,
-                    )
+                Header(
+                    cocktail = uiState.coverCocktail,
+                    onRandomClick = openRecipe,
+                )
+                Text(
+                    text = stringResource(id = R.string.six_base_wine),
+                    style = MaterialTheme.typography.displaySmall,
+                    modifier = Modifier.padding(16.dp)
+                )
+                uiState.baseWineGroups.chunked(2).forEach {
+                    Row(modifier = Modifier.fillMaxWidth()) {
+                        it.forEach {
+                            WineCard(
+                                imageData = it.groupImageUrl,
+                                label = it.groupName,
+                                onCardClick = openCocktailList,
+                                modifier = Modifier.weight(1f)
+                            )
+                        }
+                    }
                 }
-                item(span = { GridItemSpan(maxLineSpan) }) {
-                    Text(
-                        text = stringResource(id = R.string.six_base_wine),
-                        style = MaterialTheme.typography.displaySmall,
-                        modifier = Modifier.padding(16.dp)
-                    )
-                }
-
-                items(uiState.baseWineGroups) {
-                    WineCard(
-                        imageData = it.groupImageUrl,
-                        label = it.groupName,
-                        onCardClick = openCocktailList,
-                    )
-                }
-
-                item(span = { GridItemSpan(maxLineSpan) }) {
-                    Text(
-                        text = stringResource(id = R.string.iba_official_cocktail_list),
-                        style = MaterialTheme.typography.displaySmall,
-                        modifier = Modifier.padding(16.dp)
-                    )
-                }
-
-                items(
-                    items = uiState.ibaCategories,
-                    span = { GridItemSpan(maxLineSpan) },
-                ) {
+                Text(
+                    text = stringResource(id = R.string.iba_official_cocktail_list),
+                    style = MaterialTheme.typography.displaySmall,
+                    modifier = Modifier.padding(16.dp)
+                )
+                uiState.ibaCategories.forEach {
                     CategoryCard(
                         imageData = it.imageUrl,
                         categoryName = it.name,
                         onCardClick = { /* TODO */ },
-                    )
-                }
-
-                item {
-                    WineCard(
-                        imageData = R.drawable.ic_glass_poring,
-                        label = "戴眼鏡的波利",
-                        onCardClick = {},
-                    )
-                }
-
-                item {
-                    WineCard(
-                        imageData = R.drawable.ic_tenerife_dog,
-                        label = "狗勾",
-                        onCardClick = {},
                     )
                 }
             }
