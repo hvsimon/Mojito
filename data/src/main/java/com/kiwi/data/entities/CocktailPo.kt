@@ -26,5 +26,5 @@ data class CocktailPo(
     val ingredients: List<Ingredient>,
 
     @ColumnInfo(name = "steps")
-    val steps: List<String>,
+    val steps: String
 )

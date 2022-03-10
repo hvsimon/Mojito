@@ -153,7 +153,7 @@ private fun Ingredient(ingredients: List<Ingredient>) {
 
 @Composable
 private fun Step(
-    steps: List<String>,
+    steps: String,
 ) {
     Column(modifier = Modifier.padding(16.dp)) {
         Text(
@@ -162,7 +162,7 @@ private fun Step(
         )
 
         Text(
-            text = steps.joinToString(separator = "\n"),
+            text = steps,
             style = MaterialTheme.typography.bodyLarge,
         )
     }

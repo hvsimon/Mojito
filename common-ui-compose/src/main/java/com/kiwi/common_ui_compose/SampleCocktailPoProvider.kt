@@ -34,9 +34,7 @@ class SampleCocktailPoProvider : PreviewParameterProvider<CocktailPo> {
                     amount = "fill to top"
                 ),
             ),
-            steps = listOf(
-                "Pour all ingredients into a cocktail shaker, "
-            ),
+            steps = "Pour all ingredients into a cocktail shaker",
         )
     )
 }

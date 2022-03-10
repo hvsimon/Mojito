@@ -17,7 +17,7 @@ fun FullDrinkDto.toCocktailPo(): CocktailPo {
                 amount = measure,
             )
         },
-        steps = listOf(this.instructions),
+        steps = this.instructions,
     )
 }
 
@@ -28,6 +28,6 @@ fun SimpleDrinkDto.toCocktailPo(): CocktailPo {
         gallery = listOf(this.thumb),
         category = "",
         ingredients = listOf(),
-        steps = listOf(),
+        steps = "",
     )
 }

@@ -264,7 +264,7 @@ private fun ResultCard(
                     style = MaterialTheme.typography.bodyMedium,
                 )
                 Text(
-                    text = cocktailPo.steps.random(),
+                    text = cocktailPo.steps,
                     overflow = TextOverflow.Ellipsis,
                     maxLines = 2,
                     modifier = Modifier.padding(top = 8.dp)
