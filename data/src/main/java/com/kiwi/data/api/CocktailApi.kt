@@ -24,6 +24,12 @@ interface CocktailApi {
 
     @Headers("Accept-Encoding: identity")
     @GET("search.php")
+    suspend fun searchCocktailByFirstLetter(
+        @Query("f") firstLetter: Char,
+    ): CocktailResponse<FullDrinkDto>
+
+    @Headers("Accept-Encoding: identity")
+    @GET("search.php")
     suspend fun searchIngredientByName(
         @Query("i") ingredientName: String,
     ): CocktailResponse<FullIngredientDto>

@@ -52,6 +52,12 @@ class CocktailRepository @Inject constructor(
             cocktailApi.searchCocktailByName(cocktailName).drinks.map { it.toCocktailPo() }
         }
 
+    suspend fun searchCocktailByFirstLetter(firstLetter: Char): List<CocktailPo> =
+        withContext(ioDispatcher) {
+            cocktailApi.searchCocktailByFirstLetter(firstLetter).drinks.map { it.toCocktailPo() }
+                .also { launch { cocktailDao.insertCocktails(*it.toTypedArray()) } }
+        }
+
     suspend fun searchIngredientByName(ingredientName: String): FullIngredientDto =
         withContext(ioDispatcher) {
             cocktailApi.searchIngredientByName(ingredientName).ingredients.first()
