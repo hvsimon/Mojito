@@ -12,6 +12,8 @@ class SampleCocktailPoProvider : PreviewParameterProvider<CocktailPo> {
             name = "Cocktail Name",
             gallery = listOf(),
             category = "category",
+            alcoholic = "",
+            glass = "",
             ingredients = listOf(
                 Ingredient(
                     name = "\uD83C\uDF78 白蘭姆酒",

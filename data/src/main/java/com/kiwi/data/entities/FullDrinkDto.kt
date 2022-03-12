@@ -7,7 +7,11 @@ import kotlinx.serialization.Serializable
 data class FullDrinkDto(
     @SerialName("idDrink") val id: String,
     @SerialName("strDrink") val drink: String,
+    @SerialName("strTags") val tags: String?,
     @SerialName("strCategory") val category: String,
+    @SerialName("strIBA") val iba: String?,
+    @SerialName("strAlcoholic") val alcoholic: String,
+    @SerialName("strGlass") val glass: String,
     @SerialName("strInstructions") val instructions: String,
     @SerialName("strDrinkThumb") val thumb: String,
 
