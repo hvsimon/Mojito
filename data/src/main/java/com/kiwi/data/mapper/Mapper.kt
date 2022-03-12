@@ -15,12 +15,14 @@ fun FullDrinkDto.toCocktailPo(): CocktailPo {
         iba = this.iba,
         alcoholic = this.alcoholic,
         glass = this.glass,
-        ingredients = this.ingredients.zip(this.measures) { ingredient, measure ->
-            Ingredient(
-                name = ingredient,
-                amount = measure,
-            )
-        },
+        ingredients = this.ingredients
+            .filter { it.isNotBlank() }
+            .mapIndexed { index, s ->
+                Ingredient(
+                    name = s,
+                    amount = this.measures.getOrElse(index) { "" }
+                )
+            },
         steps = this.instructions,
     )
 }
