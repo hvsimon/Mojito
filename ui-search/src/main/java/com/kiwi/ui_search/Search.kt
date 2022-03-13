@@ -37,7 +37,6 @@ import androidx.compose.material3.SmallTopAppBar
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarScrollBehavior
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -59,7 +58,7 @@ import coil.compose.rememberImagePainter
 import com.google.accompanist.flowlayout.FlowRow
 import com.google.accompanist.insets.statusBarsPadding
 import com.kiwi.common_ui_compose.SampleCocktailPoProvider
-import com.kiwi.common_ui_compose.rememberFlowWithLifecycle
+import com.kiwi.common_ui_compose.rememberStateWithLifecycle
 import com.kiwi.data.entities.CocktailPo
 
 @Composable
@@ -68,8 +67,7 @@ fun Search(
     navigateUp: () -> Unit,
     openRecipe: (cocktailId: String) -> Unit,
 ) {
-    val uiState by rememberFlowWithLifecycle(viewModel.uiState)
-        .collectAsState(initial = SearchUiState())
+    val uiState by rememberStateWithLifecycle(viewModel.uiState)
 
     Search(
         uiState = uiState,

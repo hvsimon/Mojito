@@ -26,7 +26,6 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults.pinnedScrollBehavior
 import androidx.compose.material3.TopAppBarScrollBehavior
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
@@ -37,7 +36,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.rememberImagePainter
 import com.google.accompanist.insets.statusBarsPadding
-import com.kiwi.common_ui_compose.rememberFlowWithLifecycle
+import com.kiwi.common_ui_compose.rememberStateWithLifecycle
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -46,7 +45,7 @@ fun CocktailList(
     navigateUp: () -> Unit,
     openRecipe: (cocktailId: String) -> Unit,
 ) {
-    val uiState by rememberFlowWithLifecycle(viewModel.uiState).collectAsState(CocktailUiState())
+    val uiState by rememberStateWithLifecycle(viewModel.uiState)
     val scrollBehavior = remember { pinnedScrollBehavior() }
 
     Scaffold(

@@ -60,6 +60,7 @@ import com.google.accompanist.swiperefresh.SwipeRefreshIndicator
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 import com.kiwi.common_ui_compose.CocktailListFilterType
 import com.kiwi.common_ui_compose.rememberFlowWithLifecycle
+import com.kiwi.common_ui_compose.rememberStateWithLifecycle
 import com.kiwi.data.entities.CocktailPo
 import com.kiwi.data.entities.Ingredient
 
@@ -70,8 +71,7 @@ fun Onboarding(
     openRecipe: (cocktailId: String) -> Unit,
     openCocktailList: (filter: CocktailListFilterType, keyword: String) -> Unit,
 ) {
-    val uiState by rememberFlowWithLifecycle(viewModel.uiState)
-        .collectAsState(initial = OnboardingUiState())
+    val uiState by rememberStateWithLifecycle(viewModel.uiState)
 
     Onboarding(
         uiState = uiState,

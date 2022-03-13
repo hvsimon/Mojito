@@ -36,7 +36,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.rememberImagePainter
 import coil.size.OriginalSize
 import com.kiwi.common_ui_compose.SampleCocktailPoProvider
-import com.kiwi.common_ui_compose.rememberFlowWithLifecycle
+import com.kiwi.common_ui_compose.rememberStateWithLifecycle
 import com.kiwi.data.entities.CocktailPo
 import com.kiwi.data.entities.Ingredient
 
@@ -44,8 +44,7 @@ import com.kiwi.data.entities.Ingredient
 fun Recipe(
     viewModel: RecipeViewModel = hiltViewModel(),
 ) {
-    val uiState by rememberFlowWithLifecycle(viewModel.uiState)
-        .collectAsState(initial = RecipeUiState())
+    val uiState by rememberStateWithLifecycle(viewModel.uiState)
 
     Recipe(
         cocktail = uiState.cocktail,
