@@ -326,7 +326,7 @@ private fun RecommendResult(
                 modifier = Modifier
                     .padding(top = 8.dp)
                     .padding(horizontal = 16.dp),
-                text = "Categories",
+                text = stringResource(id = R.string.categories),
             )
             TagGroup(
                 modifier = Modifier.padding(horizontal = 16.dp),
@@ -340,7 +340,7 @@ private fun RecommendResult(
                 modifier = Modifier
                     .padding(top = 8.dp)
                     .padding(horizontal = 16.dp),
-                text = "Drink again?",
+                text = stringResource(id = R.string.drink_again),
             )
             CocktailRow(
                 data = uiState.randomCocktails,

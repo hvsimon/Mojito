@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--  Common  -->
+    <string name="app_name">Kiwi\'s Bar</string>
+
+    <string name="onboarding_title">發現</string>
+    <string name="collection_title">酒單</string>
+    <string name="about_title">關於</string>
+    <string name="recipe_title">Recipe</string>
+    <string name="cocktail_list_title">Cocktail List</string>
+
+    <!--  OnBoarding  -->
+    <string name="drink_something">想喝什麼呢？</string>
+    <string name="lets_go">Let\'s Go</string>
+
+    <string name="six_base_liquors">六大基酒</string>
+    <string name="rum">蘭姆酒</string>
+    <string name="gin">琴酒</string>
+    <string name="vodka">伏特加</string>
+    <string name="tequila">龍舌蘭</string>
+    <string name="whiskey">威士忌</string>
+    <string name="brandy">白蘭地</string>
+
+    <string name="iba_official_cocktail_list">IBA 官方雞尾酒</string>
+    <string name="the_unforgettables">難忘</string>
+    <string name="contemporary_classics">當代經典</string>
+    <string name="new_era_drinks">新時代飲料</string>
+
+    <!--  Recipe  -->
+    <string name="ingredients">配方</string>
+    <string name="step">如何調製</string>
+
+    <!--  Follow  -->
+    <string name="follow_title">Menu</string>
+    <string name="follow_empty_message">目前這邊空空，要不要現在製作自己的酒單？</string>
+    <string name="browse_cocktails">瀏覽酒譜</string>
+
+    <!--  About  -->
+    <string name="feed_back">提供意見</string>
+    <string name="licenses">授權</string>
+    <string name="settings_app_version_summary">版本 %s (%d)</string>
+
+    <!--  Search  -->
+    <string name="search">Search</string>
+    <string name="no_result">沒有結果</string>
+    <string name="no_result_caption">請試試看其他關鍵字。</string>
+    <string name="categories">類別</string>
+    <string name="drink_again">再喝一次？</string>
+</resources>

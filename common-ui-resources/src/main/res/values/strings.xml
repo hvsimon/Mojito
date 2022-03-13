@@ -12,16 +12,16 @@
     <string name="cocktail_list_title">Cocktail List</string>
 
     <!--  OnBoarding  -->
-    <string name="drink_something">想喝什麼呢 ?</string>
-    <string name="flexible">隨心所欲</string>
+    <string name="drink_something">What would you like to drink?</string>
+    <string name="lets_go">Let\'s Go</string>
 
-    <string name="six_base_wine">六大基酒</string>
-    <string name="rum">蘭姆酒</string>
-    <string name="gin">琴酒</string>
-    <string name="vodka">伏特加</string>
-    <string name="tequila">龍舌蘭</string>
-    <string name="whiskey">威士忌</string>
-    <string name="brandy">白蘭地</string>
+    <string name="six_base_liquors">Six Base Liquors</string>
+    <string name="rum">Rum</string>
+    <string name="gin">Gin</string>
+    <string name="vodka">Vodka</string>
+    <string name="tequila">Tequila</string>
+    <string name="whiskey">Whiskey</string>
+    <string name="brandy">Brandy</string>
 
     <string name="iba_official_cocktail_list">IBA Official Cocktail list</string>
     <string name="the_unforgettables">The Unforgettables</string>
@@ -29,22 +29,23 @@
     <string name="new_era_drinks">New Era Drinks</string>
 
     <!--  Recipe  -->
-    <string name="ingredients">原料</string>
+    <string name="ingredients">Ingredients</string>
     <string name="step">How to Make</string>
-    <string name="tips">Tips &amp; Tricks</string>
 
     <!--  Follow  -->
     <string name="follow_title">Menu</string>
-    <string name="follow_empty_message">目前這邊空空，要不要現在製作自己的酒單？</string>
-    <string name="browse_cocktails">瀏覽酒譜</string>
+    <string name="follow_empty_message">It\'s empty in here.\nCreate your special cocktail list.</string>
+    <string name="browse_cocktails">Browse</string>
 
     <!--  About  -->
-    <string name="feed_back">提供意見</string>
-    <string name="licenses">授權</string>
-    <string name="settings_app_version_summary">版本 v%s (%d)</string>
+    <string name="feed_back">Feedback</string>
+    <string name="licenses">Licenses</string>
+    <string name="settings_app_version_summary">Version %s (%d)</string>
 
     <!--  Search  -->
     <string name="search">Search</string>
     <string name="no_result">No Results</string>
     <string name="no_result_caption">Try searching other keywords.</string>
+    <string name="categories">Categories</string>
+    <string name="drink_again">Drink again?</string>
 </resources>

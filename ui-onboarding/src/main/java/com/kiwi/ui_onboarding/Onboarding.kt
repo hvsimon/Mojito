@@ -35,7 +35,6 @@ import androidx.compose.material3.TopAppBarScrollBehavior
 import androidx.compose.material3.contentColorFor
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.SideEffect
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -59,7 +58,6 @@ import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.SwipeRefreshIndicator
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 import com.kiwi.common_ui_compose.CocktailListFilterType
-import com.kiwi.common_ui_compose.rememberFlowWithLifecycle
 import com.kiwi.common_ui_compose.rememberStateWithLifecycle
 import com.kiwi.data.entities.CocktailPo
 import com.kiwi.data.entities.Ingredient
@@ -133,7 +131,7 @@ private fun Onboarding(
                     onRandomClick = openRecipe,
                 )
                 Text(
-                    text = stringResource(id = R.string.six_base_wine),
+                    text = stringResource(id = R.string.six_base_liquors),
                     style = MaterialTheme.typography.displaySmall,
                     modifier = Modifier.padding(16.dp)
                 )
@@ -334,7 +332,7 @@ fun RandomButton(
             .padding(8.dp)
     ) {
         Button(onClick = onClick) {
-            Text(text = stringResource(id = R.string.flexible))
+            Text(text = stringResource(id = R.string.lets_go))
         }
     }
 }
