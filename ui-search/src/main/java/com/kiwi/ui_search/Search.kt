@@ -37,16 +37,21 @@ import androidx.compose.material3.SmallTopAppBar
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarScrollBehavior
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.compositeOver
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.TextRange
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.style.TextOverflow
@@ -119,7 +124,14 @@ private fun SearchableTopBar(
     query: String,
     onSearch: (String) -> Unit,
 ) {
-    var searchQuery by remember { mutableStateOf(TextFieldValue(query)) }
+    var searchQuery by remember {
+        mutableStateOf(
+            TextFieldValue(
+                text = query,
+                selection = TextRange(query.length)
+            )
+        )
+    }
 
     SmallTopAppBar(
         modifier = modifier,
@@ -154,8 +166,12 @@ private fun SearchBar(
     onSearch: () -> Unit,
     hint: String,
 ) {
+
+    val focusRequester = remember { FocusRequester() }
+    val focusManager = LocalFocusManager.current
+
     OutlinedTextField(
-        modifier = modifier,
+        modifier = modifier.focusRequester(focusRequester),
         value = value,
         onValueChange = onValueChange,
         trailingIcon = {
@@ -172,7 +188,10 @@ private fun SearchBar(
             imeAction = ImeAction.Search
         ),
         keyboardActions = KeyboardActions(
-            onSearch = { onSearch() }
+            onSearch = {
+                onSearch()
+                focusManager.clearFocus()
+            }
         ),
         placeholder = { Text(text = hint) },
         singleLine = true,
@@ -181,6 +200,12 @@ private fun SearchBar(
             unfocusedBorderColor = Color.Transparent,
         ),
     )
+
+    SideEffect {
+        if (value.text.isEmpty()) {
+            focusRequester.requestFocus()
+        }
+    }
 }
 
 @Composable
