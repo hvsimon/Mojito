@@ -51,9 +51,12 @@ class OnboardingViewModel @Inject constructor(
         }
 
         viewModelScope.launch {
-            val list = cocktailRepository.getIBACategories()
+            val list = cocktailRepository.getIBACocktails()
+                .groupBy { it.iba }
+                .keys
+                .map { IBACategoryItemUiState(it) }
             _uiState.update {
-                it.copy(ibaCategories = list)
+                it.copy(ibaCategoryUiStates = list)
             }
         }
     }

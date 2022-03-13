@@ -4,6 +4,7 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.kiwi.common_ui_compose.CocktailListFilterType
+import com.kiwi.data.entities.IBACategoryType
 import com.kiwi.data.repositories.CocktailRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
@@ -57,7 +58,7 @@ class CocktailListViewModel @Inject constructor(
 
     private suspend fun getIBACocktails() =
         cocktailRepository.getIBACocktails()
-            .filter { it.iba == keyword && it.id.isNotEmpty() }
+            .filter { it.iba == IBACategoryType.THE_UNFORGETTABLES && it.id.isNotEmpty() }
             .map {
                 viewModelScope.async { cocktailRepository.lookupFullCocktailDetailsById(it.id) }
             }

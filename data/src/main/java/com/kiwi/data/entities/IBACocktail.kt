@@ -7,5 +7,5 @@ import kotlinx.serialization.Serializable
 data class IBACocktail(
     @SerialName("id") val id: String,
     @SerialName("name") val name: String,
-    @SerialName("iba") val iba: String,
+    @SerialName("iba") val iba: IBACategoryType,
 )

@@ -157,14 +157,15 @@ private fun Onboarding(
                     style = MaterialTheme.typography.displaySmall,
                     modifier = Modifier.padding(16.dp)
                 )
-                uiState.ibaCategories.forEach {
+                uiState.ibaCategoryUiStates.forEach {
                     CategoryCard(
                         imageData = it.imageUrl,
-                        categoryName = it.name,
+                        categoryName = stringResource(id = it.displayTextResId),
                         onCardClick = {
                             openCocktailList(
+                                // FIXME: Change to pass enum
                                 CocktailListFilterType.IBA_CATEGORY,
-                                it.name
+                                "it.name"
                             )
                         },
                     )
