@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="ingredient_image_url" translatable="false">https://www.thecocktaildb.com/images/ingredients/%s.png</string>
+    <string name="ingredient_small_image_url" translatable="false">https://www.thecocktaildb.com/images/ingredients/%s-Small.png</string>
 
     <!--  Common  -->
     <string name="app_name">Kiwi\'s Bar</string>

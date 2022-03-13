@@ -245,7 +245,7 @@ private fun IngredientCardRow(
                 modifier = Modifier
                     .fillMaxHeight()
                     .aspectRatio(1f),
-                imageUrl = stringResource(id = R.string.ingredient_image_url, it.name),
+                imageUrl = stringResource(id = R.string.ingredient_small_image_url, it.name),
                 name = it.name,
             )
         }
