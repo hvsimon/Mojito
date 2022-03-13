@@ -57,9 +57,10 @@ import com.google.accompanist.insets.statusBarsPadding
 import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.SwipeRefreshIndicator
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
-import com.kiwi.common_ui_compose.CocktailListFilterType
 import com.kiwi.common_ui_compose.rememberStateWithLifecycle
+import com.kiwi.data.entities.BaseLiquorType
 import com.kiwi.data.entities.CocktailPo
+import com.kiwi.data.entities.IBACategoryType
 import com.kiwi.data.entities.Ingredient
 
 @Composable
@@ -67,7 +68,7 @@ fun Onboarding(
     viewModel: OnboardingViewModel = hiltViewModel(),
     openSearch: () -> Unit,
     openRecipe: (cocktailId: String) -> Unit,
-    openCocktailList: (filter: CocktailListFilterType, keyword: String) -> Unit,
+    openCocktailList: (baseLiquorType: BaseLiquorType?, ibaCategoryType: IBACategoryType?) -> Unit,
 ) {
     val uiState by rememberStateWithLifecycle(viewModel.uiState)
 
@@ -86,7 +87,7 @@ private fun Onboarding(
     uiState: OnboardingUiState,
     openSearch: () -> Unit,
     openRecipe: (cocktailId: String) -> Unit,
-    openCocktailList: (filter: CocktailListFilterType, keyword: String) -> Unit,
+    openCocktailList: (baseLiquorType: BaseLiquorType?, ibaCategoryType: IBACategoryType?) -> Unit,
     onRefresh: () -> Unit,
 ) {
     val scrollBehavior = remember { TopAppBarDefaults.pinnedScrollBehavior() }
@@ -142,11 +143,7 @@ private fun Onboarding(
                                 imageData = it.imageUrl,
                                 label = stringResource(id = it.displayTextResId),
                                 onCardClick = {
-                                    // FIXME: Change to pass enum
-                                    openCocktailList(
-                                        CocktailListFilterType.BASE_LIQUOR,
-                                        "it.groupName"
-                                    )
+                                    openCocktailList(it.type, null)
                                 },
                                 modifier = Modifier.weight(1f)
                             )
@@ -162,13 +159,7 @@ private fun Onboarding(
                     CategoryCard(
                         imageData = it.imageUrl,
                         categoryName = stringResource(id = it.displayTextResId),
-                        onCardClick = {
-                            openCocktailList(
-                                // FIXME: Change to pass enum
-                                CocktailListFilterType.IBA_CATEGORY,
-                                "it.name"
-                            )
-                        },
+                        onCardClick = { openCocktailList(null, it.type) },
                     )
                 }
             }

@@ -8,7 +8,6 @@ import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
-import com.kiwi.common_ui_compose.CocktailListFilterType
 import com.kiwi.ui_about.About
 import com.kiwi.ui_about.Licenses
 import com.kiwi.ui_cocktail_list.CocktailList
@@ -42,7 +41,7 @@ internal sealed class Screen(
     )
 
     object CocktailList : Screen(
-        "cocktail_list/?filter={filter}&keyword={keyword}",
+        "cocktail_list/?base_liquor_type={base_liquor_type}&iba_category_type={iba_category_type}",
         R.string.cocktail_list_title,
     )
 
@@ -75,8 +74,12 @@ internal fun AppNavigation(
                 openRecipe = { cocktailId ->
                     navController.navigate("recipe/$cocktailId")
                 },
-                openCocktailList = { filter, keyword ->
-                    navController.navigate("cocktail_list/?filter=$filter&keyword=$keyword")
+                openCocktailList = { baseLiquorType, ibaCategoryType ->
+                    navController.navigate(
+                        "cocktail_list/" +
+                            "?base_liquor_type=${baseLiquorType?.name ?: ""}" +
+                            "&iba_category_type=${ibaCategoryType?.name ?: ""}"
+                    )
                 },
             )
         }
@@ -107,8 +110,14 @@ internal fun AppNavigation(
         composable(
             route = Screen.CocktailList.route,
             arguments = listOf(
-                navArgument("filter") { type = NavType.EnumType(CocktailListFilterType::class.java) },
-                navArgument("keyword") { type = NavType.StringType },
+                navArgument("base_liquor_type") {
+                    type = NavType.StringType
+                    nullable = true
+                },
+                navArgument("iba_category_type") {
+                    type = NavType.StringType
+                    nullable = true
+                },
             )
         ) {
             CocktailList(
