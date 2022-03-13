@@ -48,6 +48,7 @@ import com.kiwi.data.entities.CocktailPo
 fun Collection(
     viewModel: CollectionViewModel = hiltViewModel(),
     openRecipe: (cocktailId: String) -> Unit,
+    openSearch: () -> Unit,
 ) {
     val lazyPagingItems = rememberFlowWithLifecycle(viewModel.pagedList).collectAsLazyPagingItems()
     val isEmpty = lazyPagingItems.itemCount == 0
@@ -56,6 +57,7 @@ fun Collection(
         lazyPagingItems = lazyPagingItems,
         isEmpty = isEmpty,
         openRecipe = openRecipe,
+        openSearch = openSearch,
     )
 }
 
@@ -64,6 +66,7 @@ private fun Collection(
     lazyPagingItems: LazyPagingItems<UiModel>,
     isEmpty: Boolean,
     openRecipe: (cocktailId: String) -> Unit,
+    openSearch: () -> Unit,
 ) {
     Column(
         modifier = Modifier
@@ -83,7 +86,10 @@ private fun Collection(
             }
         }
         if (isEmpty) {
-            Empty(modifier = Modifier.weight(1f))
+            Empty(
+                modifier = Modifier.weight(1f),
+                onButtonClick = openSearch,
+            )
         }
     }
 }
@@ -181,7 +187,10 @@ private fun CollectionItem(
 }
 
 @Composable
-private fun Empty(modifier: Modifier = Modifier) {
+private fun Empty(
+    modifier: Modifier = Modifier,
+    onButtonClick: () -> Unit,
+) {
     val composition by rememberLottieComposition(
         LottieCompositionSpec.Asset("animations/59196-drink.json")
     )
@@ -205,7 +214,7 @@ private fun Empty(modifier: Modifier = Modifier) {
                 .padding(horizontal = 16.dp)
                 .padding(bottom = 8.dp)
         )
-        Button(onClick = { /*TODO*/ }) {
+        Button(onClick = onButtonClick) {
             Text(text = stringResource(R.string.browse_cocktails))
         }
     }

@@ -89,6 +89,9 @@ internal fun AppNavigation(
                 openRecipe = { cocktailId ->
                     navController.navigate("recipe/$cocktailId")
                 },
+                openSearch = {
+                    navController.navigate("search")
+                },
             )
         }
 
