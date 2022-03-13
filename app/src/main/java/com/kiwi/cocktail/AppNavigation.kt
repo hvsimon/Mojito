@@ -8,6 +8,7 @@ import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
+import com.kiwi.common_ui_compose.CocktailListFilterType
 import com.kiwi.ui_about.About
 import com.kiwi.ui_about.Licenses
 import com.kiwi.ui_cocktail_list.CocktailList
@@ -41,7 +42,7 @@ internal sealed class Screen(
     )
 
     object CocktailList : Screen(
-        "cocktail_list/{ingredient}",
+        "cocktail_list/?filter={filter}&keyword={keyword}",
         R.string.cocktail_list_title,
     )
 
@@ -74,8 +75,8 @@ internal fun AppNavigation(
                 openRecipe = { cocktailId ->
                     navController.navigate("recipe/$cocktailId")
                 },
-                openCocktailList = { ingredient ->
-                    navController.navigate("cocktail_list/$ingredient")
+                openCocktailList = { filter, keyword ->
+                    navController.navigate("cocktail_list/?filter=$filter&keyword=$keyword")
                 },
             )
         }
@@ -103,7 +104,13 @@ internal fun AppNavigation(
             )
         ) { Recipe() }
 
-        composable(Screen.CocktailList.route) {
+        composable(
+            route = Screen.CocktailList.route,
+            arguments = listOf(
+                navArgument("filter") { type = NavType.EnumType(CocktailListFilterType::class.java) },
+                navArgument("keyword") { type = NavType.StringType },
+            )
+        ) {
             CocktailList(
                 navigateUp = navController::navigateUp,
                 openRecipe = { cocktailId ->

@@ -58,6 +58,7 @@ import com.google.accompanist.insets.statusBarsPadding
 import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.SwipeRefreshIndicator
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
+import com.kiwi.common_ui_compose.CocktailListFilterType
 import com.kiwi.common_ui_compose.rememberFlowWithLifecycle
 import com.kiwi.data.entities.CocktailPo
 import com.kiwi.data.entities.Ingredient
@@ -67,7 +68,7 @@ fun Onboarding(
     viewModel: OnboardingViewModel = hiltViewModel(),
     openSearch: () -> Unit,
     openRecipe: (cocktailId: String) -> Unit,
-    openCocktailList: (String) -> Unit,
+    openCocktailList: (filter: CocktailListFilterType, keyword: String) -> Unit,
 ) {
     val uiState by rememberFlowWithLifecycle(viewModel.uiState)
         .collectAsState(initial = OnboardingUiState())
@@ -87,7 +88,7 @@ private fun Onboarding(
     uiState: OnboardingUiState,
     openSearch: () -> Unit,
     openRecipe: (cocktailId: String) -> Unit,
-    openCocktailList: (String) -> Unit,
+    openCocktailList: (filter: CocktailListFilterType, keyword: String) -> Unit,
     onRefresh: () -> Unit,
 ) {
     val scrollBehavior = remember { TopAppBarDefaults.pinnedScrollBehavior() }
@@ -142,7 +143,12 @@ private fun Onboarding(
                             WineCard(
                                 imageData = it.groupImageUrl,
                                 label = it.groupName,
-                                onCardClick = openCocktailList,
+                                onCardClick = {
+                                    openCocktailList(
+                                        CocktailListFilterType.BASE_LIQUOR,
+                                        it.groupName
+                                    )
+                                },
                                 modifier = Modifier.weight(1f)
                             )
                         }
@@ -157,7 +163,12 @@ private fun Onboarding(
                     CategoryCard(
                         imageData = it.imageUrl,
                         categoryName = it.name,
-                        onCardClick = { /* TODO */ },
+                        onCardClick = {
+                            openCocktailList(
+                                CocktailListFilterType.IBA_CATEGORY,
+                                it.name
+                            )
+                        },
                     )
                 }
             }
@@ -333,14 +344,14 @@ fun RandomButton(
 private fun WineCard(
     imageData: Any,
     label: String,
-    onCardClick: (String) -> Unit,
+    onCardClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     Card(
         modifier = modifier
             .padding(4.dp)
             .aspectRatio(1f)
-            .clickable { onCardClick.invoke(label) },
+            .clickable(onClick = onCardClick),
     ) {
         Box {
             Image(
@@ -370,14 +381,14 @@ private fun WineCard(
 private fun CategoryCard(
     imageData: Any,
     categoryName: String,
-    onCardClick: (String) -> Unit,
+    onCardClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     Card(
         modifier = modifier
             .padding(4.dp)
             .aspectRatio(2f)
-            .clickable { onCardClick.invoke(categoryName) },
+            .clickable(onClick = onCardClick),
     ) {
         Box {
             Image(
