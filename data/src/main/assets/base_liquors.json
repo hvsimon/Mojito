@@ -1,0 +1,117 @@
+[
+  {
+    "id": "179",
+    "name": "Dark Rum",
+    "base_liquor": "Rum"
+  },
+  {
+    "id": "3",
+    "name": "Rum",
+    "base_liquor": "Rum"
+  },
+  {
+    "id": "305",
+    "name": "Light Rum",
+    "base_liquor": "Rum"
+  },
+  {
+    "id": "37",
+    "name": "Añejo Rum",
+    "base_liquor": "Rum"
+  },
+  {
+    "id": "464",
+    "name": "Spiced rum",
+    "base_liquor": "Rum"
+  },
+  {
+    "id": "2",
+    "name": "Gin",
+    "base_liquor": "Gin"
+  },
+  {
+    "id": "1",
+    "name": "Vodka",
+    "base_liquor": "Vodka"
+  },
+  {
+    "id": "380",
+    "name": "Peach Vodka",
+    "base_liquor": "Vodka"
+  },
+  {
+    "id": "574",
+    "name": "Absolut citron",
+    "base_liquor": "Vodka"
+  },
+  {
+    "id": "4",
+    "name": "Tequila",
+    "base_liquor": "Tequila"
+  },
+  {
+    "id": "273",
+    "name": "Irish Whiskey",
+    "base_liquor": "Whiskey"
+  },
+  {
+    "id": "280",
+    "name": "Johnnie Walker",
+    "base_liquor": "Whiskey"
+  },
+  {
+    "id": "66",
+    "name": "Blended Whiskey",
+    "base_liquor": "Whiskey"
+  },
+  {
+    "id": "71",
+    "name": "Bourbon",
+    "base_liquor": "Whiskey"
+  },
+  {
+    "id": "600",
+    "name": "Whiskey",
+    "base_liquor": "Whiskey"
+  },
+  {
+    "id": "137",
+    "name": "Coffee Brandy",
+    "base_liquor": "Brandy"
+  },
+  {
+    "id": "141",
+    "name": "Cognac",
+    "base_liquor": "Brandy"
+  },
+  {
+    "id": "26",
+    "name": "Apple Brandy",
+    "base_liquor": "Brandy"
+  },
+  {
+    "id": "32",
+    "name": "Apricot Brandy",
+    "base_liquor": "Brandy"
+  },
+  {
+    "id": "400",
+    "name": "Pisco",
+    "base_liquor": "Brandy"
+  },
+  {
+    "id": "61",
+    "name": "Blackberry Brandy",
+    "base_liquor": "Brandy"
+  },
+  {
+    "id": "74",
+    "name": "Brandy",
+    "base_liquor": "Brandy"
+  },
+  {
+    "id": "100",
+    "name": "Cherry brandy",
+    "base_liquor": "Brandy"
+  }
+]

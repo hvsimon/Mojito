@@ -21,10 +21,8 @@ class CocktailListViewModel @Inject constructor(
     val groupName: String = savedStateHandle["ingredient"]!!
 
     val list = flow {
-        val group = cocktailRepository.getBaseWineGroups()
-            .find { it.groupName == groupName } ?: error("Not match group name")
-
-        group.baseWineList
+        cocktailRepository.getBaseLiquors()
+            .filter { it.baseLiquor == groupName }
             .map { viewModelScope.async { cocktailRepository.searchByIngredient(it.name) } }
             .awaitAll()
             .flatten()

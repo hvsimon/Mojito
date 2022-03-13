@@ -4,7 +4,7 @@ import android.app.Application
 import com.kiwi.data.api.CocktailApi
 import com.kiwi.data.db.CocktailDao
 import com.kiwi.data.di.IoDispatcher
-import com.kiwi.data.entities.BaseWineGroup
+import com.kiwi.data.entities.BaseLiquor
 import com.kiwi.data.entities.CocktailCategoryPo
 import com.kiwi.data.entities.CocktailPo
 import com.kiwi.data.entities.FullIngredientDto
@@ -80,18 +80,15 @@ class CocktailRepository @Inject constructor(
                     .also { cocktailDao.insertCocktails(it) }
         }
 
-    suspend fun getBaseWineGroups(): List<BaseWineGroup> = withContext(ioDispatcher) {
+    suspend fun getBaseLiquors(): List<BaseLiquor> = withContext(ioDispatcher) {
         // TODO: Implement cache mechanism
         application.assets
-            .open("base_wine.json")
+            .open("base_liquors.json")
             .source()
             .buffer()
             .use { it.readString(Charset.defaultCharset()) }
             .let { json ->
-                Json.decodeFromString(
-                    ListSerializer(BaseWineGroup.serializer()),
-                    json
-                )
+                Json.decodeFromString(ListSerializer(BaseLiquor.serializer()), json)
             }
     }
 
