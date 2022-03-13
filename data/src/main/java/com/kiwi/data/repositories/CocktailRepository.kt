@@ -9,6 +9,7 @@ import com.kiwi.data.entities.CocktailCategoryPo
 import com.kiwi.data.entities.CocktailPo
 import com.kiwi.data.entities.FullIngredientDto
 import com.kiwi.data.entities.IBACategory
+import com.kiwi.data.entities.IBACocktail
 import com.kiwi.data.mapper.toCocktailPo
 import dagger.Reusable
 import java.nio.charset.Charset
@@ -89,6 +90,18 @@ class CocktailRepository @Inject constructor(
             .use { it.readString(Charset.defaultCharset()) }
             .let { json ->
                 Json.decodeFromString(ListSerializer(BaseLiquor.serializer()), json)
+            }
+    }
+
+    suspend fun getIBACocktails(): List<IBACocktail> = withContext(ioDispatcher) {
+        // TODO: Implement cache mechanism
+        application.assets
+            .open("iba_cocktails.json")
+            .source()
+            .buffer()
+            .use { it.readString(Charset.defaultCharset()) }
+            .let { json ->
+                Json.decodeFromString(ListSerializer(IBACocktail.serializer()), json)
             }
     }
 
