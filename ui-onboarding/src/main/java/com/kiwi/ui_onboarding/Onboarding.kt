@@ -135,16 +135,17 @@ private fun Onboarding(
                     style = MaterialTheme.typography.displaySmall,
                     modifier = Modifier.padding(16.dp)
                 )
-                uiState.baseWineGroups.chunked(2).forEach {
+                uiState.baseLiquorItemUiStates.chunked(2).forEach {
                     Row(modifier = Modifier.fillMaxWidth()) {
                         it.forEach {
                             WineCard(
-                                imageData = it.groupImageUrl,
-                                label = it.groupName,
+                                imageData = it.imageUrl,
+                                label = stringResource(id = it.displayTextResId),
                                 onCardClick = {
+                                    // FIXME: Change to pass enum
                                     openCocktailList(
                                         CocktailListFilterType.BASE_LIQUOR,
-                                        it.groupName
+                                        "it.groupName"
                                     )
                                 },
                                 modifier = Modifier.weight(1f)

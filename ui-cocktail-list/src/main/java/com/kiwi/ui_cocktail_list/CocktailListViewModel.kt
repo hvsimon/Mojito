@@ -4,6 +4,7 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.kiwi.common_ui_compose.CocktailListFilterType
+import com.kiwi.data.entities.BaseLiquorType
 import com.kiwi.data.entities.IBACategoryType
 import com.kiwi.data.repositories.CocktailRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -44,7 +45,7 @@ class CocktailListViewModel @Inject constructor(
 
     private suspend fun getCocktailsByBaseLiquors() =
         cocktailRepository.getBaseLiquors()
-            .filter { it.baseLiquor == keyword }
+            .filter { it.baseLiquor == BaseLiquorType.RUM }
             .map { viewModelScope.async { cocktailRepository.searchByIngredient(it.name) } }
             .awaitAll()
             .flatten()

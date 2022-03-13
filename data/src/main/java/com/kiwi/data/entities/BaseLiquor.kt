@@ -7,5 +7,5 @@ import kotlinx.serialization.Serializable
 data class BaseLiquor(
     @SerialName("id") val id: String,
     @SerialName("name") val name: String,
-    @SerialName("base_liquor") val baseLiquor: String,
+    @SerialName("base_liquor") val baseLiquor: BaseLiquorType,
 )
