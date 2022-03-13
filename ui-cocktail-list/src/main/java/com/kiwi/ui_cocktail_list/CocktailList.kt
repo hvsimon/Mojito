@@ -33,14 +33,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.rememberImagePainter
 import com.google.accompanist.insets.statusBarsPadding
-import com.kiwi.common_ui_compose.SampleCocktailPoProvider
 import com.kiwi.common_ui_compose.rememberFlowWithLifecycle
-import com.kiwi.data.entities.CocktailPo
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -49,13 +46,13 @@ fun CocktailList(
     navigateUp: () -> Unit,
     openRecipe: (cocktailId: String) -> Unit,
 ) {
-    val cocktails by rememberFlowWithLifecycle(viewModel.list).collectAsState(emptyList())
+    val uiState by rememberFlowWithLifecycle(viewModel.uiState).collectAsState(CocktailUiState())
     val scrollBehavior = remember { pinnedScrollBehavior() }
 
     Scaffold(
         topBar = {
             CocktailListAppBar(
-                title = viewModel.groupName.uppercase(),
+                title = uiState.title.uppercase(),
                 navigateUp = navigateUp,
                 scrollBehavior = scrollBehavior,
             )
@@ -65,7 +62,7 @@ fun CocktailList(
             .nestedScroll(scrollBehavior.nestedScrollConnection)
     ) {
         CocktailList(
-            list = cocktails,
+            list = uiState.cocktailItems,
             onItemClick = openRecipe,
         )
     }
@@ -96,7 +93,7 @@ private fun CocktailListAppBar(
 
 @Composable
 private fun CocktailList(
-    list: List<CocktailPo>,
+    list: List<CocktailItemUiState>,
     onItemClick: (cocktailId: String) -> Unit
 ) {
     LazyVerticalGrid(
@@ -117,18 +114,18 @@ private fun CocktailList(
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun CocktailCard(
-    cocktail: CocktailPo,
+    cocktail: CocktailItemUiState,
     onClick: (cocktailId: String) -> Unit,
 ) {
     Card(
         modifier = Modifier
             .fillMaxWidth()
-            .clickable(onClick = { onClick.invoke(cocktail.cocktailId) }),
+            .clickable(onClick = { onClick.invoke(cocktail.id) }),
     ) {
         Column {
             Image(
                 painter = rememberImagePainter(
-                    data = cocktail.gallery.randomOrNull(),
+                    data = cocktail.imageUrl,
                     builder = {
                         crossfade(true)
                     },
@@ -178,10 +175,14 @@ private fun PreviewSectionHeader() {
 
 @Preview
 @Composable
-private fun PreviewCocktailGrid(
-    @PreviewParameter(SampleCocktailPoProvider::class) cocktailPo: CocktailPo
-) {
-    val list = MutableList(8) { cocktailPo }
+private fun PreviewCocktailGrid() {
+    val list = MutableList(8) {
+        CocktailItemUiState(
+            id = "",
+            name = "name",
+            imageUrl = ""
+        )
+    }
     CocktailList(
         list = list,
         onItemClick = {},
@@ -190,11 +191,13 @@ private fun PreviewCocktailGrid(
 
 @Preview
 @Composable
-private fun PreviewCocktailCard(
-    @PreviewParameter(SampleCocktailPoProvider::class) cocktailPo: CocktailPo
-) {
+private fun PreviewCocktailCard() {
     CocktailCard(
-        cocktail = cocktailPo,
+        cocktail = CocktailItemUiState(
+            id = "",
+            name = "name",
+            imageUrl = ""
+        ),
         onClick = {},
     )
 }

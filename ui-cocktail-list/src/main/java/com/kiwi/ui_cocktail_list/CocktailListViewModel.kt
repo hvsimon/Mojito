@@ -8,9 +8,11 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
-import kotlinx.coroutines.flow.SharingStarted
-import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
 
 @HiltViewModel
 class CocktailListViewModel @Inject constructor(
@@ -18,14 +20,29 @@ class CocktailListViewModel @Inject constructor(
     cocktailRepository: CocktailRepository,
 ) : ViewModel() {
 
-    val groupName: String = savedStateHandle["ingredient"]!!
+    private val groupName: String = savedStateHandle["ingredient"]!!
 
-    val list = flow {
-        cocktailRepository.getBaseLiquors()
-            .filter { it.baseLiquor == groupName }
-            .map { viewModelScope.async { cocktailRepository.searchByIngredient(it.name) } }
-            .awaitAll()
-            .flatten()
-            .run { emit(this) }
-    }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), emptyList())
+    private val _uiState = MutableStateFlow(CocktailUiState(title = groupName))
+    val uiState: StateFlow<CocktailUiState> = _uiState.asStateFlow()
+
+    init {
+        viewModelScope.launch {
+            val list = cocktailRepository.getBaseLiquors()
+                .filter { it.baseLiquor == groupName }
+                .map { viewModelScope.async { cocktailRepository.searchByIngredient(it.name) } }
+                .awaitAll()
+                .flatten()
+                .map {
+                    CocktailItemUiState(
+                        id = it.cocktailId,
+                        name = it.name,
+                        imageUrl = it.gallery.firstOrNull() ?: "",
+                    )
+                }
+
+            _uiState.update {
+                it.copy(cocktailItems = list)
+            }
+        }
+    }
 }
