@@ -49,4 +49,5 @@
 
     <!--  Ingredient  -->
     <string name="ingredient_title">配方</string>
+    <string name="default_ingredient_desc">毫無反應，就只是個 %s。</string>
 </resources>

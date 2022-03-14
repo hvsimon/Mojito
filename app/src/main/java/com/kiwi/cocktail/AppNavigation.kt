@@ -1,9 +1,11 @@
 package com.kiwi.cocktail
 
 import androidx.annotation.StringRes
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
@@ -76,6 +78,7 @@ internal fun AppNavigation(
 ) {
     ModalBottomSheetLayout(
         bottomSheetNavigator = bottomSheetNavigator,
+        sheetShape = RoundedCornerShape(topStart = 12.dp, topEnd = 12.dp),
         sheetBackgroundColor = MaterialTheme.colorScheme.surface,
     ) {
         NavHost(
