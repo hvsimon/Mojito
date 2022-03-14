@@ -25,15 +25,22 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.google.accompanist.insets.navigationBarsPadding
+import com.google.accompanist.navigation.material.ExperimentalMaterialNavigationApi
+import com.google.accompanist.navigation.material.rememberBottomSheetNavigator
 import com.kiwi.cocktail.AppNavigation
 import com.kiwi.cocktail.R
 import com.kiwi.cocktail.Screen
 
-@OptIn(ExperimentalMaterial3Api::class)
+@OptIn(
+    ExperimentalMaterial3Api::class,
+    ExperimentalMaterialNavigationApi::class,
+)
 @Preview
 @Composable
 fun Home() {
-    val navController = rememberNavController()
+    val bottomSheetNavigator = rememberBottomSheetNavigator()
+    val navController = rememberNavController(bottomSheetNavigator)
+
     val mainScreen = listOf(
         Screen.Onboarding.route,
         Screen.Collection.route,
@@ -56,7 +63,11 @@ fun Home() {
         },
     ) { innerPadding ->
         val paddingBottom = if (showBottomBar) innerPadding else PaddingValues(0.dp)
-        AppNavigation(navController = navController, modifier = Modifier.padding(paddingBottom))
+        AppNavigation(
+            navController = navController,
+            bottomSheetNavigator = bottomSheetNavigator,
+            modifier = Modifier.padding(paddingBottom),
+        )
     }
 }
 

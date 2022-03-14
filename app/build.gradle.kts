@@ -77,6 +77,7 @@ dependencies {
     // Google
     implementation(libs.material)
     implementation(libs.bundles.accompanist)
+    implementation(libs.accompanist.navigation.material)
 
     implementation(libs.androidx.hilt.compose)
     implementation(libs.hilt.library)
