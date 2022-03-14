@@ -2,6 +2,7 @@ package com.kiwi.ui_recipe
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -42,13 +43,15 @@ import com.kiwi.data.entities.Ingredient
 @Composable
 fun Recipe(
     viewModel: RecipeViewModel = hiltViewModel(),
+    openIngredient: (ingredientName: String) -> Unit,
 ) {
     val uiState by rememberStateWithLifecycle(viewModel.uiState)
 
     Recipe(
         cocktail = uiState.cocktail,
         isFollowed = uiState.isFollowed,
-        onToggleFollowed = { viewModel.toggleFollow() }
+        onToggleFollowed = { viewModel.toggleFollow() },
+        openIngredient = openIngredient,
     )
 }
 
@@ -58,6 +61,7 @@ private fun Recipe(
     cocktail: CocktailPo?,
     isFollowed: Boolean,
     onToggleFollowed: () -> Unit,
+    openIngredient: (ingredientName: String) -> Unit,
 ) {
     if (cocktail == null) {
         // show loading view
@@ -93,7 +97,10 @@ private fun Recipe(
                 Introduction(
                     cocktailName = cocktail.name,
                 )
-                Ingredient(cocktail.ingredients)
+                Ingredients(
+                    ingredients = cocktail.ingredients,
+                    onItemClick = openIngredient,
+                )
                 Step(cocktail.steps)
                 Spacer(
                     modifier = Modifier
@@ -118,7 +125,10 @@ private fun Introduction(
 }
 
 @Composable
-private fun Ingredient(ingredients: List<Ingredient>) {
+private fun Ingredients(
+    ingredients: List<Ingredient>,
+    onItemClick: (String) -> Unit,
+) {
     Column(
         modifier = Modifier
             .background(color = MaterialTheme.colorScheme.surfaceVariant)
@@ -134,8 +144,9 @@ private fun Ingredient(ingredients: List<Ingredient>) {
                 verticalAlignment = Alignment.CenterVertically,
                 modifier = Modifier
                     .height(40.dp)
-                    .padding(4.dp)
                     .fillMaxWidth()
+                    .clickable { onItemClick(it.name) }
+                    .padding(4.dp)
             ) {
                 Image(
                     painter = rememberImagePainter(
@@ -207,7 +218,8 @@ fun PreviewRecipe(
     Recipe(
         cocktail = cocktailPo,
         isFollowed = false,
-        onToggleFollowed = {}
+        onToggleFollowed = {},
+        openIngredient = {},
     )
 }
 

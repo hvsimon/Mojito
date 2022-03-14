@@ -131,7 +131,13 @@ internal fun AppNavigation(
                         type = NavType.StringType
                     }
                 )
-            ) { Recipe() }
+            ) {
+                Recipe(
+                    openIngredient = { ingredientName ->
+                        navController.navigate("ingredient/$ingredientName")
+                    }
+                )
+            }
 
             composable(
                 route = Screen.CocktailList.route,
