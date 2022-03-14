@@ -1,6 +1,5 @@
 package com.kiwi.ui_onboarding
 
-import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -45,7 +44,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.compositeOver
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
@@ -69,6 +67,7 @@ fun Onboarding(
     openSearch: () -> Unit,
     openRecipe: (cocktailId: String) -> Unit,
     openCocktailList: (baseLiquorType: BaseLiquorType?, ibaCategoryType: IBACategoryType?) -> Unit,
+    openIngredient: (ingredientName: String) -> Unit,
 ) {
     val uiState by rememberStateWithLifecycle(viewModel.uiState)
 
@@ -77,7 +76,8 @@ fun Onboarding(
         openSearch = openSearch,
         openRecipe = openRecipe,
         openCocktailList = openCocktailList,
-        onRefresh = { viewModel.randomCocktail() }
+        onRefresh = { viewModel.randomCocktail() },
+        openIngredient = openIngredient,
     )
 }
 
@@ -89,6 +89,7 @@ private fun Onboarding(
     openRecipe: (cocktailId: String) -> Unit,
     openCocktailList: (baseLiquorType: BaseLiquorType?, ibaCategoryType: IBACategoryType?) -> Unit,
     onRefresh: () -> Unit,
+    openIngredient: (ingredientName: String) -> Unit,
 ) {
     val scrollBehavior = remember { TopAppBarDefaults.pinnedScrollBehavior() }
 
@@ -130,6 +131,7 @@ private fun Onboarding(
                 Header(
                     cocktail = uiState.coverCocktail,
                     onRandomClick = openRecipe,
+                    onIngredientClick = openIngredient,
                 )
                 Text(
                     text = stringResource(id = R.string.six_base_liquors),
@@ -171,6 +173,7 @@ private fun Onboarding(
 private fun Header(
     cocktail: CocktailPo?,
     onRandomClick: (cocktailId: String) -> Unit,
+    onIngredientClick: (ingredientName: String) -> Unit,
 ) {
 
     Column(
@@ -179,7 +182,10 @@ private fun Header(
             .fillMaxWidth()
     ) {
         RandomCocktail(cocktail = cocktail)
-        IngredientCardRow(cocktail?.ingredients ?: emptyList())
+        IngredientCardRow(
+            ingredients = cocktail?.ingredients ?: emptyList(),
+            onItemClick = onIngredientClick
+        )
         RandomButton(
             onClick = { cocktail?.let { onRandomClick(it.cocktailId) } }
         )
@@ -231,6 +237,7 @@ private fun RandomCocktail(
 @Composable
 private fun IngredientCardRow(
     ingredients: List<Ingredient>,
+    onItemClick: (ingredientName: String) -> Unit,
 ) {
     Row(
         modifier = Modifier
@@ -246,7 +253,7 @@ private fun IngredientCardRow(
                     .fillMaxHeight()
                     .aspectRatio(1f),
                 imageUrl = stringResource(id = R.string.ingredient_small_image_url, it.name),
-                name = it.name,
+                onCardClick = { onItemClick(it.name) }
             )
         }
     }
@@ -291,14 +298,10 @@ private fun SearchBar(
 private fun IngredientCard(
     modifier: Modifier = Modifier,
     imageUrl: String,
-    name: String,
+    onCardClick: () -> Unit,
 ) {
-    val context = LocalContext.current
     Card(
-        modifier = modifier
-            .clickable {
-                Toast.makeText(context, name, Toast.LENGTH_SHORT).show()
-            }
+        modifier = modifier.clickable(onClick = onCardClick)
     ) {
         Image(
             painter = rememberImagePainter(
@@ -414,9 +417,8 @@ private fun PreviewSearchBar() {
 @Composable
 private fun PreviewIngredientCardRow() {
     IngredientCardRow(
-        listOf(
-            Ingredient(name = "a", amount = "a"),
-        )
+        ingredients = listOf(Ingredient(name = "a", amount = "a")),
+        onItemClick = {}
     )
 }
 

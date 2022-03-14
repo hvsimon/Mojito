@@ -17,6 +17,7 @@ import com.kiwi.ui_about.About
 import com.kiwi.ui_about.Licenses
 import com.kiwi.ui_cocktail_list.CocktailList
 import com.kiwi.ui_collection.Collection
+import com.kiwi.ui_ingredient.Ingredient
 import com.kiwi.ui_onboarding.Onboarding
 import com.kiwi.ui_recipe.Recipe
 import com.kiwi.ui_search.Search
@@ -59,6 +60,11 @@ internal sealed class Screen(
         "licenses",
         R.string.licenses,
     )
+
+    object Ingredient : Screen(
+        "ingredient/{ingredientName}",
+        R.string.ingredient_title,
+    )
 }
 
 @OptIn(ExperimentalMaterialNavigationApi::class)
@@ -77,10 +83,6 @@ internal fun AppNavigation(
             startDestination = Screen.Onboarding.route,
             modifier = modifier,
         ) {
-            bottomSheet(route = "sheet") {
-                // TODO: add dest
-            }
-
             composable(Screen.Onboarding.route) {
                 Onboarding(
                     openSearch = {
@@ -96,6 +98,9 @@ internal fun AppNavigation(
                                 "&iba_category_type=${ibaCategoryType?.name ?: ""}"
                         )
                     },
+                    openIngredient = { ingredientName ->
+                        navController.navigate("ingredient/$ingredientName")
+                    }
                 )
             }
 
@@ -159,6 +164,10 @@ internal fun AppNavigation(
                 Licenses(
                     navigateUp = navController::navigateUp
                 )
+            }
+
+            bottomSheet(Screen.Ingredient.route) {
+                Ingredient()
             }
         }
     }

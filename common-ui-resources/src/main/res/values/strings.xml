@@ -48,4 +48,7 @@
     <string name="no_result_caption">Try searching other keywords.</string>
     <string name="categories">Categories</string>
     <string name="drink_again">Drink again?</string>
+
+    <!--  Ingredient  -->
+    <string name="ingredient_title">Ingredient</string>
 </resources>
