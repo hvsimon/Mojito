@@ -20,5 +20,6 @@ include(
     ":ui-collection",
     ":ui-cocktail-list",
     ":ui-search",
-    ":ui-about"
+    ":ui-about",
+    ":ui-ingredient",
 )

@@ -59,6 +59,7 @@ dependencies {
     implementation(project(":ui-cocktail-list"))
     implementation(project(":ui-search"))
     implementation(project(":ui-about"))
+    implementation(project(":ui-ingredient"))
 
     // Jetbrains
 
