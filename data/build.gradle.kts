@@ -61,4 +61,5 @@ dependencies {
     implementation(libs.retrofit.kotlinx.serialization.converter)
 
     testImplementation(libs.junit.core)
+    testImplementation(libs.mockk.core)
 }
