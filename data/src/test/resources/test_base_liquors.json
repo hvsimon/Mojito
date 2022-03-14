@@ -1,0 +1,27 @@
+[
+  {
+    "id": "179",
+    "name": "Dark Rum",
+    "base_liquor": "Rum"
+  },
+  {
+    "id": "3",
+    "name": "Rum",
+    "base_liquor": "Rum"
+  },
+  {
+    "id": "305",
+    "name": "Light Rum",
+    "base_liquor": "Rum"
+  },
+  {
+    "id": "37",
+    "name": "Añejo Rum",
+    "base_liquor": "Rum"
+  },
+  {
+    "id": "464",
+    "name": "Spiced rum",
+    "base_liquor": "Rum"
+  }
+]

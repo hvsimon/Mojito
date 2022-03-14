@@ -59,4 +59,6 @@ dependencies {
     implementation(libs.okhttp.core)
     implementation(libs.retrofit.core)
     implementation(libs.retrofit.kotlinx.serialization.converter)
+
+    testImplementation(libs.junit.core)
 }
