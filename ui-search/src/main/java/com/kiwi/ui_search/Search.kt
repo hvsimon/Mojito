@@ -196,6 +196,8 @@ private fun SearchBar(
         placeholder = { Text(text = hint) },
         singleLine = true,
         colors = TextFieldDefaults.outlinedTextFieldColors(
+            textColor = MaterialTheme.colorScheme.onSurface,
+            cursorColor = MaterialTheme.colorScheme.primary,
             focusedBorderColor = Color.Transparent,
             unfocusedBorderColor = Color.Transparent,
         ),
