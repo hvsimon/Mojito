@@ -1,6 +1,5 @@
 package com.kiwi.cocktail
 
-import androidx.annotation.StringRes
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
@@ -24,49 +23,19 @@ import com.kiwi.ui_onboarding.Onboarding
 import com.kiwi.ui_recipe.Recipe
 import com.kiwi.ui_search.Search
 
-internal sealed class Screen(
-    val route: String,
-    @StringRes val labelResId: Int,
-) {
-    object Onboarding : Screen(
-        "onboarding",
-        R.string.onboarding_title,
-    )
-
-    object Collection : Screen(
-        "collection",
-        R.string.collection_title,
-    )
-
-    object About : Screen(
-        "about",
-        R.string.about_title,
-    )
-
-    object Recipe : Screen(
-        "recipe/{cocktailId}",
-        R.string.recipe_title,
-    )
-
+internal sealed class Screen(val route: String) {
+    object Onboarding : Screen("onboarding")
+    object Collection : Screen("collection")
+    object About : Screen("about")
+    object Recipe : Screen("recipe/{cocktailId}")
     object CocktailList : Screen(
-        "cocktail_list/?base_liquor_type={base_liquor_type}&iba_category_type={iba_category_type}",
-        R.string.cocktail_list_title,
+        "cocktail_list/" +
+            "?base_liquor_type={base_liquor_type}" +
+            "&iba_category_type={iba_category_type}"
     )
-
-    object Search : Screen(
-        "search",
-        R.string.search,
-    )
-
-    object Licenses : Screen(
-        "licenses",
-        R.string.licenses,
-    )
-
-    object Ingredient : Screen(
-        "ingredient/{ingredientName}",
-        R.string.ingredient_title,
-    )
+    object Search : Screen("search")
+    object Licenses : Screen("licenses")
+    object Ingredient : Screen("ingredient/{ingredientName}")
 }
 
 @OptIn(ExperimentalMaterialNavigationApi::class)

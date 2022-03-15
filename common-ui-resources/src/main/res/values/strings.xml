@@ -7,13 +7,8 @@
     <!--  Common  -->
     <string name="app_name">Kiwi\'s Bar</string>
 
-    <string name="onboarding_title">Onboarding</string>
-    <string name="collection_title">Collection</string>
-    <string name="about_title">About</string>
-    <string name="recipe_title">Recipe</string>
-    <string name="cocktail_list_title">Cocktail List</string>
-
     <!--  OnBoarding  -->
+    <string name="onboarding_title">Onboarding</string>
     <string name="drink_something">What would you like to drink?</string>
     <string name="lets_go">Let\'s Go</string>
 
@@ -35,11 +30,13 @@
     <string name="step">How to Make</string>
 
     <!--  Follow  -->
+    <string name="collection_title">Collection</string>
     <string name="follow_title">Menu</string>
     <string name="follow_empty_message">It\'s empty in here.\nCreate your special cocktail list.</string>
     <string name="browse_cocktails">Browse</string>
 
     <!--  About  -->
+    <string name="about_title">About</string>
     <string name="feed_back">Feedback</string>
     <string name="licenses">Licenses</string>
     <string name="settings_app_version_summary">Version %s (%d)</string>

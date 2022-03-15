@@ -1,6 +1,7 @@
 package com.kiwi.cocktail.ui
 
 import androidx.annotation.DrawableRes
+import androidx.annotation.StringRes
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.slideInVertically
 import androidx.compose.animation.slideOutVertically
@@ -86,7 +87,7 @@ fun HomeBottomNavigation(
             val iconRes = if (selected) item.selectedIconResId else item.iconResId
             NavigationBarItem(
                 icon = { Icon(painterResource(id = iconRes), contentDescription = null) },
-                label = { Text(text = stringResource(id = item.screen.labelResId)) },
+                label = { Text(text = stringResource(id = item.labelResId)) },
                 selected = selected,
                 onClick = {
                     navController.navigate(item.screen.route) {
@@ -102,6 +103,7 @@ fun HomeBottomNavigation(
 
 private data class HomeNavigationItem(
     val screen: Screen,
+    @StringRes val labelResId: Int,
     @DrawableRes val iconResId: Int,
     @DrawableRes val selectedIconResId: Int,
 )
@@ -109,16 +111,19 @@ private data class HomeNavigationItem(
 private val HomeNavigationItems = listOf(
     HomeNavigationItem(
         screen = Screen.Onboarding,
+        labelResId = R.string.onboarding_title,
         iconResId = R.drawable.ic_mojito_outlined,
         selectedIconResId = R.drawable.ic_mojito_filled,
     ),
     HomeNavigationItem(
         screen = Screen.Collection,
+        labelResId = R.string.collection_title,
         iconResId = R.drawable.ic_favorite_outlined,
         selectedIconResId = R.drawable.ic_favorite_filled,
     ),
     HomeNavigationItem(
         screen = Screen.About,
+        labelResId = R.string.about_title,
         iconResId = R.drawable.ic_person_outline,
         selectedIconResId = R.drawable.ic_person_filled,
     )
