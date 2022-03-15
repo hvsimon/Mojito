@@ -37,7 +37,11 @@
 
     <!--  About  -->
     <string name="about_title">About</string>
+    <string name="support">Support</string>
+    <string name="legal">Legal</string>
     <string name="feed_back">Feedback</string>
+    <string name="terms_of_service">Terms of Service</string>
+    <string name="privacy_policy">Privacy Policy</string>
     <string name="licenses">Licenses</string>
     <string name="settings_app_version_summary">Version %s (%d)</string>
 

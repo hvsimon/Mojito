@@ -33,7 +33,11 @@
 
     <!--  About  -->
     <string name="about_title">關於</string>
+    <string name="support">支援</string>
+    <string name="legal">法律</string>
     <string name="feed_back">提供意見</string>
+    <string name="terms_of_service">《服務條款》</string>
+    <string name="privacy_policy">《隱私權政策》</string>
     <string name="licenses">授權</string>
     <string name="settings_app_version_summary">版本 %s (%d)</string>
 

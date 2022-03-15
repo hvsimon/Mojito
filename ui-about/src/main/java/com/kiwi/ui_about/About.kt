@@ -67,9 +67,21 @@ private fun About(
             .fillMaxSize()
     ) {
         Title()
+        SectionTitle(stringResource(id = R.string.support))
         AboutItem(
             text = stringResource(id = R.string.feed_back),
             painter = rememberVectorPainter(Icons.Default.Edit),
+            onItemClick = { /*TODO*/ }
+        )
+        SectionTitle(stringResource(id = R.string.legal))
+        AboutItem(
+            text = stringResource(id = R.string.terms_of_service),
+            painter = painterResource(id = R.drawable.ic_baseline_menu_book_24),
+            onItemClick = { /*TODO*/ }
+        )
+        AboutItem(
+            text = stringResource(id = R.string.privacy_policy),
+            painter = painterResource(id = R.drawable.ic_baseline_menu_book_24),
             onItemClick = { /*TODO*/ }
         )
         AboutItem(
@@ -90,6 +102,18 @@ private fun Title() {
     Text(
         text = stringResource(R.string.about_title),
         style = MaterialTheme.typography.displayLarge,
+        modifier = Modifier
+            .fillMaxWidth()
+            .wrapContentHeight()
+            .padding(16.dp)
+    )
+}
+
+@Composable
+private fun SectionTitle(sectionTitle: String) {
+    Text(
+        text = sectionTitle,
+        style = MaterialTheme.typography.headlineLarge,
         modifier = Modifier
             .fillMaxWidth()
             .wrapContentHeight()
