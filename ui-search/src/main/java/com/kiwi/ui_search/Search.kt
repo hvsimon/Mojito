@@ -90,12 +90,22 @@ private fun Search(
     onSearchQuery: (String) -> Unit,
     openRecipe: (cocktailId: String) -> Unit,
 ) {
+    var searchQuery by remember {
+        mutableStateOf(
+            TextFieldValue(
+                text = uiState.query,
+                selection = TextRange(uiState.query.length)
+            )
+        )
+    }
+
     Scaffold(
         topBar = {
             SearchableTopBar(
                 navigateUp = navigateUp,
-                query = uiState.query,
-                onSearch = onSearchQuery,
+                queryValue = searchQuery,
+                onValueChange = { searchQuery = it },
+                onSearch = { onSearchQuery(searchQuery.text) },
             )
         },
         modifier = Modifier
@@ -105,7 +115,17 @@ private fun Search(
         if (uiState.searchResult.isEmpty()) {
             Column(modifier = Modifier.fillMaxWidth()) {
                 if (uiState.query.isNotBlank()) NoResult()
-                RecommendResult(uiState, onSearchQuery, openRecipe)
+                RecommendResult(
+                    uiState = uiState,
+                    onSearchQuery = {
+                        searchQuery = TextFieldValue(
+                            text = it,
+                            selection = TextRange(it.length),
+                        )
+                        onSearchQuery(it)
+                    },
+                    openRecipe = openRecipe,
+                )
             }
         } else {
             SearchResult(
@@ -121,28 +141,18 @@ private fun SearchableTopBar(
     modifier: Modifier = Modifier,
     navigateUp: () -> Unit,
     scrollBehavior: TopAppBarScrollBehavior? = null,
-    query: String,
-    onSearch: (String) -> Unit,
+    queryValue: TextFieldValue,
+    onValueChange: (TextFieldValue) -> Unit,
+    onSearch: () -> Unit,
 ) {
-    var searchQuery by remember {
-        mutableStateOf(
-            TextFieldValue(
-                text = query,
-                selection = TextRange(query.length)
-            )
-        )
-    }
-
     SmallTopAppBar(
         modifier = modifier,
         title = {
             SearchBar(
                 modifier = Modifier.fillMaxWidth(),
-                value = searchQuery,
-                onValueChange = { value ->
-                    searchQuery = value
-                },
-                onSearch = { onSearch(searchQuery.text) },
+                value = queryValue,
+                onValueChange = onValueChange,
+                onSearch = onSearch,
                 hint = stringResource(id = R.string.drink_something)
             )
         },
@@ -442,7 +452,8 @@ private fun CocktailCard(
 private fun PreviewTopBar() {
     SearchableTopBar(
         navigateUp = {},
-        query = "Query",
+        queryValue = TextFieldValue("text"),
+        onValueChange = {},
         onSearch = {},
     )
 }
