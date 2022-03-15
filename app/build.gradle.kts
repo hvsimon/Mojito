@@ -21,6 +21,7 @@ android {
 
     buildTypes {
         getByName("debug") {
+            signingConfig = signingConfigs.getByName("debug")
         }
         getByName("release") {
             isMinifyEnabled = true
@@ -28,6 +29,15 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
+        }
+    }
+
+    signingConfigs {
+        getByName("debug") {
+            storeFile = rootProject.file("release/debug.keystore")
+            keyPassword = "android"
+            keyAlias = "androiddebugkey"
+            storePassword = "android"
         }
     }
 
