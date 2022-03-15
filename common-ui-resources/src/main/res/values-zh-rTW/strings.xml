@@ -25,10 +25,9 @@
     <string name="ingredients">配方</string>
     <string name="step">如何調製</string>
 
-    <!--  Follow  -->
-    <string name="collection_title">酒單</string>
-    <string name="follow_title">Menu</string>
-    <string name="follow_empty_message">目前這邊空空，要不要現在製作自己的酒單？</string>
+    <!--  Collection  -->
+    <string name="collection_title">收藏</string>
+    <string name="collection_empty_message">目前這邊空空，要不要現在製作自己的酒單？</string>
     <string name="browse_cocktails">瀏覽酒譜</string>
 
     <!--  About  -->

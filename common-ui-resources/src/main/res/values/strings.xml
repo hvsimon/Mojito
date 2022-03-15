@@ -29,10 +29,9 @@
     <string name="ingredients">Ingredients</string>
     <string name="step">How to Make</string>
 
-    <!--  Follow  -->
-    <string name="collection_title">Collection</string>
-    <string name="follow_title">Menu</string>
-    <string name="follow_empty_message">It\'s empty in here.\nCreate your special cocktail list.</string>
+    <!--  Collection  -->
+    <string name="collection_title">Collections</string>
+    <string name="collection_empty_message">It\'s empty in here.\nCreate your special cocktail list.</string>
     <string name="browse_cocktails">Browse</string>
 
     <!--  About  -->

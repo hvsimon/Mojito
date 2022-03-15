@@ -97,7 +97,7 @@ private fun Collection(
 @Composable
 private fun CollectionTitle() {
     Text(
-        text = stringResource(R.string.follow_title),
+        text = stringResource(R.string.collection_title),
         style = MaterialTheme.typography.displayLarge,
         modifier = Modifier
             .fillMaxWidth()
@@ -209,7 +209,7 @@ private fun Empty(
         )
         Text(
             textAlign = TextAlign.Center,
-            text = stringResource(R.string.follow_empty_message),
+            text = stringResource(R.string.collection_empty_message),
             modifier = Modifier
                 .padding(horizontal = 16.dp)
                 .padding(bottom = 8.dp)
