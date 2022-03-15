@@ -18,20 +18,46 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.graphics.vector.rememberVectorPainter
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.core.content.pm.PackageInfoCompat
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.google.accompanist.insets.statusBarsPadding
+import com.kiwi.common_ui_compose.rememberStateWithLifecycle
 
 @Composable
 fun About(
+    openLicenses: () -> Unit,
+) {
+    About(
+        viewModel = hiltViewModel(),
+        openLicenses = openLicenses,
+    )
+}
+
+@Composable
+private fun About(
+    viewModel: AboutViewModel,
+    openLicenses: () -> Unit,
+) {
+
+    val uiState by rememberStateWithLifecycle(viewModel.uiState)
+
+    About(
+        uiState = uiState,
+        openLicenses = openLicenses,
+    )
+}
+
+@Composable
+private fun About(
+    uiState: AboutUiState,
     openLicenses: () -> Unit,
 ) {
     Column(
@@ -52,13 +78,9 @@ fun About(
             onItemClick = openLicenses
         )
 
-        val packageInfo = LocalContext.current
-            .packageManager
-            .getPackageInfo(LocalContext.current.packageName, 0)
-
         VersionItem(
-            versionName = packageInfo.versionName,
-            versionCode = PackageInfoCompat.getLongVersionCode(packageInfo),
+            versionName = uiState.versionName,
+            versionCode = uiState.versionCode,
         )
     }
 }
@@ -140,7 +162,8 @@ private fun VersionItem(
 @Composable
 private fun PreviewAbout() {
     About(
-        openLicenses = {}
+        uiState = AboutUiState("1.0.0", 99),
+        openLicenses = {},
     )
 }
 
