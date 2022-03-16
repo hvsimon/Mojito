@@ -1,5 +1,6 @@
 package com.kiwi.ui_cocktail_list
 
+import androidx.annotation.StringRes
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -30,7 +31,33 @@ class CocktailListViewModel @Inject constructor(
         savedStateHandle.get<String>("iba_category_type")
             ?.let { IBACategoryType.valueOf(it) }
 
-    private val _uiState = MutableStateFlow(CocktailUiState())
+
+    private val titleStringRes: Int
+        @StringRes
+        get() {
+            if (baseLiquorType != null) {
+                return when (baseLiquorType) {
+                    BaseLiquorType.RUM -> R.string.rum
+                    BaseLiquorType.GIN -> R.string.gin
+                    BaseLiquorType.VODKA -> R.string.vodka
+                    BaseLiquorType.TEQUILA -> R.string.tequila
+                    BaseLiquorType.WHISKEY -> R.string.whiskey
+                    BaseLiquorType.BRANDY -> R.string.brandy
+                }
+            }
+
+            if (ibaCategoryType != null) {
+                return when (ibaCategoryType) {
+                    IBACategoryType.THE_UNFORGETTABLES -> R.string.the_unforgettables
+                    IBACategoryType.CONTEMPORARY_CLASSICS -> R.string.contemporary_classics
+                    IBACategoryType.NEW_ERA_DRINKS -> R.string.new_era_drinks
+                }
+            }
+
+            return -1
+        }
+
+    private val _uiState = MutableStateFlow(CocktailUiState(titleStringRes = titleStringRes))
     val uiState: StateFlow<CocktailUiState> = _uiState.asStateFlow()
 
     init {

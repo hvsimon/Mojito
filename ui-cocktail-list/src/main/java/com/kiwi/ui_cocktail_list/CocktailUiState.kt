@@ -1,7 +1,7 @@
 package com.kiwi.ui_cocktail_list
 
 data class CocktailUiState(
-    val title: String = "",
+    val titleStringRes: Int = -1,
     val cocktailItems: List<CocktailItemUiState> = listOf(),
 )
 
