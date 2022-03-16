@@ -29,6 +29,7 @@ desugar-jdk-libs = "1.1.5"
 material = "1.5.0-rc01"
 accompanist = "0.23.0"
 dagger = "2.40.5"
+firebase-bom = "29.2.0"
 
 # UI
 coil = "1.4.0"
@@ -101,6 +102,10 @@ hilt-compiler = { module = "com.google.dagger:hilt-android-compiler", version.re
 hilt-pluginGradle = { module = "com.google.dagger:hilt-android-gradle-plugin", version.ref = "dagger" }
 hilt-library = { module = "com.google.dagger:hilt-android", version.ref = "dagger" }
 hilt-testing = { module = "com.google.dagger:hilt-android-testing", version.ref = "dagger" }
+
+firebase-bom = { module = "com.google.firebase:firebase-bom", version.ref = "firebase-bom" }
+firebase-crashlytics = { module = "com.google.firebase:firebase-crashlytics"}
+firebase-analytics = { module = "com.google.firebase:firebase-analytics"}
 
 # UI
 coil-compose = { module = "io.coil-kt:coil-compose", version.ref = "coil" }
