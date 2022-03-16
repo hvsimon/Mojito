@@ -15,7 +15,7 @@ include(
     ":data",
     ":common-ui-resources",
     ":common-ui-compose",
-    ":ui-onboarding",
+    ":ui-explore",
     ":ui-recipe",
     ":ui-collection",
     ":ui-cocktail-list",

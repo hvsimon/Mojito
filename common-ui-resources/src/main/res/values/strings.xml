@@ -7,8 +7,8 @@
     <!--  Common  -->
     <string name="app_name" translatable="false">Mojito</string>
 
-    <!--  OnBoarding  -->
-    <string name="onboarding_title">Onboarding</string>
+    <!--  Explore  -->
+    <string name="explore_title">Explore</string>
     <string name="drink_something">What would you like to drink?</string>
     <string name="lets_go">Let\'s Go</string>
 

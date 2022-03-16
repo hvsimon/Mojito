@@ -2,8 +2,8 @@
 <resources>
     <!--  Common  -->
 
-    <!--  OnBoarding  -->
-    <string name="onboarding_title">發現</string>
+    <!--  Explore  -->
+    <string name="explore_title">探索</string>
     <string name="drink_something">想喝什麼呢？</string>
     <string name="lets_go">Let\'s Go</string>
 

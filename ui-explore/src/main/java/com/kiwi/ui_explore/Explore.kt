@@ -1,4 +1,4 @@
-package com.kiwi.ui_onboarding
+package com.kiwi.ui_explore
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -62,8 +62,8 @@ import com.kiwi.data.entities.IBACategoryType
 import com.kiwi.data.entities.Ingredient
 
 @Composable
-fun Onboarding(
-    viewModel: OnboardingViewModel = hiltViewModel(),
+fun Explore(
+    viewModel: ExploreViewModel = hiltViewModel(),
     openSearch: () -> Unit,
     openRecipe: (cocktailId: String) -> Unit,
     openCocktailList: (baseLiquorType: BaseLiquorType?, ibaCategoryType: IBACategoryType?) -> Unit,
@@ -71,7 +71,7 @@ fun Onboarding(
 ) {
     val uiState by rememberStateWithLifecycle(viewModel.uiState)
 
-    Onboarding(
+    Explore(
         uiState = uiState,
         openSearch = openSearch,
         openRecipe = openRecipe,
@@ -83,8 +83,8 @@ fun Onboarding(
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-private fun Onboarding(
-    uiState: OnboardingUiState,
+private fun Explore(
+    uiState: ExploreUiState,
     openSearch: () -> Unit,
     openRecipe: (cocktailId: String) -> Unit,
     openCocktailList: (baseLiquorType: BaseLiquorType?, ibaCategoryType: IBACategoryType?) -> Unit,

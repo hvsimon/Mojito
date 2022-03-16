@@ -43,7 +43,7 @@ fun Home() {
     val navController = rememberNavController(bottomSheetNavigator)
 
     val mainScreen = listOf(
-        Screen.Onboarding.route,
+        Screen.Explore.route,
         Screen.Collection.route,
         Screen.About.route,
     )
@@ -110,8 +110,8 @@ private data class HomeNavigationItem(
 
 private val HomeNavigationItems = listOf(
     HomeNavigationItem(
-        screen = Screen.Onboarding,
-        labelResId = R.string.onboarding_title,
+        screen = Screen.Explore,
+        labelResId = R.string.explore_title,
         iconResId = R.drawable.ic_mojito_outlined,
         selectedIconResId = R.drawable.ic_mojito_filled,
     ),

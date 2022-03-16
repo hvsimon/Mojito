@@ -1,4 +1,4 @@
-package com.kiwi.ui_onboarding
+package com.kiwi.ui_explore
 
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
@@ -13,13 +13,13 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 @HiltViewModel
-class OnboardingViewModel @Inject constructor(
+class ExploreViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
     private val cocktailRepository: CocktailRepository,
 ) : ViewModel() {
 
-    private val _uiState = MutableStateFlow(OnboardingUiState())
-    val uiState: StateFlow<OnboardingUiState> = _uiState.asStateFlow()
+    private val _uiState = MutableStateFlow(ExploreUiState())
+    val uiState: StateFlow<ExploreUiState> = _uiState.asStateFlow()
 
     init {
         randomCocktail()

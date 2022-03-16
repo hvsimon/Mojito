@@ -18,13 +18,13 @@ import com.kiwi.ui_about.About
 import com.kiwi.ui_about.Licenses
 import com.kiwi.ui_cocktail_list.CocktailList
 import com.kiwi.ui_collection.Collection
+import com.kiwi.ui_explore.Explore
 import com.kiwi.ui_ingredient.Ingredient
-import com.kiwi.ui_onboarding.Onboarding
 import com.kiwi.ui_recipe.Recipe
 import com.kiwi.ui_search.Search
 
 internal sealed class Screen(val route: String) {
-    object Onboarding : Screen("onboarding")
+    object Explore : Screen("explore")
     object Collection : Screen("collection")
     object About : Screen("about")
     object Recipe : Screen("recipe/{cocktailId}")
@@ -52,11 +52,11 @@ internal fun AppNavigation(
     ) {
         NavHost(
             navController = navController,
-            startDestination = Screen.Onboarding.route,
+            startDestination = Screen.Explore.route,
             modifier = modifier,
         ) {
-            composable(Screen.Onboarding.route) {
-                Onboarding(
+            composable(Screen.Explore.route) {
+                Explore(
                     openSearch = {
                         navController.navigate("search")
                     },
