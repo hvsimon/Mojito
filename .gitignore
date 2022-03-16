@@ -26,3 +26,7 @@ gradle.xml
 
 # Do not commit firebase config
 google-services.json
+
+# Release
+keystore.properties
+upload.keystore

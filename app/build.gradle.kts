@@ -1,3 +1,6 @@
+import java.io.FileInputStream
+import java.util.Properties
+
 plugins {
     id("com.android.application")
     id("kotlin-android")
@@ -5,6 +8,10 @@ plugins {
     id("dagger.hilt.android.plugin")
     id("com.mikepenz.aboutlibraries.plugin")
 }
+
+val keystorePropertiesFile = rootProject.file("/release/keystore.properties")
+val keystoreProperties = Properties()
+keystoreProperties.load(FileInputStream(keystorePropertiesFile))
 
 android {
     compileSdk = libs.versions.compileSdk.get().toInt()
@@ -38,6 +45,12 @@ android {
             keyPassword = "android"
             keyAlias = "androiddebugkey"
             storePassword = "android"
+        }
+        create("release") {
+            storeFile = rootProject.file(keystoreProperties.getProperty("storeFile"))
+            keyPassword = keystoreProperties.getProperty("keyPassword")
+            keyAlias = keystoreProperties.getProperty("keyAlias")
+            storePassword = keystoreProperties.getProperty("storePassword")
         }
     }
 
