@@ -1,6 +1,6 @@
-# Kiwi's Bar
+# Mojito
 
-Kiwi's Bar is a cocktail manual, which contains recipes, images and so on.
+Mojito is a cocktail manual, which contains recipes, images and so on.
 
 ## Screenshots
 
