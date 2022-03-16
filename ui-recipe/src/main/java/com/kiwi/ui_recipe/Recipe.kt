@@ -134,11 +134,12 @@ private fun Ingredients(
         modifier = Modifier
             .background(color = MaterialTheme.colorScheme.surfaceVariant)
             .fillMaxWidth()
-            .padding(16.dp)
+            .padding(vertical = 4.dp)
     ) {
         Text(
             text = stringResource(id = R.string.ingredients),
             style = MaterialTheme.typography.headlineLarge,
+            modifier = Modifier.padding(horizontal = 16.dp, vertical = 4.dp)
         )
         ingredients.forEach {
             Row(
@@ -147,14 +148,14 @@ private fun Ingredients(
                     .height(40.dp)
                     .fillMaxWidth()
                     .clickable { onItemClick(it.name) }
-                    .padding(4.dp)
+                    .padding(horizontal = 16.dp)
             ) {
                 Image(
                     painter = rememberImagePainter(
                         data = stringResource(id = R.string.ingredient_small_image_url, it.name)
                     ),
                     contentDescription = null,
-                    modifier = Modifier.size(48.dp)
+                    modifier = Modifier.size(36.dp)
                 )
                 Text(
                     text = it.name,
@@ -168,7 +169,8 @@ private fun Ingredients(
                 )
             }
             Divider(
-                color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.12f)
+                color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.12f),
+                modifier = Modifier.padding(horizontal = 16.dp)
             )
         }
     }
