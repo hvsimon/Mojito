@@ -1,5 +1,6 @@
 package com.kiwi.ui_about
 
+import android.content.Intent
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -23,10 +24,13 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.graphics.vector.rememberVectorPainter
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.core.content.ContextCompat.startActivity
+import androidx.core.net.toUri
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.google.accompanist.insets.statusBarsPadding
 import com.kiwi.common_ui_compose.rememberStateWithLifecycle
@@ -66,12 +70,22 @@ private fun About(
             .verticalScroll(rememberScrollState())
             .fillMaxSize()
     ) {
+        val context = LocalContext.current
+        val intent = Intent(Intent.ACTION_SENDTO).apply {
+            data = "mailto:".toUri()
+            putExtra(Intent.EXTRA_EMAIL, arrayOf(stringResource(id = R.string.contact_email)))
+            putExtra(Intent.EXTRA_SUBJECT, stringResource(id = R.string.feedback_subject))
+        }
+
         Title()
         SectionTitle(stringResource(id = R.string.support))
         AboutItem(
-            text = stringResource(id = R.string.feed_back),
+            text = stringResource(id = R.string.feedback),
             painter = rememberVectorPainter(Icons.Default.Edit),
-            onItemClick = { /*TODO*/ }
+            onItemClick = {
+
+                startActivity(context, intent, null)
+            }
         )
         SectionTitle(stringResource(id = R.string.legal))
         AboutItem(

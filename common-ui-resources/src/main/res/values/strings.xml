@@ -4,6 +4,8 @@
     <string name="ingredient_medium_image_url" translatable="false">https://www.thecocktaildb.com/images/ingredients/%s-Medium.png</string>
     <string name="ingredient_image_url" translatable="false">https://www.thecocktaildb.com/images/ingredients/%s.png</string>
 
+    <string name="contact_email" translatable="false">kiwi.bar.studio@gmail.com</string>
+
     <!--  Common  -->
     <string name="app_name" translatable="false">Mojito</string>
 
@@ -38,7 +40,8 @@
     <string name="about_title">About</string>
     <string name="support">Support</string>
     <string name="legal">Legal</string>
-    <string name="feed_back">Feedback</string>
+    <string name="feedback">Feedback</string>
+    <string name="feedback_subject">[Feedback]</string>
     <string name="terms_of_service">Terms of Service</string>
     <string name="privacy_policy">Privacy Policy</string>
     <string name="licenses">Licenses</string>
