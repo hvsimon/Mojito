@@ -4,7 +4,11 @@ Mojito is a cocktail manual, which contains recipes, images and so on.
 
 ## Screenshots
 
-    TODO:
+<p>
+<img src="/screenshots/explore.png" width="32%"/>
+<img src="/screenshots/explore-six-base-liquors.png" width="32%"/>
+<img src="/screenshots/explore-iba-official-cocktail-list.png" width="32%"/>
+</p>
 
 ## Download
 
