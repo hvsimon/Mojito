@@ -3,6 +3,7 @@ package com.kiwi.ui_recipe
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -167,7 +168,7 @@ private fun Ingredients(
                 )
             }
             Divider(
-                color = MaterialTheme.colorScheme.onSurface
+                color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.12f)
             )
         }
     }
@@ -177,12 +178,14 @@ private fun Ingredients(
 private fun Step(
     steps: String,
 ) {
-    Column(modifier = Modifier.padding(16.dp)) {
+    Column(
+        verticalArrangement = Arrangement.spacedBy(4.dp),
+        modifier = Modifier.padding(16.dp)
+    ) {
         Text(
             text = stringResource(id = R.string.step),
             style = MaterialTheme.typography.headlineLarge,
         )
-
         Text(
             text = steps,
             style = MaterialTheme.typography.bodyLarge,
