@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!--  Common  -->
-    <string name="app_name">Kiwi\'s Bar</string>
 
     <!--  OnBoarding  -->
     <string name="onboarding_title">發現</string>

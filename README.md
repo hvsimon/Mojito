@@ -18,6 +18,8 @@ This project using [TheCocktailDB](https://www.thecocktaildb.com/) for construct
 
 ## Data
 
+ + App logo is designed by .. (Shih).
+
  + Easter egg images are designed by .. (Shih).
 
  + Imagery is sourced from [Unsplash](https://unsplash.com/).

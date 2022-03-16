@@ -5,7 +5,7 @@
     <string name="ingredient_image_url" translatable="false">https://www.thecocktaildb.com/images/ingredients/%s.png</string>
 
     <!--  Common  -->
-    <string name="app_name">Kiwi\'s Bar</string>
+    <string name="app_name" translatable="false">Mojito</string>
 
     <!--  OnBoarding  -->
     <string name="onboarding_title">Onboarding</string>
