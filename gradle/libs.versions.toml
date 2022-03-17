@@ -41,6 +41,8 @@ okhttp-bom = "4.9.3"
 retrofit-core = "2.9.0"
 retrofit-kotlinx-serialization-converter = "0.8.0"
 
+store = "4.0.4-KT15"
+
 # Test
 junit-core = "4.13.2"
 mockk-core = "1.12.3"
@@ -104,8 +106,8 @@ hilt-library = { module = "com.google.dagger:hilt-android", version.ref = "dagge
 hilt-testing = { module = "com.google.dagger:hilt-android-testing", version.ref = "dagger" }
 
 firebase-bom = { module = "com.google.firebase:firebase-bom", version.ref = "firebase-bom" }
-firebase-crashlytics = { module = "com.google.firebase:firebase-crashlytics"}
-firebase-analytics = { module = "com.google.firebase:firebase-analytics"}
+firebase-crashlytics = { module = "com.google.firebase:firebase-crashlytics" }
+firebase-analytics = { module = "com.google.firebase:firebase-analytics" }
 
 # UI
 coil-compose = { module = "io.coil-kt:coil-compose", version.ref = "coil" }
@@ -118,6 +120,8 @@ okhttp-bom = { module = "com.squareup.okhttp3:okhttp-bom", version.ref = "okhttp
 okhttp-core = { module = "com.squareup.okhttp3:okhttp" }
 retrofit-core = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofit-core" }
 retrofit-kotlinx-serialization-converter = { module = "com.jakewharton.retrofit:retrofit2-kotlinx-serialization-converter", version.ref = "retrofit-kotlinx-serialization-converter" }
+
+store = { module = "com.dropbox.mobile.store:store4", version.ref = "store" }
 
 # Test
 junit-core = { module = "junit:junit", version.ref = "junit-core" }

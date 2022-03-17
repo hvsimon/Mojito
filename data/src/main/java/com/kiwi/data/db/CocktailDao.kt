@@ -6,6 +6,7 @@ import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import com.kiwi.data.entities.CocktailCategoryPo
 import com.kiwi.data.entities.CocktailPo
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface CocktailDao {
@@ -14,7 +15,10 @@ interface CocktailDao {
     suspend fun insertCocktails(vararg cocktail: CocktailPo)
 
     @Query("SELECT * FROM CocktailPo WHERE cocktail_id = :cocktailId")
-    suspend fun getCocktailBy(cocktailId: String): CocktailPo?
+    fun getCocktailBy(cocktailId: String): CocktailPo?
+
+    @Query("SELECT * FROM CocktailPo WHERE cocktail_id = :cocktailId")
+    fun getCocktailByIdFlow(cocktailId: String): Flow<CocktailPo>
 
     @Query(
         """

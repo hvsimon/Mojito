@@ -48,27 +48,36 @@ fun Recipe(
 ) {
     val uiState by rememberStateWithLifecycle(viewModel.uiState)
 
-    Recipe(
-        cocktail = uiState.cocktail,
-        isFollowed = uiState.isFollowed,
-        onToggleFollowed = { viewModel.toggleFollow() },
-        openIngredient = openIngredient,
-    )
+    val isLoading = uiState.isLoading
+    if (isLoading) {
+        // TODO: Show loading view
+        return
+    }
+
+    val errorMessage = uiState.errorMessage
+    if (errorMessage != null) {
+        // TODO: Show error view
+        return
+    }
+
+    uiState.cocktail?.let { cocktail ->
+        Recipe(
+            cocktail = cocktail,
+            isFollowed = uiState.isFollowed,
+            onToggleFollowed = { viewModel.toggleFollow() },
+            openIngredient = openIngredient,
+        )
+    }
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun Recipe(
-    cocktail: CocktailPo?,
+    cocktail: CocktailPo,
     isFollowed: Boolean,
     onToggleFollowed: () -> Unit,
     openIngredient: (ingredientName: String) -> Unit,
 ) {
-    if (cocktail == null) {
-        // show loading view
-        return
-    }
-
     val scrollState = rememberScrollState()
     Scaffold(
         floatingActionButton = {

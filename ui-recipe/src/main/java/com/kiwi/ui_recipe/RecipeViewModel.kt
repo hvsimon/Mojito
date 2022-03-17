@@ -3,7 +3,10 @@ package com.kiwi.ui_recipe
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.kiwi.data.repositories.CocktailRepository
+import com.dropbox.android.external.store4.Store
+import com.dropbox.android.external.store4.StoreRequest
+import com.dropbox.android.external.store4.StoreResponse
+import com.kiwi.data.entities.CocktailPo
 import com.kiwi.data.repositories.FollowedRecipesRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
@@ -17,8 +20,8 @@ import kotlinx.coroutines.launch
 @HiltViewModel
 class RecipeViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
-    private val cocktailRepository: CocktailRepository,
     private val followedRecipesRepository: FollowedRecipesRepository,
+    cocktailStore: Store<String, CocktailPo>
 ) : ViewModel() {
 
     private val cocktailId: String = savedStateHandle.get("cocktailId")!!
@@ -28,11 +31,31 @@ class RecipeViewModel @Inject constructor(
 
     init {
         viewModelScope.launch {
-            val cocktail = cocktailRepository.lookupFullCocktailDetailsById(cocktailId)
-            _uiState.update {
-                it.copy(cocktail = cocktail)
-            }
+            cocktailStore.stream(StoreRequest.cached(key = cocktailId, refresh = false))
+                .collect { response ->
+                    when (response) {
+                        is StoreResponse.Loading -> _uiState.update {
+                            it.copy(isLoading = true)
+                        }
+
+                        is StoreResponse.Data -> _uiState.update {
+                            it.copy(
+                                isLoading = false,
+                                cocktail = response.value,
+                            )
+                        }
+                        is StoreResponse.Error -> _uiState.update {
+                            it.copy(
+                                isLoading = false,
+                                errorMessage = response.errorMessageOrNull()
+                                    ?: "TODO: unknown error",
+                            )
+                        }
+                        is StoreResponse.NoNewData -> Unit
+                    }
+                }
         }
+
         viewModelScope.launch {
             followedRecipesRepository.recipeFollowedObservable(cocktailId)
                 .collectLatest { isFollowed ->
