@@ -36,6 +36,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.rememberImagePainter
 import coil.size.OriginalSize
+import com.kiwi.common_ui_compose.ErrorLayout
 import com.kiwi.common_ui_compose.SampleCocktailPoProvider
 import com.kiwi.common_ui_compose.rememberStateWithLifecycle
 import com.kiwi.data.entities.CocktailPo
@@ -56,7 +57,7 @@ fun Recipe(
 
     val errorMessage = uiState.errorMessage
     if (errorMessage != null) {
-        // TODO: Show error view
+        ErrorLayout(errorMessage = errorMessage)
         return
     }
 

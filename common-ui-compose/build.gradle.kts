@@ -30,6 +30,7 @@ android {
 
 dependencies {
     implementation(project(":data"))
+    implementation(project(":common-ui-resources"))
 
     implementation(libs.lifecycle.runtime)
 
