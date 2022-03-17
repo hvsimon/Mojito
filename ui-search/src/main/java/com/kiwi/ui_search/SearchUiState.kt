@@ -8,5 +8,6 @@ data class SearchUiState(
     val ingredients: List<String> = emptyList(),
     val randomCocktails: List<CocktailPo> = emptyList(),
     val searchResult: List<CocktailPo> = emptyList(),
+    val isSearching: Boolean = false,
     val errorMessage: String? = null,
 )
