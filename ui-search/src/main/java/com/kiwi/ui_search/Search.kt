@@ -114,7 +114,13 @@ private fun Search(
     ) {
         if (uiState.searchResult.isEmpty()) {
             Column(modifier = Modifier.fillMaxWidth()) {
-                if (uiState.query.isNotBlank()) NoResult()
+                if (uiState.query.isNotBlank()) {
+                    val message =
+                        uiState.errorMessage ?: stringResource(id = R.string.no_result_caption)
+                    NoResult(
+                        message = message
+                    )
+                }
                 RecommendResult(
                     uiState = uiState,
                     onSearchQuery = {
@@ -221,7 +227,9 @@ private fun SearchBar(
 }
 
 @Composable
-private fun NoResult() {
+private fun NoResult(
+    message: String,
+) {
     Column(
         modifier = Modifier
             .fillMaxWidth()
@@ -232,7 +240,7 @@ private fun NoResult() {
             text = stringResource(id = R.string.no_result),
             style = MaterialTheme.typography.titleLarge
         )
-        Text(text = stringResource(id = R.string.no_result_caption))
+        Text(text = message)
     }
 }
 
@@ -461,7 +469,7 @@ private fun PreviewTopBar() {
 @Preview
 @Composable
 private fun PreviewNoResult() {
-    NoResult()
+    NoResult("Message")
 }
 
 @Preview

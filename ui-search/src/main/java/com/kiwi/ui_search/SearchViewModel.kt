@@ -60,10 +60,12 @@ class SearchViewModel @Inject constructor(
         }
 
         viewModelScope.launch {
+            val result = cocktailRepository.searchCocktailByName(query)
             _uiState.update {
                 it.copy(
                     query = query,
-                    searchResult = cocktailRepository.searchCocktailByName(query)
+                    searchResult = result.getOrDefault(emptyList()),
+                    errorMessage = result.exceptionOrNull()?.localizedMessage,
                 )
             }
         }

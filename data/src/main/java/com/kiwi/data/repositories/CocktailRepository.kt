@@ -4,7 +4,6 @@ import android.app.Application
 import com.kiwi.data.DataJsonParser
 import com.kiwi.data.api.CocktailApi
 import com.kiwi.data.db.CocktailDao
-import com.kiwi.data.di.DefaultDispatcher
 import com.kiwi.data.di.IoDispatcher
 import com.kiwi.data.entities.BaseLiquor
 import com.kiwi.data.entities.CocktailCategoryPo
@@ -51,9 +50,11 @@ class CocktailRepository @Inject constructor(
             }
         }
 
-    suspend fun searchCocktailByName(cocktailName: String): List<CocktailPo> =
-        withContext(ioDispatcher) {
-            cocktailApi.searchCocktailByName(cocktailName).drinks.map { it.toCocktailPo() }
+    suspend fun searchCocktailByName(cocktailName: String): Result<List<CocktailPo>> =
+        runCatching {
+            withContext(ioDispatcher) {
+                cocktailApi.searchCocktailByName(cocktailName).drinks.map { it.toCocktailPo() }
+            }
         }
 
     suspend fun searchCocktailByFirstLetter(firstLetter: Char): List<CocktailPo> =
