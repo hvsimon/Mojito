@@ -37,6 +37,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.rememberImagePainter
 import coil.size.OriginalSize
 import com.kiwi.common_ui_compose.ErrorLayout
+import com.kiwi.common_ui_compose.ProgressLayout
 import com.kiwi.common_ui_compose.SampleCocktailPoProvider
 import com.kiwi.common_ui_compose.rememberStateWithLifecycle
 import com.kiwi.data.entities.CocktailPo
@@ -51,7 +52,7 @@ fun Recipe(
 
     val isLoading = uiState.isLoading
     if (isLoading) {
-        // TODO: Show loading view
+        ProgressLayout()
         return
     }
 
