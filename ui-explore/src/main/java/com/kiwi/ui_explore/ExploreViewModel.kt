@@ -1,6 +1,5 @@
 package com.kiwi.ui_explore
 
-import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.kiwi.data.repositories.CocktailRepository
@@ -14,7 +13,6 @@ import kotlinx.coroutines.launch
 
 @HiltViewModel
 class ExploreViewModel @Inject constructor(
-    savedStateHandle: SavedStateHandle,
     private val cocktailRepository: CocktailRepository,
 ) : ViewModel() {
 
@@ -51,13 +49,23 @@ class ExploreViewModel @Inject constructor(
                 it.copy(isRefreshing = true)
             }
 
-            val cocktail = cocktailRepository.randomCocktail(num = 1, loadFromRemote = true).first()
-            _uiState.update {
-                it.copy(
-                    coverCocktail = cocktail,
-                    isRefreshing = false,
-                )
-            }
+            cocktailRepository.randomCocktail(num = 1, loadFromRemote = true)
+                .onSuccess { data ->
+                    _uiState.update {
+                        it.copy(
+                            coverCocktail = data.firstOrNull(),
+                            isRefreshing = false,
+                        )
+                    }
+                }
+                .onFailure {
+                    _uiState.update {
+                        // TODO: pass error message
+                        it.copy(
+                            isRefreshing = false,
+                        )
+                    }
+                }
         }
     }
 }

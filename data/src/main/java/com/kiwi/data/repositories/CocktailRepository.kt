@@ -4,6 +4,7 @@ import android.app.Application
 import com.kiwi.data.DataJsonParser
 import com.kiwi.data.api.CocktailApi
 import com.kiwi.data.db.CocktailDao
+import com.kiwi.data.di.DefaultDispatcher
 import com.kiwi.data.di.IoDispatcher
 import com.kiwi.data.entities.BaseLiquor
 import com.kiwi.data.entities.CocktailCategoryPo
@@ -16,6 +17,7 @@ import javax.inject.Inject
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
+import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import okio.buffer
@@ -29,19 +31,23 @@ class CocktailRepository @Inject constructor(
     @IoDispatcher private val ioDispatcher: CoroutineDispatcher,
 ) {
 
-    suspend fun randomCocktail(num: Int, loadFromRemote: Boolean): List<CocktailPo> =
-        withContext(ioDispatcher) {
+    suspend fun randomCocktail(num: Int, loadFromRemote: Boolean): Result<List<CocktailPo>> =
+        runCatching {
             if (loadFromRemote) {
-                (1..num)
-                    .map { async { cocktailApi.randomCocktail().drinks.first().toCocktailPo() } }
-                    .awaitAll()
-                    .also {
-                        launch {
-                            cocktailDao.insertCocktails(*it.toTypedArray())
+                coroutineScope {
+                    (1..num)
+                        .map {
+                            async(ioDispatcher) {
+                                cocktailApi.randomCocktail().drinks.first().toCocktailPo()
+                            }
                         }
-                    }
+                        .awaitAll()
+                        .also { cocktailDao.insertCocktails(*it.toTypedArray()) }
+                }
             } else {
-                cocktailDao.randomCocktail(num)
+                withContext(ioDispatcher) {
+                    cocktailDao.randomCocktail(num)
+                }
             }
         }
 

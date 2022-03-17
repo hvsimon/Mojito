@@ -35,9 +35,16 @@ class SearchViewModel @Inject constructor(
         }
 
         viewModelScope.launch {
-            _uiState.update {
-                it.copy(randomCocktails = cocktailRepository.randomCocktail(10, false))
-            }
+            cocktailRepository.randomCocktail(10, false)
+                .onSuccess { data ->
+                    _uiState.update {
+                        it.copy(randomCocktails = data)
+                    }
+                }
+                .onFailure {
+                    // TODO: pass error message
+                }
+
         }
     }
 
