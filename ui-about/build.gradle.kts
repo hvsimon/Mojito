@@ -42,6 +42,7 @@ dependencies {
     implementation(libs.appcompat)
     implementation(libs.bundles.activity)
     implementation(libs.navigation.compose)
+    implementation(libs.browser)
 
     // Compose
     implementation(libs.bundles.compose)

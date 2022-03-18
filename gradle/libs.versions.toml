@@ -17,6 +17,7 @@ room = "2.4.0"
 lifecycle = "2.4.0"
 paging = "3.1.0"
 androidxhilt = "1.0.0"
+browser = "1.4.0"
 
 # Compose
 compose = "1.2.0-alpha05"
@@ -75,6 +76,8 @@ paging-compose = "androidx.paging:paging-compose:1.0.0-alpha14"
 
 androidx-hilt-compiler = { module = "androidx.hilt:hilt-compiler", version.ref = "androidxhilt" }
 androidx-hilt-compose = { module = "androidx.hilt:hilt-navigation-compose", version.ref = "androidxhilt" }
+
+browser = { module = "androidx.browser:browser", version.ref = "browser" }
 
 # Compose
 compose-runtime = { module = "androidx.compose.runtime:runtime", version.ref = "compose" }

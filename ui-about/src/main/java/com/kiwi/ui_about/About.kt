@@ -1,6 +1,7 @@
 package com.kiwi.ui_about
 
 import android.content.Intent
+import androidx.browser.customtabs.CustomTabsIntent
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -89,14 +90,13 @@ private fun About(
         )
         SectionTitle(stringResource(id = R.string.legal))
         AboutItem(
-            text = stringResource(id = R.string.terms_of_service),
-            painter = painterResource(id = R.drawable.ic_baseline_menu_book_24),
-            onItemClick = { /*TODO*/ }
-        )
-        AboutItem(
             text = stringResource(id = R.string.privacy_policy),
             painter = painterResource(id = R.drawable.ic_baseline_menu_book_24),
-            onItemClick = { /*TODO*/ }
+            onItemClick = {
+                CustomTabsIntent.Builder()
+                    .build()
+                    .launchUrl(context, "https://hvsimon.github.io/Mojito/privacypolicy".toUri())
+            }
         )
         AboutItem(
             text = stringResource(id = R.string.licenses),
