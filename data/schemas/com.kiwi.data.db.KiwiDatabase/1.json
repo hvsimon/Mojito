@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "768c4510dc412e5dc8490e375347117f",
+    "identityHash": "8a2d6bbfccd80b664b17e3260d124000",
     "entities": [
       {
         "tableName": "CocktailPo",
@@ -137,7 +137,7 @@
         "foreignKeys": []
       },
       {
-        "tableName": "CocktailCategoryPo",
+        "tableName": "CategoryPo",
         "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`name` TEXT NOT NULL, PRIMARY KEY(`name`))",
         "fields": [
           {
@@ -160,7 +160,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '768c4510dc412e5dc8490e375347117f')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '8a2d6bbfccd80b664b17e3260d124000')"
     ]
   }
 }

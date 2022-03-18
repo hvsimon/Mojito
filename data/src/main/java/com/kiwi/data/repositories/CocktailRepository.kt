@@ -6,7 +6,6 @@ import com.kiwi.data.api.CocktailApi
 import com.kiwi.data.db.CocktailDao
 import com.kiwi.data.di.IoDispatcher
 import com.kiwi.data.entities.BaseLiquor
-import com.kiwi.data.entities.CocktailCategoryPo
 import com.kiwi.data.entities.CocktailPo
 import com.kiwi.data.entities.FullIngredientDto
 import com.kiwi.data.entities.IBACocktail
@@ -103,16 +102,6 @@ class CocktailRepository @Inject constructor(
             .source()
             .buffer()
             .use { DataJsonParser.parseIBACocktailData(it) }
-    }
-
-    suspend fun listCategories() = withContext(ioDispatcher) {
-        cocktailDao.getAllCocktailCategory()
-            .ifEmpty {
-                cocktailApi.listCategories().drinks.map { CocktailCategoryPo(it.categoryName) }
-            }
-            .also {
-                launch { cocktailDao.insertCocktailCategories(*it.toTypedArray()) }
-            }
     }
 
     suspend fun listIngredients() = withContext(ioDispatcher) {

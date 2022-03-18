@@ -6,6 +6,7 @@ import com.dropbox.android.external.store4.Store
 import com.dropbox.android.external.store4.StoreBuilder
 import com.kiwi.data.api.CocktailApi
 import com.kiwi.data.db.CocktailDao
+import com.kiwi.data.entities.CategoryPo
 import com.kiwi.data.entities.CocktailPo
 import com.kiwi.data.mapper.toCocktailPo
 import dagger.Module
@@ -13,6 +14,7 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import javax.inject.Singleton
+import kotlinx.coroutines.flow.map
 
 @InstallIn(SingletonComponent::class)
 @Module
@@ -35,6 +37,27 @@ object StoreModule {
             },
             writer = { _, data ->
                 cocktailDao.insertCocktails(data)
+            }
+        )
+    ).build()
+
+    @Provides
+    @Singleton
+    fun provideCategoryStore(
+        cocktailDao: CocktailDao,
+        cocktailApi: CocktailApi,
+    ): Store<Unit, List<CategoryPo>> = StoreBuilder.from<Unit, List<CategoryPo>, List<CategoryPo>>(
+        fetcher = Fetcher.of {
+            cocktailApi.listCategories().drinks
+                .map { CategoryPo(it.categoryName) }
+        },
+        sourceOfTruth = SourceOfTruth.of(
+            reader = {
+                cocktailDao.getAllCocktailCategoryFlow()
+                    .map { it.ifEmpty { null } }
+            },
+            writer = { _, data ->
+                cocktailDao.insertCategories(*data.toTypedArray())
             }
         )
     ).build()

@@ -3,7 +3,7 @@ package com.kiwi.data.db
 import androidx.room.Database
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
-import com.kiwi.data.entities.CocktailCategoryPo
+import com.kiwi.data.entities.CategoryPo
 import com.kiwi.data.entities.CocktailPo
 import com.kiwi.data.entities.FollowedRecipe
 
@@ -11,7 +11,7 @@ import com.kiwi.data.entities.FollowedRecipe
     entities = [
         CocktailPo::class,
         FollowedRecipe::class,
-        CocktailCategoryPo::class,
+        CategoryPo::class,
     ],
     views = [],
     version = 1,

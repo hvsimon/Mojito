@@ -4,7 +4,7 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 
 @Entity
-data class CocktailCategoryPo(
+data class CategoryPo(
     @PrimaryKey
     val name: String,
 )

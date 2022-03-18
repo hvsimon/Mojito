@@ -2,6 +2,10 @@ package com.kiwi.ui_search
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.dropbox.android.external.store4.Store
+import com.dropbox.android.external.store4.StoreRequest
+import com.dropbox.android.external.store4.StoreResponse
+import com.kiwi.data.entities.CategoryPo
 import com.kiwi.data.repositories.CocktailRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
@@ -13,6 +17,7 @@ import kotlinx.coroutines.launch
 @HiltViewModel
 class SearchViewModel @Inject constructor(
     private val cocktailRepository: CocktailRepository,
+    categoryStore: Store<Unit, List<CategoryPo>>,
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(SearchUiState())
@@ -20,18 +25,20 @@ class SearchViewModel @Inject constructor(
 
     init {
         viewModelScope.launch {
-            _uiState.update {
-                it.copy(
-                    categories = cocktailRepository.listCategories()
-                        .map { cocktailCategoryPo -> cocktailCategoryPo.name }
-                )
-            }
-        }
-
-        viewModelScope.launch {
-            _uiState.update {
-                it.copy(ingredients = cocktailRepository.listIngredients())
-            }
+            categoryStore.stream(StoreRequest.cached(Unit, false))
+                .collect { response ->
+                    when (response) {
+                        is StoreResponse.Data -> {
+                            _uiState.update {
+                                it.copy(
+                                    categories = response.value
+                                        .map { cocktailCategoryPo -> cocktailCategoryPo.name }
+                                )
+                            }
+                        }
+                        else -> Unit
+                    }
+                }
         }
 
         viewModelScope.launch {
