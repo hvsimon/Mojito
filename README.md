@@ -1,6 +1,14 @@
-# Mojito
+<h1 align="center">
+  <br>
+  <img src="/app/src/main/ic_launcher-playstore.png"/>
+  <br>
+  Mojito
+  <br>
+</h1>
 
-Mojito is a cocktail manual, which contains recipes, images and so on.
+<p align="center">Mojito* is a cocktail manual, which contains recipes, images and so on.</p>
+
+*Mojito: an alcoholic drink made with rum, lime juice, sugar, and mint.
 
 ## Screenshots
 
@@ -18,13 +26,11 @@ Mojito is a cocktail manual, which contains recipes, images and so on.
 
 This project using [TheCocktailDB](https://www.thecocktaildb.com/) for constructing RESTful API.
 
-    TODO: Show the req/resp sample.
+## Credits
 
-## Data
+ + App logo is designed by .. (aka Shih).
 
- + App logo is designed by .. (Shih).
-
- + Easter egg images are designed by .. (Shih).
+ + Easter egg images are designed by .. (aka Shih).
 
  + Imagery is sourced from [Unsplash](https://unsplash.com/).
 
