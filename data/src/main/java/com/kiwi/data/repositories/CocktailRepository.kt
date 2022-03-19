@@ -6,10 +6,10 @@ import com.kiwi.data.api.CocktailApi
 import com.kiwi.data.db.CocktailDao
 import com.kiwi.data.di.IoDispatcher
 import com.kiwi.data.entities.BaseLiquor
-import com.kiwi.data.entities.CocktailPo
+import com.kiwi.data.entities.FullDrinkEntity
 import com.kiwi.data.entities.FullIngredientDto
 import com.kiwi.data.entities.IBACocktail
-import com.kiwi.data.mapper.toCocktailPo
+import com.kiwi.data.entities.SimpleDrinkDto
 import dagger.Reusable
 import javax.inject.Inject
 import kotlinx.coroutines.CoroutineDispatcher
@@ -29,14 +29,14 @@ class CocktailRepository @Inject constructor(
     @IoDispatcher private val ioDispatcher: CoroutineDispatcher,
 ) {
 
-    suspend fun randomCocktail(num: Int, loadFromRemote: Boolean): Result<List<CocktailPo>> =
+    suspend fun randomCocktail(num: Int, loadFromRemote: Boolean): Result<List<FullDrinkEntity>> =
         runCatching {
             if (loadFromRemote) {
                 coroutineScope {
                     (1..num)
                         .map {
                             async(ioDispatcher) {
-                                cocktailApi.randomCocktail().drinks.first().toCocktailPo()
+                                cocktailApi.randomCocktail().drinks.first()
                             }
                         }
                         .awaitAll()
@@ -49,16 +49,16 @@ class CocktailRepository @Inject constructor(
             }
         }
 
-    suspend fun searchCocktailByName(cocktailName: String): Result<List<CocktailPo>> =
+    suspend fun searchCocktailByName(cocktailName: String): Result<List<FullDrinkEntity>> =
         runCatching {
             withContext(ioDispatcher) {
-                cocktailApi.searchCocktailByName(cocktailName).drinks.map { it.toCocktailPo() }
+                cocktailApi.searchCocktailByName(cocktailName).drinks
             }
         }
 
-    suspend fun searchCocktailByFirstLetter(firstLetter: Char): List<CocktailPo> =
+    suspend fun searchCocktailByFirstLetter(firstLetter: Char): List<FullDrinkEntity> =
         withContext(ioDispatcher) {
-            cocktailApi.searchCocktailByFirstLetter(firstLetter).drinks.map { it.toCocktailPo() }
+            cocktailApi.searchCocktailByFirstLetter(firstLetter).drinks
                 .also { launch { cocktailDao.insertCocktails(*it.toTypedArray()) } }
         }
 
@@ -67,20 +67,20 @@ class CocktailRepository @Inject constructor(
             cocktailApi.searchIngredientByName(ingredientName).ingredients.first()
         }
 
-    suspend fun searchByIngredient(ingredientName: String): List<CocktailPo> =
+    suspend fun searchByIngredient(ingredientName: String): List<SimpleDrinkDto> =
         withContext(ioDispatcher) {
-            cocktailApi.searchByIngredient(ingredientName).drinks.map { it.toCocktailPo() }
+            cocktailApi.searchByIngredient(ingredientName).drinks
         }
 
-    suspend fun filterByCategory(category: String): List<CocktailPo> =
+    suspend fun filterByCategory(category: String): List<SimpleDrinkDto> =
         withContext(ioDispatcher) {
-            cocktailApi.filterByCategory(category).drinks.map { it.toCocktailPo() }
+            cocktailApi.filterByCategory(category).drinks
         }
 
-    suspend fun lookupFullCocktailDetailsById(id: String): CocktailPo =
+    suspend fun lookupFullCocktailDetailsById(id: String): FullDrinkEntity =
         withContext(ioDispatcher) {
             return@withContext cocktailDao.getCocktailBy(id)
-                ?: cocktailApi.lookupFullCocktailDetailsById(id).drinks.first().toCocktailPo()
+                ?: cocktailApi.lookupFullCocktailDetailsById(id).drinks.first()
                     .also { cocktailDao.insertCocktails(it) }
         }
 

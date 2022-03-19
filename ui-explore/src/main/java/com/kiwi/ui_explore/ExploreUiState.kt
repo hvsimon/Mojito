@@ -2,11 +2,11 @@ package com.kiwi.ui_explore
 
 import androidx.annotation.StringRes
 import com.kiwi.data.entities.BaseLiquorType
-import com.kiwi.data.entities.CocktailPo
+import com.kiwi.data.entities.FullDrinkEntity
 import com.kiwi.data.entities.IBACategoryType
 
 data class ExploreUiState(
-    val coverCocktail: CocktailPo? = null,
+    val coverCocktail: FullDrinkEntity? = null,
     val baseLiquorItemUiStates: List<BaseLiquorItemUiState> = listOf(),
     val ibaCategoryUiStates: List<IBACategoryItemUiState> = listOf(),
     val isRefreshing: Boolean = false

@@ -40,9 +40,9 @@ import com.airbnb.lottie.compose.LottieCompositionSpec
 import com.airbnb.lottie.compose.LottieConstants
 import com.airbnb.lottie.compose.rememberLottieComposition
 import com.google.accompanist.insets.statusBarsPadding
-import com.kiwi.common_ui_compose.SampleCocktailPoProvider
+import com.kiwi.common_ui_compose.SampleFullDrinkEntityProvider
 import com.kiwi.common_ui_compose.rememberFlowWithLifecycle
-import com.kiwi.data.entities.CocktailPo
+import com.kiwi.data.entities.FullDrinkEntity
 
 @Composable
 fun Collection(
@@ -124,7 +124,7 @@ private fun LazyListScope.collectionList(
                 item {
                     CollectionItem(
                         cocktail = cocktail,
-                        onClick = { onItemClick(cocktail.cocktailId) }
+                        onClick = { onItemClick(cocktail.id) }
                     )
                 }
             }
@@ -147,7 +147,7 @@ private fun SectionHeader(sectionName: String) {
 
 @Composable
 private fun CollectionItem(
-    cocktail: CocktailPo,
+    cocktail: FullDrinkEntity,
     onClick: () -> Unit,
 ) {
     Row(
@@ -160,7 +160,7 @@ private fun CollectionItem(
     ) {
         Image(
             painter = rememberImagePainter(
-                data = cocktail.gallery.firstOrNull(),
+                data = cocktail.thumb,
                 builder = {
                     crossfade(true)
                     transformations(RoundedCornersTransformation(radius = 16.dp.value))
@@ -178,7 +178,7 @@ private fun CollectionItem(
                 style = MaterialTheme.typography.titleLarge
             )
             Text(
-                text = cocktail.ingredients.joinToString(prefix = "(", postfix = ")") { it.name },
+                text = cocktail.ingredients.joinToString(prefix = "(", postfix = ")") { it },
                 maxLines = 1,
                 overflow = TextOverflow.Ellipsis,
             )
@@ -235,10 +235,10 @@ private fun PreviewSectionHeader() {
 @Preview
 @Composable
 private fun PreviewCollectionItem(
-    @PreviewParameter(SampleCocktailPoProvider::class) cocktailPo: CocktailPo
+    @PreviewParameter(SampleFullDrinkEntityProvider::class) cocktail: FullDrinkEntity
 ) {
     CollectionItem(
-        cocktail = cocktailPo,
+        cocktail = cocktail,
         onClick = {}
     )
 }

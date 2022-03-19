@@ -3,7 +3,7 @@ package com.kiwi.data.api
 import com.kiwi.data.entities.CategoryDto
 import com.kiwi.data.entities.CocktailIngredientDto
 import com.kiwi.data.entities.CocktailResponse
-import com.kiwi.data.entities.FullDrinkDto
+import com.kiwi.data.entities.FullDrinkEntity
 import com.kiwi.data.entities.FullIngredientDto
 import com.kiwi.data.entities.SimpleDrinkDto
 import retrofit2.http.GET
@@ -14,19 +14,19 @@ interface CocktailApi {
 
     @Headers("Accept-Encoding: identity")
     @GET("random.php")
-    suspend fun randomCocktail(): CocktailResponse<FullDrinkDto>
+    suspend fun randomCocktail(): CocktailResponse<FullDrinkEntity>
 
     @Headers("Accept-Encoding: identity")
     @GET("search.php")
     suspend fun searchCocktailByName(
         @Query("s") cocktailName: String,
-    ): CocktailResponse<FullDrinkDto>
+    ): CocktailResponse<FullDrinkEntity>
 
     @Headers("Accept-Encoding: identity")
     @GET("search.php")
     suspend fun searchCocktailByFirstLetter(
         @Query("f") firstLetter: Char,
-    ): CocktailResponse<FullDrinkDto>
+    ): CocktailResponse<FullDrinkEntity>
 
     @Headers("Accept-Encoding: identity")
     @GET("search.php")
@@ -50,7 +50,7 @@ interface CocktailApi {
     @GET("lookup.php")
     suspend fun lookupFullCocktailDetailsById(
         @Query("i") id: String
-    ): CocktailResponse<FullDrinkDto>
+    ): CocktailResponse<FullDrinkEntity>
 
     @Headers("Accept-Encoding: identity")
     @GET("list.php?c=list")

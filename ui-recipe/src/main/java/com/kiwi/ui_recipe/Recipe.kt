@@ -38,10 +38,9 @@ import coil.compose.rememberImagePainter
 import coil.size.OriginalSize
 import com.kiwi.common_ui_compose.ErrorLayout
 import com.kiwi.common_ui_compose.ProgressLayout
-import com.kiwi.common_ui_compose.SampleCocktailPoProvider
+import com.kiwi.common_ui_compose.SampleFullDrinkEntityProvider
 import com.kiwi.common_ui_compose.rememberStateWithLifecycle
-import com.kiwi.data.entities.CocktailPo
-import com.kiwi.data.entities.Ingredient
+import com.kiwi.data.entities.FullDrinkEntity
 
 @Composable
 fun Recipe(
@@ -75,7 +74,7 @@ fun Recipe(
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun Recipe(
-    cocktail: CocktailPo,
+    cocktail: FullDrinkEntity,
     isFollowed: Boolean,
     onToggleFollowed: () -> Unit,
     openIngredient: (ingredientName: String) -> Unit,
@@ -95,7 +94,7 @@ private fun Recipe(
         ) {
             Image(
                 painter = rememberImagePainter(
-                    data = cocktail.gallery.firstOrNull(),
+                    data = cocktail.thumb,
                     builder = {
                         size(OriginalSize)
                     },
@@ -111,9 +110,10 @@ private fun Recipe(
                 )
                 Ingredients(
                     ingredients = cocktail.ingredients,
+                    measures = cocktail.measures,
                     onItemClick = openIngredient,
                 )
-                Step(cocktail.steps)
+                Step(cocktail.instructions)
                 Spacer(
                     modifier = Modifier
                         .fillMaxWidth()
@@ -138,7 +138,8 @@ private fun Introduction(
 
 @Composable
 private fun Ingredients(
-    ingredients: List<Ingredient>,
+    ingredients: List<String>,
+    measures: List<String>,
     onItemClick: (String) -> Unit,
 ) {
     Column(
@@ -152,28 +153,28 @@ private fun Ingredients(
             style = MaterialTheme.typography.headlineLarge,
             modifier = Modifier.padding(horizontal = 16.dp, vertical = 4.dp)
         )
-        ingredients.forEach {
+        ingredients.zip(measures) { ingredient, measure ->
             Row(
                 verticalAlignment = Alignment.CenterVertically,
                 modifier = Modifier
                     .height(40.dp)
                     .fillMaxWidth()
-                    .clickable { onItemClick(it.name) }
+                    .clickable { onItemClick(ingredient) }
                     .padding(horizontal = 16.dp)
             ) {
                 Image(
                     painter = rememberImagePainter(
-                        data = stringResource(id = R.string.ingredient_small_image_url, it.name)
+                        data = stringResource(id = R.string.ingredient_small_image_url, ingredient)
                     ),
                     contentDescription = null,
                     modifier = Modifier.size(36.dp)
                 )
                 Text(
-                    text = it.name,
+                    text = ingredient,
                     style = MaterialTheme.typography.headlineSmall,
                 )
                 Text(
-                    text = it.amount,
+                    text = measure,
                     style = MaterialTheme.typography.bodyLarge,
                     textAlign = TextAlign.End,
                     modifier = Modifier.weight(1f),
@@ -229,10 +230,10 @@ private fun ToggleFollowFloatingActionButton(
 @Preview
 @Composable
 fun PreviewRecipe(
-    @PreviewParameter(SampleCocktailPoProvider::class) cocktailPo: CocktailPo
+    @PreviewParameter(SampleFullDrinkEntityProvider::class) cocktail: FullDrinkEntity
 ) {
     Recipe(
-        cocktail = cocktailPo,
+        cocktail = cocktail,
         isFollowed = false,
         onToggleFollowed = {},
         openIngredient = {},

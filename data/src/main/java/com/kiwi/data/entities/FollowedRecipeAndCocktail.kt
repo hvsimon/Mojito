@@ -9,7 +9,7 @@ data class FollowedRecipeAndCocktail(
 
     @Relation(
         parentColumn = "cocktail_id",
-        entityColumn = "cocktail_id"
+        entityColumn = "idDrink"
     )
-    val cocktail: CocktailPo
+    val cocktail: FullDrinkEntity
 )

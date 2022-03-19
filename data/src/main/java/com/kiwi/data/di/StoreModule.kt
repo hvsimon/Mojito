@@ -7,8 +7,7 @@ import com.dropbox.android.external.store4.StoreBuilder
 import com.kiwi.data.api.CocktailApi
 import com.kiwi.data.db.CocktailDao
 import com.kiwi.data.entities.CategoryPo
-import com.kiwi.data.entities.CocktailPo
-import com.kiwi.data.mapper.toCocktailPo
+import com.kiwi.data.entities.FullDrinkEntity
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -25,11 +24,9 @@ object StoreModule {
     fun provideCocktailStore(
         cocktailDao: CocktailDao,
         cocktailApi: CocktailApi,
-    ): Store<String, CocktailPo> = StoreBuilder.from(
+    ): Store<String, FullDrinkEntity> = StoreBuilder.from(
         fetcher = Fetcher.of { id: String ->
-            cocktailApi.lookupFullCocktailDetailsById(id).drinks
-                .first()
-                .toCocktailPo()
+            cocktailApi.lookupFullCocktailDetailsById(id).drinks.first()
         },
         sourceOfTruth = SourceOfTruth.of(
             reader = { id ->

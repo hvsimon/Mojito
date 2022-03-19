@@ -4,14 +4,14 @@ import androidx.room.Database
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import com.kiwi.data.entities.CategoryPo
-import com.kiwi.data.entities.CocktailPo
 import com.kiwi.data.entities.FollowedRecipe
+import com.kiwi.data.entities.FullDrinkEntity
 
 @Database(
     entities = [
-        CocktailPo::class,
         FollowedRecipe::class,
         CategoryPo::class,
+        FullDrinkEntity::class,
     ],
     views = [],
     version = 1,
