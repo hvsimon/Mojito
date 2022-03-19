@@ -15,6 +15,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import timber.log.Timber
 
 @HiltViewModel
 class CocktailListViewModel @Inject constructor(
@@ -86,6 +87,10 @@ class CocktailListViewModel @Inject constructor(
                     )
                 }
             }.onFailure { t ->
+                Timber.e(
+                    t,
+                    "Error while fetching cocktail list by type: $baseLiquorType or $ibaCategoryType"
+                )
                 _uiState.update {
                     it.copy(
                         isLoading = false,

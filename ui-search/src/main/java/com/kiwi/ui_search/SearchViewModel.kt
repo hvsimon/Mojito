@@ -13,6 +13,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import timber.log.Timber
 
 @HiltViewModel
 class SearchViewModel @Inject constructor(
@@ -28,13 +29,18 @@ class SearchViewModel @Inject constructor(
             categoryStore.stream(StoreRequest.cached(Unit, false))
                 .collect { response ->
                     when (response) {
-                        is StoreResponse.Data -> {
-                            _uiState.update {
-                                it.copy(
-                                    categories = response.value
-                                        .map { categoryEntity -> categoryEntity.name }
-                                )
-                            }
+                        is StoreResponse.Data -> _uiState.update {
+                            it.copy(
+                                categories = response.value
+                                    .map { categoryEntity -> categoryEntity.name }
+                            )
+                        }
+
+                        is StoreResponse.Error.Exception -> {
+                            Timber.e(
+                                response.error,
+                                "Error while fetching categories on Search"
+                            )
                         }
                         else -> Unit
                     }
@@ -48,7 +54,8 @@ class SearchViewModel @Inject constructor(
                         it.copy(randomCocktails = data)
                     }
                 }
-                .onFailure {
+                .onFailure { t ->
+                    Timber.e(t, "Error while random cocktail for show on Search")
                     // TODO: pass error message
                 }
 
@@ -76,7 +83,9 @@ class SearchViewModel @Inject constructor(
                     isSearching = false,
                     query = query,
                     searchResult = result.getOrDefault(emptyList()),
-                    errorMessage = result.exceptionOrNull()?.localizedMessage,
+                    errorMessage = result.exceptionOrNull()
+                        ?.also { t -> Timber.e(t, "Error while searching: $query") }
+                        ?.localizedMessage,
                 )
             }
         }

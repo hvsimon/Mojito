@@ -10,6 +10,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import timber.log.Timber
 
 @HiltViewModel
 class ExploreViewModel @Inject constructor(
@@ -58,7 +59,8 @@ class ExploreViewModel @Inject constructor(
                         )
                     }
                 }
-                .onFailure {
+                .onFailure { t ->
+                    Timber.e(t, "Error while random cocktail for show on Explore")
                     _uiState.update {
                         // TODO: pass error message
                         it.copy(

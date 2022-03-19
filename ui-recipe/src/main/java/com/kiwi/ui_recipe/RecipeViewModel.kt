@@ -16,6 +16,7 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import timber.log.Timber
 
 @HiltViewModel
 class RecipeViewModel @Inject constructor(
@@ -44,14 +45,19 @@ class RecipeViewModel @Inject constructor(
                                 cocktail = response.value,
                             )
                         }
-                        is StoreResponse.Error -> _uiState.update {
+                        is StoreResponse.Error.Exception -> _uiState.update {
                             it.copy(
                                 isLoading = false,
                                 errorMessage = response.errorMessageOrNull()
                                     ?: "TODO: unknown error",
                             )
+                        }.also {
+                            Timber.e(
+                                response.error,
+                                "Error while fetching cocktail by id: $cocktailId"
+                            )
                         }
-                        is StoreResponse.NoNewData -> Unit
+                        else -> Unit
                     }
                 }
         }

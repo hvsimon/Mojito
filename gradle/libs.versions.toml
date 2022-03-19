@@ -43,6 +43,7 @@ retrofit-core = "2.9.0"
 retrofit-kotlinx-serialization-converter = "0.8.0"
 
 store = "4.0.4-KT15"
+timber = "5.0.1"
 
 # Test
 junit-core = "4.13.2"
@@ -125,6 +126,7 @@ retrofit-core = { module = "com.squareup.retrofit2:retrofit", version.ref = "ret
 retrofit-kotlinx-serialization-converter = { module = "com.jakewharton.retrofit:retrofit2-kotlinx-serialization-converter", version.ref = "retrofit-kotlinx-serialization-converter" }
 
 store = { module = "com.dropbox.mobile.store:store4", version.ref = "store" }
+timber = { module = "com.jakewharton.timber:timber", version.ref = "timber" }
 
 # Test
 junit-core = { module = "junit:junit", version.ref = "junit-core" }
