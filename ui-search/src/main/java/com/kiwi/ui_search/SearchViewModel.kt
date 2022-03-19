@@ -5,7 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.dropbox.android.external.store4.Store
 import com.dropbox.android.external.store4.StoreRequest
 import com.dropbox.android.external.store4.StoreResponse
-import com.kiwi.data.entities.CategoryPo
+import com.kiwi.data.entities.CategoryEntity
 import com.kiwi.data.repositories.CocktailRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
@@ -17,7 +17,7 @@ import kotlinx.coroutines.launch
 @HiltViewModel
 class SearchViewModel @Inject constructor(
     private val cocktailRepository: CocktailRepository,
-    categoryStore: Store<Unit, List<CategoryPo>>,
+    categoryStore: Store<Unit, List<CategoryEntity>>,
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(SearchUiState())
@@ -32,7 +32,7 @@ class SearchViewModel @Inject constructor(
                             _uiState.update {
                                 it.copy(
                                     categories = response.value
-                                        .map { cocktailCategoryPo -> cocktailCategoryPo.name }
+                                        .map { categoryEntity -> categoryEntity.name }
                                 )
                             }
                         }

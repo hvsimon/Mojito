@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "e2a382cfd723aec87d7bcbf6789f18e0",
+    "identityHash": "3e3826a56038acd8e77bc85606b87794",
     "entities": [
       {
         "tableName": "FollowedRecipe",
@@ -53,19 +53,19 @@
         "foreignKeys": []
       },
       {
-        "tableName": "CategoryPo",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`name` TEXT NOT NULL, PRIMARY KEY(`name`))",
+        "tableName": "CategoryEntity",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`strCategory` TEXT NOT NULL, PRIMARY KEY(`strCategory`))",
         "fields": [
           {
             "fieldPath": "name",
-            "columnName": "name",
+            "columnName": "strCategory",
             "affinity": "TEXT",
             "notNull": true
           }
         ],
         "primaryKey": {
           "columnNames": [
-            "name"
+            "strCategory"
           ],
           "autoGenerate": false
         },
@@ -83,7 +83,7 @@
             "notNull": true
           },
           {
-            "fieldPath": "drink",
+            "fieldPath": "name",
             "columnName": "strDrink",
             "affinity": "TEXT",
             "notNull": true
@@ -343,7 +343,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'e2a382cfd723aec87d7bcbf6789f18e0')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '3e3826a56038acd8e77bc85606b87794')"
     ]
   }
 }

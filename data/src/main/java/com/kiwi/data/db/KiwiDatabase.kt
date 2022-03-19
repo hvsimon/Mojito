@@ -3,14 +3,14 @@ package com.kiwi.data.db
 import androidx.room.Database
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
-import com.kiwi.data.entities.CategoryPo
+import com.kiwi.data.entities.CategoryEntity
 import com.kiwi.data.entities.FollowedRecipe
 import com.kiwi.data.entities.FullDrinkEntity
 
 @Database(
     entities = [
         FollowedRecipe::class,
-        CategoryPo::class,
+        CategoryEntity::class,
         FullDrinkEntity::class,
     ],
     views = [],

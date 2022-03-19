@@ -6,7 +6,7 @@ import com.dropbox.android.external.store4.Store
 import com.dropbox.android.external.store4.StoreBuilder
 import com.kiwi.data.api.CocktailApi
 import com.kiwi.data.db.CocktailDao
-import com.kiwi.data.entities.CategoryPo
+import com.kiwi.data.entities.CategoryEntity
 import com.kiwi.data.entities.FullDrinkEntity
 import dagger.Module
 import dagger.Provides
@@ -43,10 +43,9 @@ object StoreModule {
     fun provideCategoryStore(
         cocktailDao: CocktailDao,
         cocktailApi: CocktailApi,
-    ): Store<Unit, List<CategoryPo>> = StoreBuilder.from<Unit, List<CategoryPo>, List<CategoryPo>>(
+    ): Store<Unit, List<CategoryEntity>> = StoreBuilder.from<Unit, List<CategoryEntity>, List<CategoryEntity>>(
         fetcher = Fetcher.of {
             cocktailApi.listCategories().drinks
-                .map { CategoryPo(it.categoryName) }
         },
         sourceOfTruth = SourceOfTruth.of(
             reader = {

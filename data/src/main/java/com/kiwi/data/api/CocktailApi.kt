@@ -1,6 +1,6 @@
 package com.kiwi.data.api
 
-import com.kiwi.data.entities.CategoryDto
+import com.kiwi.data.entities.CategoryEntity
 import com.kiwi.data.entities.CocktailIngredientDto
 import com.kiwi.data.entities.CocktailResponse
 import com.kiwi.data.entities.FullDrinkEntity
@@ -54,7 +54,7 @@ interface CocktailApi {
 
     @Headers("Accept-Encoding: identity")
     @GET("list.php?c=list")
-    suspend fun listCategories(): CocktailResponse<CategoryDto>
+    suspend fun listCategories(): CocktailResponse<CategoryEntity>
 
     @Headers("Accept-Encoding: identity")
     @GET("list.php?i=list")
