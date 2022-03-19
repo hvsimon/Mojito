@@ -3,7 +3,7 @@ package com.kiwi.data
 import android.app.Application
 import com.kiwi.data.api.CocktailApi
 import com.kiwi.data.db.CocktailDao
-import com.kiwi.data.entities.CocktailResponse
+import com.kiwi.data.entities.TheCocktailDBResponse
 import com.kiwi.data.repositories.CocktailRepository
 import io.mockk.coEvery
 import io.mockk.coVerify
@@ -37,7 +37,7 @@ class CocktailRepositoryTest {
 
     @Test
     fun `get cocktail by id from remote without local data`() {
-        val mockCocktailResponse = CocktailResponse(
+        val mockCocktailResponse = TheCocktailDBResponse(
             drinks = listOf(TestData.fullDrinkDto1)
         )
 

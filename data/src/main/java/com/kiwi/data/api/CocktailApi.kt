@@ -1,7 +1,7 @@
 package com.kiwi.data.api
 
 import com.kiwi.data.entities.CategoryEntity
-import com.kiwi.data.entities.CocktailResponse
+import com.kiwi.data.entities.TheCocktailDBResponse
 import com.kiwi.data.entities.FullDrinkEntity
 import com.kiwi.data.entities.FullIngredientEntity
 import com.kiwi.data.entities.SimpleDrinkDto
@@ -14,49 +14,49 @@ interface CocktailApi {
 
     @Headers("Accept-Encoding: identity")
     @GET("random.php")
-    suspend fun randomCocktail(): CocktailResponse<FullDrinkEntity>
+    suspend fun randomCocktail(): TheCocktailDBResponse<FullDrinkEntity>
 
     @Headers("Accept-Encoding: identity")
     @GET("search.php")
     suspend fun searchCocktailByName(
         @Query("s") cocktailName: String,
-    ): CocktailResponse<FullDrinkEntity>
+    ): TheCocktailDBResponse<FullDrinkEntity>
 
     @Headers("Accept-Encoding: identity")
     @GET("search.php")
     suspend fun searchCocktailByFirstLetter(
         @Query("f") firstLetter: Char,
-    ): CocktailResponse<FullDrinkEntity>
+    ): TheCocktailDBResponse<FullDrinkEntity>
 
     @Headers("Accept-Encoding: identity")
     @GET("search.php")
     suspend fun searchIngredientByName(
         @Query("i") ingredientName: String,
-    ): CocktailResponse<FullIngredientEntity>
+    ): TheCocktailDBResponse<FullIngredientEntity>
 
     @Headers("Accept-Encoding: identity")
     @GET("filter.php")
     suspend fun searchByIngredient(
         @Query("i") ingredientName: String
-    ): CocktailResponse<SimpleDrinkDto>
+    ): TheCocktailDBResponse<SimpleDrinkDto>
 
     @Headers("Accept-Encoding: identity")
     @GET("filter.php")
     suspend fun filterByCategory(
         @Query("c") category: String
-    ): CocktailResponse<SimpleDrinkDto>
+    ): TheCocktailDBResponse<SimpleDrinkDto>
 
     @Headers("Accept-Encoding: identity")
     @GET("lookup.php")
     suspend fun lookupFullCocktailDetailsById(
         @Query("i") id: String
-    ): CocktailResponse<FullDrinkEntity>
+    ): TheCocktailDBResponse<FullDrinkEntity>
 
     @Headers("Accept-Encoding: identity")
     @GET("list.php?c=list")
-    suspend fun listCategories(): CocktailResponse<CategoryEntity>
+    suspend fun listCategories(): TheCocktailDBResponse<CategoryEntity>
 
     @Headers("Accept-Encoding: identity")
     @GET("list.php?i=list")
-    suspend fun listIngredients(): CocktailResponse<SimpleIngredientDto>
+    suspend fun listIngredients(): TheCocktailDBResponse<SimpleIngredientDto>
 }
