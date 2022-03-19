@@ -5,7 +5,6 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import com.kiwi.data.entities.FullDrinkEntity
-import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface CocktailDao {
@@ -14,10 +13,7 @@ interface CocktailDao {
     suspend fun insertCocktails(vararg cocktail: FullDrinkEntity)
 
     @Query("SELECT * FROM FullDrinkEntity WHERE idDrink = :cocktailId")
-    fun getCocktailBy(cocktailId: String): FullDrinkEntity?
-
-    @Query("SELECT * FROM FullDrinkEntity WHERE idDrink = :cocktailId")
-    fun getCocktailByIdFlow(cocktailId: String): Flow<FullDrinkEntity>
+    suspend fun getCocktailById(cocktailId: String): FullDrinkEntity?
 
     @Query(
         """

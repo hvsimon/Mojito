@@ -16,7 +16,8 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import javax.inject.Singleton
-import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.withContext
 
 @InstallIn(SingletonComponent::class)
 @Module
@@ -27,16 +28,17 @@ object StoreModule {
     fun provideCocktailStore(
         cocktailDao: CocktailDao,
         cocktailApi: CocktailApi,
+        @IoDispatcher ioDispatcher: CoroutineDispatcher,
     ): Store<String, FullDrinkEntity> = StoreBuilder.from(
         fetcher = Fetcher.of { id: String ->
             cocktailApi.lookupFullCocktailDetailsById(id).drinks.first()
         },
         sourceOfTruth = SourceOfTruth.of(
-            reader = { id ->
-                cocktailDao.getCocktailByIdFlow(id)
+            nonFlowReader = { id ->
+                withContext(ioDispatcher) { cocktailDao.getCocktailById(id) }
             },
             writer = { _, data ->
-                cocktailDao.insertCocktails(data)
+                withContext(ioDispatcher) { cocktailDao.insertCocktails(data) }
             }
         )
     ).build()
@@ -46,17 +48,18 @@ object StoreModule {
     fun provideIngredientStore(
         ingredientDao: IngredientDao,
         cocktailApi: CocktailApi,
+        @IoDispatcher ioDispatcher: CoroutineDispatcher,
     ): Store<String, FullIngredientEntity> =
         StoreBuilder.from<String, FullIngredientEntity, FullIngredientEntity>(
             fetcher = Fetcher.of { name ->
                 cocktailApi.searchIngredientByName(name).ingredients.first()
             },
             sourceOfTruth = SourceOfTruth.of(
-                reader = { name ->
-                    ingredientDao.getIngredientByNameFlow(name)
+                nonFlowReader = { name ->
+                    withContext(ioDispatcher) { ingredientDao.getIngredientByName(name) }
                 },
                 writer = { _, data ->
-                    ingredientDao.insertIngredients(data)
+                    withContext(ioDispatcher) { ingredientDao.insertIngredients(data) }
                 }
             )
         ).build()
@@ -67,18 +70,23 @@ object StoreModule {
     fun provideCategoryStore(
         categoryDao: CategoryDao,
         cocktailApi: CocktailApi,
+        @IoDispatcher ioDispatcher: CoroutineDispatcher,
     ): Store<Unit, List<CategoryEntity>> =
         StoreBuilder.from<Unit, List<CategoryEntity>, List<CategoryEntity>>(
             fetcher = Fetcher.of {
                 cocktailApi.listCategories().drinks
             },
             sourceOfTruth = SourceOfTruth.of(
-                reader = {
-                    categoryDao.getAllCocktailCategoryFlow()
-                        .map { it.ifEmpty { null } }
+                nonFlowReader = {
+                    withContext(ioDispatcher) {
+                        categoryDao.getAllCocktailCategory().ifEmpty { null }
+                    }
+
                 },
                 writer = { _, data ->
-                    categoryDao.insertCategories(*data.toTypedArray())
+                    withContext(ioDispatcher) {
+                        categoryDao.insertCategories(*data.toTypedArray())
+                    }
                 }
             )
         ).build()

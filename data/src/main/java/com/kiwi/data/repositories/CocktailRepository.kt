@@ -71,13 +71,6 @@ class CocktailRepository @Inject constructor(
             cocktailApi.filterByCategory(category).drinks
         }
 
-    suspend fun lookupFullCocktailDetailsById(id: String): FullDrinkEntity =
-        withContext(ioDispatcher) {
-            return@withContext cocktailDao.getCocktailBy(id)
-                ?: cocktailApi.lookupFullCocktailDetailsById(id).drinks.first()
-                    .also { cocktailDao.insertCocktails(it) }
-        }
-
     suspend fun getBaseLiquors(): List<BaseLiquor> = withContext(ioDispatcher) {
         // TODO: Implement cache mechanism
         application.assets
