@@ -6,6 +6,7 @@ import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import com.kiwi.data.entities.CategoryEntity
 import com.kiwi.data.entities.FullDrinkEntity
+import com.kiwi.data.entities.FullIngredientEntity
 import kotlinx.coroutines.flow.Flow
 
 @Dao
@@ -35,4 +36,10 @@ interface CocktailDao {
 
     @Query("SELECT * FROM CategoryEntity")
     fun getAllCocktailCategoryFlow(): Flow<List<CategoryEntity>>
+
+    @Query("SELECT * FROM FullIngredientEntity WHERE strIngredient = :ingredientName")
+    fun getIngredientByNameFlow(ingredientName: String): Flow<FullIngredientEntity>
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertIngredients(vararg ingredient: FullIngredientEntity)
 }

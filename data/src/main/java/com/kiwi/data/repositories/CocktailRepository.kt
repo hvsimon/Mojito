@@ -7,7 +7,6 @@ import com.kiwi.data.db.CocktailDao
 import com.kiwi.data.di.IoDispatcher
 import com.kiwi.data.entities.BaseLiquor
 import com.kiwi.data.entities.FullDrinkEntity
-import com.kiwi.data.entities.FullIngredientDto
 import com.kiwi.data.entities.IBACocktail
 import com.kiwi.data.entities.SimpleDrinkDto
 import dagger.Reusable
@@ -60,11 +59,6 @@ class CocktailRepository @Inject constructor(
         withContext(ioDispatcher) {
             cocktailApi.searchCocktailByFirstLetter(firstLetter).drinks
                 .also { launch { cocktailDao.insertCocktails(*it.toTypedArray()) } }
-        }
-
-    suspend fun searchIngredientByName(ingredientName: String): FullIngredientDto =
-        withContext(ioDispatcher) {
-            cocktailApi.searchIngredientByName(ingredientName).ingredients.first()
         }
 
     suspend fun searchByIngredient(ingredientName: String): List<SimpleDrinkDto> =
