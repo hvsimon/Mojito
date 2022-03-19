@@ -1,7 +1,6 @@
 package com.kiwi.data
 
 import com.kiwi.data.entities.FullDrinkEntity
-import com.kiwi.data.entities.Ingredient
 
 object TestData {
 
