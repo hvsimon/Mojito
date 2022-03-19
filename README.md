@@ -1,12 +1,12 @@
 <h1 align="center">
   <br>
-  <img src="/app/src/main/ic_launcher-playstore.png"/>
+  <img src="/screenshots/banner.png"/>
   <br>
   Mojito
   <br>
 </h1>
 
-<p align="center">Mojito* is a cocktail manual, which contains recipes, images and so on.</p>
+<p align="center">Mojito* is a cocktail manual, which contains recipes, images, and so on.</p>
 
 *Mojito: an alcoholic drink made with rum, lime juice, sugar, and mint.
 
@@ -18,9 +18,17 @@
 <img src="/screenshots/explore-iba-official-cocktail-list.png" width="32%"/>
 </p>
 
+<p>
+<img src="/screenshots/collections.png" width="32%"/>
+<img src="/screenshots/search.png" width="32%"/>
+<img src="/screenshots/recipe.png" width="32%"/>
+</p>
+
 ## Download
 
-    TODO: provide F-Droid and Google Play link.
+<a href='https://play.google.com/store/apps/details?id=com.kiwi.cocktail'><img alt='Get it on Google Play' src='https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png' width=240/></a>
+    
+    TODO: provide F-Droid link.
 
 ## API
 
