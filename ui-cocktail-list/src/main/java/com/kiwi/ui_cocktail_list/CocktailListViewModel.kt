@@ -57,7 +57,12 @@ class CocktailListViewModel @Inject constructor(
             return -1
         }
 
-    private val _uiState = MutableStateFlow(CocktailUiState(titleStringRes = titleStringRes))
+    private val _uiState = MutableStateFlow(
+        CocktailUiState(
+            isLoading = true,
+            titleStringRes = titleStringRes
+        )
+    )
     val uiState: StateFlow<CocktailUiState> = _uiState.asStateFlow()
 
     init {
@@ -75,11 +80,17 @@ class CocktailListViewModel @Inject constructor(
                     )
                 }
                 _uiState.update {
-                    it.copy(cocktailItems = items)
+                    it.copy(
+                        isLoading = false,
+                        cocktailItems = items,
+                    )
                 }
             }.onFailure { t ->
                 _uiState.update {
-                    it.copy(errorMessage = t.localizedMessage)
+                    it.copy(
+                        isLoading = false,
+                        errorMessage = t.localizedMessage,
+                    )
                 }
             }
         }

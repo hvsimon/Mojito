@@ -4,6 +4,7 @@ data class CocktailUiState(
     val titleStringRes: Int = -1,
     val cocktailItems: List<CocktailItemUiState> = listOf(),
     val errorMessage: String? = null,
+    val isLoading: Boolean = false,
 )
 
 data class CocktailItemUiState(
