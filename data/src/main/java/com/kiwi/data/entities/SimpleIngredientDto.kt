@@ -4,6 +4,6 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class CocktailIngredientDto(
+data class SimpleIngredientDto(
     @SerialName("strIngredient1") val ingredientName: String,
 )

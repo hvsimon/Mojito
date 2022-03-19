@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "3e3826a56038acd8e77bc85606b87794",
+    "identityHash": "3313d6486d0bd28b0ccc6573f30a9c25",
     "entities": [
       {
         "tableName": "FollowedRecipe",
@@ -338,12 +338,50 @@
           }
         ],
         "foreignKeys": []
+      },
+      {
+        "tableName": "FullIngredientEntity",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`idIngredient` TEXT NOT NULL, `strIngredient` TEXT NOT NULL, `strDescription` TEXT, `strType` TEXT, PRIMARY KEY(`idIngredient`))",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "idIngredient",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "name",
+            "columnName": "strIngredient",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "description",
+            "columnName": "strDescription",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "type",
+            "columnName": "strType",
+            "affinity": "TEXT",
+            "notNull": false
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "idIngredient"
+          ],
+          "autoGenerate": false
+        },
+        "indices": [],
+        "foreignKeys": []
       }
     ],
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '3e3826a56038acd8e77bc85606b87794')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '3313d6486d0bd28b0ccc6573f30a9c25')"
     ]
   }
 }
