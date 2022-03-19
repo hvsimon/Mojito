@@ -83,7 +83,6 @@ fun HomeBottomNavigation(
         HomeNavigationItems.forEach { item ->
             val selected =
                 currentDestination?.hierarchy?.any { it.route == item.screen.route } == true
-            // <div>Icons made by <a href="https://www.freepik.com" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div>
             val iconRes = if (selected) item.selectedIconResId else item.iconResId
             NavigationBarItem(
                 icon = { Icon(painterResource(id = iconRes), contentDescription = null) },
@@ -112,8 +111,8 @@ private val HomeNavigationItems = listOf(
     HomeNavigationItem(
         screen = Screen.Explore,
         labelResId = R.string.explore_title,
-        iconResId = R.drawable.ic_mojito_outlined,
-        selectedIconResId = R.drawable.ic_mojito_filled,
+        iconResId = R.drawable.ic_liquor_outlined,
+        selectedIconResId = R.drawable.ic_liquor_filled,
     ),
     HomeNavigationItem(
         screen = Screen.Collection,
