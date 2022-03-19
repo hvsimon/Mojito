@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.aspectRatio
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -51,13 +52,16 @@ fun Recipe(
 
     val isLoading = uiState.isLoading
     if (isLoading) {
-        ProgressLayout()
+        ProgressLayout(modifier = Modifier.fillMaxSize())
         return
     }
 
     val errorMessage = uiState.errorMessage
     if (errorMessage != null) {
-        ErrorLayout(errorMessage = errorMessage)
+        ErrorLayout(
+            modifier = Modifier.fillMaxSize(),
+            errorMessage = errorMessage,
+        )
         return
     }
 

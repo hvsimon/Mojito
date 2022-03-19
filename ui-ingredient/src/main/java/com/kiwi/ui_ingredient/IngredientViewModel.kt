@@ -23,7 +23,7 @@ class IngredientViewModel @Inject constructor(
 
     private val ingredientName = savedStateHandle.get<String>("ingredientName")!!
 
-    private val _uiState = MutableStateFlow(IngredientUiState(isLoading = true))
+    private val _uiState = MutableStateFlow(IngredientUiState())
     val uiState = _uiState.asStateFlow()
 
     init {
@@ -31,8 +31,11 @@ class IngredientViewModel @Inject constructor(
             ingredientStore.stream(StoreRequest.cached(ingredientName, false))
                 .collect { response ->
                     when (response) {
-                        is StoreResponse.Loading -> {
-                            // TODO: show loading status
+                        is StoreResponse.Loading -> _uiState.update {
+                            it.copy(
+                                isLoading = true,
+                                errorMessage = null,
+                            )
                         }
                         is StoreResponse.Data -> _uiState.update {
                             val data = response.value
@@ -40,14 +43,19 @@ class IngredientViewModel @Inject constructor(
                                 isLoading = false,
                                 name = data.name,
                                 desc = data.description ?: "",
+                                errorMessage = null,
                             )
                         }
-                        is StoreResponse.Error.Exception -> {
+                        is StoreResponse.Error.Exception -> _uiState.update {
+                            it.copy(
+                                isLoading = false,
+                                errorMessage = response.error.localizedMessage,
+                            )
+                        }.also {
                             Timber.e(
                                 response.error,
                                 "Error while fetching ingredient by name: $ingredientName"
                             )
-                            // TODO: show error status
                         }
                         else -> Unit
                     }

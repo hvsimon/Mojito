@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.aspectRatio
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentHeight
@@ -69,7 +70,10 @@ fun CocktailList(
 
         val errorMessage = uiState.errorMessage
         if (errorMessage != null) {
-            ErrorLayout(errorMessage = errorMessage)
+            ErrorLayout(
+                modifier = Modifier.fillMaxSize(),
+                errorMessage = errorMessage
+            )
         } else {
             CocktailList(
                 list = uiState.cocktailItems,

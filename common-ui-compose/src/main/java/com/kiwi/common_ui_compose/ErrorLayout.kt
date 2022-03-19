@@ -3,7 +3,6 @@ package com.kiwi.common_ui_compose
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Text
@@ -17,14 +16,14 @@ import androidx.compose.ui.unit.dp
 
 @Composable
 fun ErrorLayout(
+    modifier: Modifier = Modifier,
     errorMessage: String,
 ) {
     // TODO: redesign
     Column(
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally,
-        modifier = Modifier
-            .fillMaxSize()
+        modifier = modifier
             .padding(16.dp),
     ) {
         Image(

@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.aspectRatio
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
@@ -21,6 +22,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.rememberImagePainter
+import com.kiwi.common_ui_compose.ErrorLayout
+import com.kiwi.common_ui_compose.ProgressLayout
 import com.kiwi.common_ui_compose.rememberStateWithLifecycle
 
 @Composable
@@ -37,6 +40,23 @@ fun Ingredient(
 private fun Ingredient(
     uiState: IngredientUiState,
 ) {
+    if (uiState.isLoading) {
+        ProgressLayout(
+            modifier = Modifier
+                .fillMaxWidth()
+                .fillMaxHeight(0.5f)
+        )
+    }
+
+    uiState.errorMessage?.let {
+        ErrorLayout(
+            modifier = Modifier
+                .fillMaxWidth()
+                .fillMaxHeight(0.5f),
+            errorMessage = it
+        )
+    }
+
     LazyColumn(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.spacedBy(16.dp),
@@ -48,15 +68,19 @@ private fun Ingredient(
         item {
             DraggableIndicator()
         }
-        item {
-            IngredientTitle(uiState.name)
-        }
-        item {
-            IngredientImage(
-                imageUrl = stringResource(id = R.string.ingredient_medium_image_url, uiState.name)
-            )
-        }
-        if (!uiState.isLoading) {
+
+        if (!uiState.isLoading && uiState.errorMessage == null) {
+            item {
+                IngredientTitle(uiState.name)
+            }
+            item {
+                IngredientImage(
+                    imageUrl = stringResource(
+                        id = R.string.ingredient_medium_image_url,
+                        uiState.name
+                    )
+                )
+            }
             item {
                 IngredientDesc(
                     desc = uiState.desc.ifEmpty {
