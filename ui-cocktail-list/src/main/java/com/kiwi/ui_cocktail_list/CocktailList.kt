@@ -37,6 +37,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.rememberImagePainter
 import com.google.accompanist.insets.statusBarsPadding
+import com.kiwi.common_ui_compose.ErrorLayout
 import com.kiwi.common_ui_compose.rememberStateWithLifecycle
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -61,10 +62,16 @@ fun CocktailList(
             .statusBarsPadding()
             .nestedScroll(scrollBehavior.nestedScrollConnection)
     ) {
-        CocktailList(
-            list = uiState.cocktailItems,
-            onItemClick = openRecipe,
-        )
+
+        val errorMessage = uiState.errorMessage
+        if (errorMessage != null) {
+            ErrorLayout(errorMessage = errorMessage)
+        } else {
+            CocktailList(
+                list = uiState.cocktailItems,
+                onItemClick = openRecipe,
+            )
+        }
     }
 }
 

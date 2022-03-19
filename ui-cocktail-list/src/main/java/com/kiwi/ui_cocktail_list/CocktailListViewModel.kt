@@ -4,13 +4,12 @@ import androidx.annotation.StringRes
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.kiwi.data.domain.GetBaseLiquorsUseCase
+import com.kiwi.data.domain.GetIBACocktailsUseCase
 import com.kiwi.data.entities.BaseLiquorType
 import com.kiwi.data.entities.IBACategoryType
-import com.kiwi.data.repositories.CocktailRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
-import kotlinx.coroutines.async
-import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -20,7 +19,8 @@ import kotlinx.coroutines.launch
 @HiltViewModel
 class CocktailListViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
-    private val cocktailRepository: CocktailRepository,
+    getBaseLiquorsUseCase: GetBaseLiquorsUseCase,
+    getIBACocktailsUseCase: GetIBACocktailsUseCase,
 ) : ViewModel() {
 
     private val baseLiquorType: BaseLiquorType? =
@@ -62,44 +62,27 @@ class CocktailListViewModel @Inject constructor(
 
     init {
         viewModelScope.launch {
-            val list = when {
-                baseLiquorType != null -> getCocktailsByBaseLiquors(baseLiquorType)
-                ibaCategoryType != null -> getIBACocktails(ibaCategoryType)
+            when {
+                baseLiquorType != null -> getBaseLiquorsUseCase(baseLiquorType)
+                ibaCategoryType != null -> getIBACocktailsUseCase(ibaCategoryType)
                 else -> error("Must pass one of types: BaseLiquorType or IBACategoryType")
-            }
-
-            _uiState.update {
-                it.copy(cocktailItems = list)
+            }.onSuccess { data ->
+                val items = data.map {
+                    CocktailItemUiState(
+                        id = it.cocktailId,
+                        name = it.name,
+                        imageUrl = it.gallery.firstOrNull() ?: "",
+                    )
+                }
+                _uiState.update {
+                    it.copy(cocktailItems = items)
+                }
+            }.onFailure { t ->
+                _uiState.update {
+                    it.copy(errorMessage = t.localizedMessage)
+                }
             }
         }
     }
-
-    private suspend fun getCocktailsByBaseLiquors(type: BaseLiquorType) =
-        cocktailRepository.getBaseLiquors()
-            .filter { it.baseLiquor == type }
-            .map { viewModelScope.async { cocktailRepository.searchByIngredient(it.name) } }
-            .awaitAll()
-            .flatten()
-            .map {
-                CocktailItemUiState(
-                    id = it.cocktailId,
-                    name = it.name,
-                    imageUrl = it.gallery.firstOrNull() ?: "",
-                )
-            }
-
-    private suspend fun getIBACocktails(type: IBACategoryType) =
-        cocktailRepository.getIBACocktails()
-            .filter { it.iba == type && it.id.isNotEmpty() }
-            .map {
-                viewModelScope.async { cocktailRepository.lookupFullCocktailDetailsById(it.id) }
-            }
-            .awaitAll()
-            .map {
-                CocktailItemUiState(
-                    id = it.cocktailId,
-                    name = it.name,
-                    imageUrl = it.gallery.firstOrNull() ?: "",
-                )
-            }
 }
+
