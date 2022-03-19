@@ -5,7 +5,9 @@ import com.dropbox.android.external.store4.SourceOfTruth
 import com.dropbox.android.external.store4.Store
 import com.dropbox.android.external.store4.StoreBuilder
 import com.kiwi.data.api.CocktailApi
+import com.kiwi.data.db.CategoryDao
 import com.kiwi.data.db.CocktailDao
+import com.kiwi.data.db.IngredientDao
 import com.kiwi.data.entities.CategoryEntity
 import com.kiwi.data.entities.FullDrinkEntity
 import com.kiwi.data.entities.FullIngredientEntity
@@ -42,7 +44,7 @@ object StoreModule {
     @Provides
     @Singleton
     fun provideIngredientStore(
-        cocktailDao: CocktailDao,
+        ingredientDao: IngredientDao,
         cocktailApi: CocktailApi,
     ): Store<String, FullIngredientEntity> =
         StoreBuilder.from<String, FullIngredientEntity, FullIngredientEntity>(
@@ -51,10 +53,10 @@ object StoreModule {
             },
             sourceOfTruth = SourceOfTruth.of(
                 reader = { name ->
-                    cocktailDao.getIngredientByNameFlow(name)
+                    ingredientDao.getIngredientByNameFlow(name)
                 },
                 writer = { _, data ->
-                    cocktailDao.insertIngredients(data)
+                    ingredientDao.insertIngredients(data)
                 }
             )
         ).build()
@@ -63,7 +65,7 @@ object StoreModule {
     @Provides
     @Singleton
     fun provideCategoryStore(
-        cocktailDao: CocktailDao,
+        categoryDao: CategoryDao,
         cocktailApi: CocktailApi,
     ): Store<Unit, List<CategoryEntity>> =
         StoreBuilder.from<Unit, List<CategoryEntity>, List<CategoryEntity>>(
@@ -72,11 +74,11 @@ object StoreModule {
             },
             sourceOfTruth = SourceOfTruth.of(
                 reader = {
-                    cocktailDao.getAllCocktailCategoryFlow()
+                    categoryDao.getAllCocktailCategoryFlow()
                         .map { it.ifEmpty { null } }
                 },
                 writer = { _, data ->
-                    cocktailDao.insertCategories(*data.toTypedArray())
+                    categoryDao.insertCategories(*data.toTypedArray())
                 }
             )
         ).build()

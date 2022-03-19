@@ -24,5 +24,9 @@ abstract class KiwiDatabase : RoomDatabase() {
 
     abstract fun cocktailDao(): CocktailDao
 
+    abstract fun ingredientDao(): IngredientDao
+
+    abstract fun categoryDao(): CategoryDao
+
     abstract fun followedCocktailDao(): FollowedRecipesDao
 }
