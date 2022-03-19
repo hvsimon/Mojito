@@ -6,7 +6,7 @@ import androidx.lifecycle.viewModelScope
 import com.dropbox.android.external.store4.Store
 import com.dropbox.android.external.store4.StoreRequest
 import com.dropbox.android.external.store4.StoreResponse
-import com.kiwi.data.entities.CocktailPo
+import com.kiwi.data.entities.FullDrinkEntity
 import com.kiwi.data.repositories.FollowedRecipesRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
@@ -21,7 +21,7 @@ import kotlinx.coroutines.launch
 class RecipeViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
     private val followedRecipesRepository: FollowedRecipesRepository,
-    cocktailStore: Store<String, CocktailPo>
+    cocktailStore: Store<String, FullDrinkEntity>
 ) : ViewModel() {
 
     private val cocktailId: String = savedStateHandle.get("cocktailId")!!

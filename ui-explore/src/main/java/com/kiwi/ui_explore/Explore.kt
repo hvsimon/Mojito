@@ -57,9 +57,8 @@ import com.google.accompanist.swiperefresh.SwipeRefreshIndicator
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 import com.kiwi.common_ui_compose.rememberStateWithLifecycle
 import com.kiwi.data.entities.BaseLiquorType
-import com.kiwi.data.entities.CocktailPo
+import com.kiwi.data.entities.FullDrinkEntity
 import com.kiwi.data.entities.IBACategoryType
-import com.kiwi.data.entities.Ingredient
 
 @Composable
 fun Explore(
@@ -171,7 +170,7 @@ private fun Explore(
 
 @Composable
 private fun Header(
-    cocktail: CocktailPo?,
+    cocktail: FullDrinkEntity?,
     onRandomClick: (cocktailId: String) -> Unit,
     onIngredientClick: (ingredientName: String) -> Unit,
 ) {
@@ -187,14 +186,14 @@ private fun Header(
             onItemClick = onIngredientClick
         )
         RandomButton(
-            onClick = { cocktail?.let { onRandomClick(it.cocktailId) } }
+            onClick = { cocktail?.let { onRandomClick(it.id) } }
         )
     }
 }
 
 @Composable
 private fun RandomCocktail(
-    cocktail: CocktailPo? = null,
+    cocktail: FullDrinkEntity? = null,
 ) {
     Box(
         modifier = Modifier
@@ -205,7 +204,7 @@ private fun RandomCocktail(
     ) {
         Image(
             painter = rememberImagePainter(
-                data = cocktail?.gallery?.random(),
+                data = cocktail?.thumb,
                 builder = { crossfade(true) },
             ),
             contentScale = ContentScale.Crop,
@@ -236,7 +235,7 @@ private fun RandomCocktail(
 
 @Composable
 private fun IngredientCardRow(
-    ingredients: List<Ingredient>,
+    ingredients: List<String>,
     onItemClick: (ingredientName: String) -> Unit,
 ) {
     Row(
@@ -252,8 +251,8 @@ private fun IngredientCardRow(
                 modifier = Modifier
                     .fillMaxHeight()
                     .aspectRatio(1f),
-                imageUrl = stringResource(id = R.string.ingredient_small_image_url, it.name),
-                onCardClick = { onItemClick(it.name) }
+                imageUrl = stringResource(id = R.string.ingredient_small_image_url, it),
+                onCardClick = { onItemClick(it) }
             )
         }
     }
@@ -417,7 +416,7 @@ private fun PreviewSearchBar() {
 @Composable
 private fun PreviewIngredientCardRow() {
     IngredientCardRow(
-        ingredients = listOf(Ingredient(name = "a", amount = "a")),
+        ingredients = listOf("a", "b"),
         onItemClick = {}
     )
 }

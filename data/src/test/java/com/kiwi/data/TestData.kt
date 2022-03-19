@@ -1,7 +1,6 @@
 package com.kiwi.data
 
-import com.kiwi.data.entities.CocktailPo
-import com.kiwi.data.entities.FullDrinkDto
+import com.kiwi.data.entities.FullDrinkEntity
 import com.kiwi.data.entities.Ingredient
 
 object TestData {
@@ -26,9 +25,9 @@ object TestData {
         steps = "Pour all ingredients into a cocktail shaker",
     )
 
-    val fullDrinkDto1 = FullDrinkDto(
+    val fullDrinkDto1 = FullDrinkEntity(
         id = "1",
-        drink = "Cocktail Name",
+        name = "Cocktail Name",
         tags = null,
         category = "Category",
         iba = null,

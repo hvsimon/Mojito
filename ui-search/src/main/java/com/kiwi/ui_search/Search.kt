@@ -63,9 +63,9 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.rememberImagePainter
 import com.google.accompanist.flowlayout.FlowRow
 import com.google.accompanist.insets.statusBarsPadding
-import com.kiwi.common_ui_compose.SampleCocktailPoProvider
+import com.kiwi.common_ui_compose.SampleFullDrinkEntityProvider
 import com.kiwi.common_ui_compose.rememberStateWithLifecycle
-import com.kiwi.data.entities.CocktailPo
+import com.kiwi.data.entities.FullDrinkEntity
 
 @Composable
 fun Search(
@@ -262,8 +262,8 @@ private fun SearchResult(
     ) {
         items(uiState.searchResult) {
             ResultCard(
-                cocktailPo = it,
-                onCardClick = { onItemClick(it.cocktailId) },
+                cocktail = it,
+                onCardClick = { onItemClick(it.name) },
             )
         }
     }
@@ -272,7 +272,7 @@ private fun SearchResult(
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalMaterialApi::class)
 @Composable
 private fun ResultCard(
-    cocktailPo: CocktailPo,
+    cocktail: FullDrinkEntity,
     onCardClick: () -> Unit,
 ) {
     Card(
@@ -286,7 +286,7 @@ private fun ResultCard(
         ) {
             Image(
                 painter = rememberImagePainter(
-                    data = cocktailPo.gallery.firstOrNull(),
+                    data = cocktail.thumb,
                     builder = {
                         crossfade(true)
                     }
@@ -303,17 +303,17 @@ private fun ResultCard(
                 verticalArrangement = Arrangement.Center
             ) {
                 Text(
-                    text = cocktailPo.name,
+                    text = cocktail.name,
                     style = MaterialTheme.typography.titleLarge,
                 )
                 Text(
-                    text = cocktailPo.ingredients.joinToString { it.name },
+                    text = cocktail.ingredients.joinToString { it },
                     overflow = TextOverflow.Ellipsis,
                     maxLines = 1,
                     style = MaterialTheme.typography.bodyMedium,
                 )
                 Text(
-                    text = cocktailPo.steps,
+                    text = cocktail.instructions,
                     overflow = TextOverflow.Ellipsis,
                     maxLines = 2,
                     modifier = Modifier.padding(top = 8.dp)
@@ -327,7 +327,7 @@ private fun ResultCard(
                     modifier = Modifier.align(Alignment.End)
                 ) {
                     Text(
-                        text = cocktailPo.category,
+                        text = cocktail.category,
                         style = MaterialTheme.typography.labelSmall,
                     )
                 }
@@ -406,7 +406,7 @@ private fun TagGroup(
 @Composable
 private fun CocktailRow(
     modifier: Modifier = Modifier,
-    data: List<CocktailPo>,
+    data: List<FullDrinkEntity>,
     onItemClick: (String) -> Unit,
 ) {
     LazyRow(
@@ -427,19 +427,19 @@ private fun CocktailRow(
 @Composable
 private fun CocktailCard(
     modifier: Modifier = Modifier,
-    cocktail: CocktailPo,
+    cocktail: FullDrinkEntity,
     onClick: (cocktailId: String) -> Unit,
 ) {
     Card(
         modifier = modifier
             .width(150.dp)
             .wrapContentHeight()
-            .clickable(onClick = { onClick.invoke(cocktail.cocktailId) }),
+            .clickable(onClick = { onClick.invoke(cocktail.id) }),
     ) {
         Column {
             Image(
                 painter = rememberImagePainter(
-                    data = cocktail.gallery.randomOrNull(),
+                    data = cocktail.thumb,
                     builder = {
                         crossfade(true)
                     },
@@ -495,10 +495,10 @@ private fun PreviewTagGroup() {
 @Preview
 @Composable
 private fun PreviewResultCard(
-    @PreviewParameter(SampleCocktailPoProvider::class) cocktailPo: CocktailPo
+    @PreviewParameter(SampleFullDrinkEntityProvider::class) cocktail: FullDrinkEntity
 ) {
     ResultCard(
-        cocktailPo = cocktailPo,
+        cocktail = cocktail,
         onCardClick = {},
     )
 }

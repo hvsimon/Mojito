@@ -1,7 +1,7 @@
 package com.kiwi.data.domain
 
 import com.kiwi.data.entities.BaseLiquorType
-import com.kiwi.data.entities.CocktailPo
+import com.kiwi.data.entities.SimpleDrinkDto
 import com.kiwi.data.repositories.CocktailRepository
 import javax.inject.Inject
 import kotlinx.coroutines.async
@@ -12,7 +12,7 @@ class GetBaseLiquorsUseCase @Inject constructor(
     private val cocktailRepository: CocktailRepository,
 ) {
 
-    suspend operator fun invoke(type: BaseLiquorType): Result<List<CocktailPo>> = runCatching {
+    suspend operator fun invoke(type: BaseLiquorType): Result<List<SimpleDrinkDto>> = runCatching {
         coroutineScope {
             cocktailRepository.getBaseLiquors()
                 .filter { it.baseLiquor == type }

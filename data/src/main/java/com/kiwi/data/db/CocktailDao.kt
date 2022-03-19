@@ -5,30 +5,30 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import com.kiwi.data.entities.CategoryPo
-import com.kiwi.data.entities.CocktailPo
+import com.kiwi.data.entities.FullDrinkEntity
 import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface CocktailDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertCocktails(vararg cocktail: CocktailPo)
+    suspend fun insertCocktails(vararg cocktail: FullDrinkEntity)
 
-    @Query("SELECT * FROM CocktailPo WHERE cocktail_id = :cocktailId")
-    fun getCocktailBy(cocktailId: String): CocktailPo?
+    @Query("SELECT * FROM FullDrinkEntity WHERE idDrink = :cocktailId")
+    fun getCocktailBy(cocktailId: String): FullDrinkEntity?
 
-    @Query("SELECT * FROM CocktailPo WHERE cocktail_id = :cocktailId")
-    fun getCocktailByIdFlow(cocktailId: String): Flow<CocktailPo>
+    @Query("SELECT * FROM FullDrinkEntity WHERE idDrink = :cocktailId")
+    fun getCocktailByIdFlow(cocktailId: String): Flow<FullDrinkEntity>
 
     @Query(
         """
         SELECT * 
-        FROM CocktailPo 
-        WHERE cocktail_id 
-        IN (SELECT cocktail_id FROM CocktailPo ORDER BY RANDOM() LIMIT :num)
+        FROM FullDrinkEntity
+        WHERE idDrink
+        IN (SELECT idDrink FROM FullDrinkEntity ORDER BY RANDOM() LIMIT :num)
     """
     )
-    suspend fun randomCocktail(num: Int): List<CocktailPo>
+    suspend fun randomCocktail(num: Int): List<FullDrinkEntity>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertCategories(vararg cocktail: CategoryPo)

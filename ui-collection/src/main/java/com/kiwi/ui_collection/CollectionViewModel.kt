@@ -1,6 +1,5 @@
 package com.kiwi.ui_collection
 
-import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.cachedIn
@@ -13,7 +12,6 @@ import kotlinx.coroutines.flow.map
 
 @HiltViewModel
 class CollectionViewModel @Inject constructor(
-    savedStateHandle: SavedStateHandle,
     followedRecipesRepository: FollowedRecipesRepository,
 ) : ViewModel() {
 

@@ -69,9 +69,9 @@ class CocktailListViewModel @Inject constructor(
             }.onSuccess { data ->
                 val items = data.map {
                     CocktailItemUiState(
-                        id = it.cocktailId,
+                        id = it.id,
                         name = it.name,
-                        imageUrl = it.gallery.firstOrNull() ?: "",
+                        imageUrl = it.thumb,
                     )
                 }
                 _uiState.update {
