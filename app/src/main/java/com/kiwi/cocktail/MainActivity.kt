@@ -36,7 +36,6 @@ class MainActivity : AppCompatActivity() {
             }
             CompositionLocalProvider {
                 KiwisBarTheme(
-                    useDarkColors = false,
                     isDynamic = false,
                 ) {
                     ProvideWindowInsets(consumeWindowInsets = false) {
