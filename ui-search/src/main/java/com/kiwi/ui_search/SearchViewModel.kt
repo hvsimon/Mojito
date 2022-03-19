@@ -56,7 +56,7 @@ class SearchViewModel @Inject constructor(
                 }
                 .onFailure { t ->
                     Timber.e(t, "Error while random cocktail for show on Search")
-                    // TODO: pass error message
+                    // ignore this error for user
                 }
 
         }
