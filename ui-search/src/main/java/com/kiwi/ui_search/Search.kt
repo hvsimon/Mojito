@@ -119,7 +119,6 @@ private fun Search(
         if (uiState.searchResult.isEmpty()) {
             Column(modifier = Modifier.fillMaxWidth()) {
 
-
                 if (uiState.query.isNotBlank()) {
                     val message =
                         uiState.errorMessage ?: stringResource(id = R.string.no_result_caption)
@@ -321,7 +320,8 @@ private fun ResultCard(
                 Chip(
                     onClick = { },
                     colors = ChipDefaults.chipColors(
-                        backgroundColor = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.12f)
+                        backgroundColor = MaterialTheme.colorScheme.onSurfaceVariant
+                            .copy(alpha = 0.12f)
                             .compositeOver(MaterialTheme.colorScheme.surfaceVariant)
                     ),
                     modifier = Modifier.align(Alignment.End)

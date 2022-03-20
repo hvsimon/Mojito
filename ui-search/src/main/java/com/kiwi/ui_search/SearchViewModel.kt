@@ -58,7 +58,6 @@ class SearchViewModel @Inject constructor(
                     Timber.e(t, "Error while random cocktail for show on Search")
                     // ignore this error for user
                 }
-
         }
     }
 
