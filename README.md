@@ -45,8 +45,8 @@ This project uses [TheCocktailDB](https://www.thecocktaildb.com/) to fetch cockt
 ## Credits
 
  + App logo and easter egg images are designed by .. (aka Shih).
-
  + Imagery is sourced from [Unsplash](https://unsplash.com/).
+ + [59196-drink.json](common-ui-resources/src/main/assets/animations/59196-drink.json) animation is made by [Atmaja Art](https://lottiefiles.com/atmaja.art) from [LottieFiles](https://lottiefiles.com/59196-drink).
 
 ## Special Thanks
 
