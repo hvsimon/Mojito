@@ -8,7 +8,7 @@
 
 <p align="center">Mojito* is a cocktail manual, which contains recipes, images, and so on.</p>
 
-*Mojito: an alcoholic drink made with rum, lime juice, sugar, and mint.
+_*Mojito: an alcoholic drink made with rum, lime juice, sugar, and mint._
 
 ## Screenshots
 
@@ -28,19 +28,29 @@
 
 <a href='https://play.google.com/store/apps/details?id=com.kiwi.cocktail'><img alt='Get it on Google Play' src='https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png' width=240/></a>
     
-    TODO: provide F-Droid link.
+## Development
+
+ + 100% [Kotlin](https://kotlinlang.org/)
+ + UIs are completely written in [Compose](https://developer.android.com/jetpack/compose)
+ + Follow latest official [app architecture guide](https://developer.android.com/jetpack/guide)
+ + Follow [Material3](https://m3.material.io/) (Material You) Design Guide
+ + Support dark mode
+ + Support dynamic colors (Android 12 above) **Not open config to user yet**
+ + Use [version catalog](https://docs.gradle.org/current/userguide/platforms.html) to share dependency versions.
 
 ## API
 
-This project using [TheCocktailDB](https://www.thecocktaildb.com/) for constructing RESTful API.
+This project uses [TheCocktailDB](https://www.thecocktaildb.com/) to fetch cocktail data.
 
 ## Credits
 
- + App logo is designed by .. (aka Shih).
-
- + Easter egg images are designed by .. (aka Shih).
+ + App logo and easter egg images are designed by .. (aka Shih).
 
  + Imagery is sourced from [Unsplash](https://unsplash.com/).
+
+## Special Thanks
+
+Thanks [Tivi](https://github.com/chrisbanes/tivi) for providing lots of coding sample to build a project.
 
 ## License
 
