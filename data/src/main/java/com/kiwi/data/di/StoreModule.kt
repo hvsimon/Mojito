@@ -64,7 +64,6 @@ object StoreModule {
             )
         ).build()
 
-
     @Provides
     @Singleton
     fun provideCategoryStore(
@@ -81,7 +80,6 @@ object StoreModule {
                     withContext(ioDispatcher) {
                         categoryDao.getAllCocktailCategory().ifEmpty { null }
                     }
-
                 },
                 writer = { _, data ->
                     withContext(ioDispatcher) {

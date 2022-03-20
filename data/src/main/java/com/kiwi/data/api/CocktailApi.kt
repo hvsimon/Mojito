@@ -1,11 +1,11 @@
 package com.kiwi.data.api
 
 import com.kiwi.data.entities.CategoryEntity
-import com.kiwi.data.entities.TheCocktailDBResponse
 import com.kiwi.data.entities.FullDrinkEntity
 import com.kiwi.data.entities.FullIngredientEntity
 import com.kiwi.data.entities.SimpleDrinkDto
 import com.kiwi.data.entities.SimpleIngredientDto
+import com.kiwi.data.entities.TheCocktailDBResponse
 import retrofit2.http.GET
 import retrofit2.http.Headers
 import retrofit2.http.Query

@@ -32,7 +32,6 @@ class CocktailListViewModel @Inject constructor(
         savedStateHandle.get<String>("iba_category_type")
             ?.let { IBACategoryType.valueOf(it) }
 
-
     private val titleStringRes: Int
         @StringRes
         get() {
@@ -89,7 +88,8 @@ class CocktailListViewModel @Inject constructor(
             }.onFailure { t ->
                 Timber.e(
                     t,
-                    "Error while fetching cocktail list by type: $baseLiquorType or $ibaCategoryType"
+                    "Error while fetching cocktail list by type: " +
+                        "$baseLiquorType or $ibaCategoryType"
                 )
                 _uiState.update {
                     it.copy(
@@ -101,4 +101,3 @@ class CocktailListViewModel @Inject constructor(
         }
     }
 }
-
