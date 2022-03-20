@@ -36,8 +36,6 @@ dependencies {
     implementation(project(":common-ui-resources"))
     implementation(project(":common-ui-compose"))
 
-    // Jetbrains
-
     // Androidx
     implementation(libs.core)
     implementation(libs.appcompat)
@@ -49,8 +47,8 @@ dependencies {
 
     // Google
     implementation(libs.material)
-    implementation(libs.bundles.accompanist)
 
+    // DI
     implementation(libs.androidx.hilt.compose)
     implementation(libs.hilt.library)
     kapt(libs.hilt.compiler)

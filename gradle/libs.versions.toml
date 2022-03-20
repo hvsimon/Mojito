@@ -28,7 +28,7 @@ composematerial3 = "1.0.0-alpha07"
 # Google
 desugar-jdk-libs = "1.1.5"
 material = "1.5.0-rc01"
-accompanist = "0.23.0"
+accompanist = "0.24.4-alpha"
 dagger = "2.40.5"
 firebase-bom = "29.2.0"
 
@@ -94,7 +94,6 @@ desugar-jdk-libs = { module = "com.android.tools:desugar_jdk_libs", version.ref 
 
 material = { module = "com.google.android.material:material", version.ref = "material" }
 
-accompanist-insets = { module = "com.google.accompanist:accompanist-insets", version.ref = "accompanist" }
 accompanist-insetsui = { module = "com.google.accompanist:accompanist-insets-ui", version.ref = "accompanist" }
 accompanist-systemuicontroller = { module = "com.google.accompanist:accompanist-systemuicontroller", version.ref = "accompanist" }
 accompanist-flowlayout = { module = "com.google.accompanist:accompanist-flowlayout", version.ref = "accompanist" }
@@ -135,5 +134,4 @@ mockk-core = { module = "io.mockk:mockk", version.ref = "mockk-core" }
 [bundles]
 activity = ["activity-ktx", "activity-compose"]
 compose = ["compose-runtime", "compose-compiler", "compose-ui", "compose-uitooling", "compose-foundation", "compose-material", "compose-material3"]
-accompanist = ["accompanist-insets", "accompanist-systemuicontroller"]
 aboutlibraries = ["aboutlibraries-core", "aboutlibraries-compose"]

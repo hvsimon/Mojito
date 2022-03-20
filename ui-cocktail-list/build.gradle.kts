@@ -57,8 +57,8 @@ dependencies {
 
     // Google
     implementation(libs.material)
-    implementation(libs.bundles.accompanist)
 
+    // DI
     implementation(libs.androidx.hilt.compose)
     implementation(libs.hilt.library)
     kapt(libs.hilt.compiler)

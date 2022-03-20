@@ -2,6 +2,7 @@ package com.kiwi.ui_about
 
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.darkColors
 import androidx.compose.material.icons.Icons
@@ -20,7 +21,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.res.stringResource
-import com.google.accompanist.insets.statusBarsPadding
 import com.mikepenz.aboutlibraries.ui.compose.LibrariesContainer
 
 @OptIn(ExperimentalMaterial3Api::class)

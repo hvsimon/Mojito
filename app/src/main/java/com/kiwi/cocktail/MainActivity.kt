@@ -8,7 +8,6 @@ import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.SideEffect
 import androidx.compose.ui.graphics.Color
 import androidx.core.view.WindowCompat
-import com.google.accompanist.insets.ProvideWindowInsets
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import com.kiwi.cocktail.ui.Home
 import com.kiwi.common_ui_compose.theme.KiwisBarTheme
@@ -38,9 +37,7 @@ class MainActivity : AppCompatActivity() {
                 KiwisBarTheme(
                     isDynamic = false,
                 ) {
-                    ProvideWindowInsets(consumeWindowInsets = false) {
-                        Home()
-                    }
+                    Home()
                 }
             }
         }

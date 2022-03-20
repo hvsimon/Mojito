@@ -93,8 +93,6 @@ dependencies {
     implementation(project(":ui-about"))
     implementation(project(":ui-ingredient"))
 
-    // Jetbrains
-
     // Androidx
     implementation(libs.core)
     implementation(libs.appcompat)
@@ -108,13 +106,16 @@ dependencies {
 
     // Google
     implementation(libs.material)
-    implementation(libs.bundles.accompanist)
+    implementation(libs.accompanist.insetsui)
+    implementation(libs.accompanist.systemuicontroller)
     implementation(libs.accompanist.navigation.material)
 
+    // DI
     implementation(libs.androidx.hilt.compose)
     implementation(libs.hilt.library)
     kapt(libs.hilt.compiler)
 
+    // Firebase
     implementation(platform(libs.firebase.bom))
     implementation(libs.firebase.crashlytics)
     implementation(libs.firebase.analytics)
