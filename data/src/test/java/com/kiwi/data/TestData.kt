@@ -4,26 +4,6 @@ import com.kiwi.data.entities.FullDrinkEntity
 
 object TestData {
 
-    val cocktailPo1 = CocktailPo(
-        cocktailId = "1",
-        name = "Cocktail Name",
-        gallery = listOf("http://"),
-        category = "Category",
-        alcoholic = "Alcoholic",
-        glass = "Glass",
-        ingredients = listOf(
-            Ingredient(
-                name = "\uD83C\uDF78 白蘭姆酒",
-                amount = "2 shots"
-            ),
-            Ingredient(
-                name = "\uD83E\uDDC2 糖漿",
-                amount = "0.5 shot"
-            )
-        ),
-        steps = "Pour all ingredients into a cocktail shaker",
-    )
-
     val fullDrinkDto1 = FullDrinkEntity(
         id = "1",
         name = "Cocktail Name",
