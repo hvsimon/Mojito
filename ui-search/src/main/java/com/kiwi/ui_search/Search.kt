@@ -254,7 +254,7 @@ private fun SearchResult(
         items(uiState.searchResult) {
             ResultCard(
                 cocktail = it,
-                onCardClick = { onItemClick(it.name) },
+                onCardClick = { onItemClick(it.id) },
             )
         }
     }
