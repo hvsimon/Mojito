@@ -32,7 +32,13 @@ dependencies {
     implementation(project(":data"))
     implementation(project(":common-ui-resources"))
 
+    // Androidx
     implementation(libs.lifecycle.runtime)
+    implementation(libs.navigation.compose)
+
+    // Firebase
+    implementation(platform(libs.firebase.bom))
+    implementation(libs.firebase.analytics)
 
     // Compose
     implementation(libs.bundles.compose)

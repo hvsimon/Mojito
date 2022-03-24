@@ -9,12 +9,17 @@ import androidx.compose.runtime.SideEffect
 import androidx.compose.ui.graphics.Color
 import androidx.core.view.WindowCompat
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
+import com.google.firebase.analytics.FirebaseAnalytics
 import com.kiwi.cocktail.ui.Home
 import com.kiwi.common_ui_compose.theme.KiwisBarTheme
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
+
+    @Inject
+    lateinit var firebaseAnalytics: FirebaseAnalytics
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,7 +42,9 @@ class MainActivity : AppCompatActivity() {
                 KiwisBarTheme(
                     isDynamic = false,
                 ) {
-                    Home()
+                    Home(
+                        firebaseAnalytics = firebaseAnalytics
+                    )
                 }
             }
         }
