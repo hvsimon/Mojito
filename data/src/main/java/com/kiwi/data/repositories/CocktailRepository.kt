@@ -66,9 +66,11 @@ class CocktailRepository @Inject constructor(
             cocktailApi.searchByIngredient(ingredientName).drinks
         }
 
-    suspend fun filterByCategory(category: String): List<SimpleDrinkDto> =
-        withContext(ioDispatcher) {
-            cocktailApi.filterByCategory(category).drinks
+    suspend fun filterByCategory(category: String): Result<List<SimpleDrinkDto>> =
+        runCatching {
+            withContext(ioDispatcher) {
+                cocktailApi.filterByCategory(category).drinks
+            }
         }
 
     suspend fun getBaseLiquors(): List<BaseLiquor> = withContext(ioDispatcher) {

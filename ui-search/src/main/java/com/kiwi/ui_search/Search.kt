@@ -138,7 +138,7 @@ private fun Search(
             }
         } else {
             SearchResult(
-                uiState = uiState,
+                data = uiState.searchResult,
                 onItemClick = openRecipe
             )
         }
@@ -243,7 +243,7 @@ private fun NoResult(
 
 @Composable
 private fun SearchResult(
-    uiState: SearchUiState,
+    data: List<CocktailUiState>,
     onItemClick: (String) -> Unit,
 ) {
     LazyColumn(
@@ -251,7 +251,7 @@ private fun SearchResult(
         contentPadding = PaddingValues(8.dp),
         modifier = Modifier.fillMaxSize()
     ) {
-        items(uiState.searchResult) {
+        items(data) {
             ResultCard(
                 cocktail = it,
                 onCardClick = { onItemClick(it.id) },
@@ -263,7 +263,7 @@ private fun SearchResult(
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalMaterialApi::class)
 @Composable
 private fun ResultCard(
-    cocktail: FullDrinkEntity,
+    cocktail: CocktailUiState,
     onCardClick: () -> Unit,
 ) {
     Card(
@@ -297,18 +297,22 @@ private fun ResultCard(
                     text = cocktail.name,
                     style = MaterialTheme.typography.titleLarge,
                 )
-                Text(
-                    text = cocktail.ingredients.joinToString { it },
-                    overflow = TextOverflow.Ellipsis,
-                    maxLines = 1,
-                    style = MaterialTheme.typography.bodyMedium,
-                )
-                Text(
-                    text = cocktail.instructions,
-                    overflow = TextOverflow.Ellipsis,
-                    maxLines = 2,
-                    modifier = Modifier.padding(top = 8.dp)
-                )
+                cocktail.ingredients?.let { ingredients ->
+                    Text(
+                        text = ingredients.joinToString { it },
+                        overflow = TextOverflow.Ellipsis,
+                        maxLines = 1,
+                        style = MaterialTheme.typography.bodyMedium,
+                    )
+                }
+                cocktail.instructions?.let { instructions ->
+                    Text(
+                        text = instructions,
+                        overflow = TextOverflow.Ellipsis,
+                        maxLines = 2,
+                        modifier = Modifier.padding(top = 8.dp)
+                    )
+                }
                 Chip(
                     onClick = { },
                     colors = ChipDefaults.chipColors(
@@ -398,7 +402,7 @@ private fun TagGroup(
 @Composable
 private fun CocktailRow(
     modifier: Modifier = Modifier,
-    data: List<FullDrinkEntity>,
+    data: List<CocktailUiState>,
     onItemClick: (String) -> Unit,
 ) {
     LazyRow(
@@ -419,7 +423,7 @@ private fun CocktailRow(
 @Composable
 private fun CocktailCard(
     modifier: Modifier = Modifier,
-    cocktail: FullDrinkEntity,
+    cocktail: CocktailUiState,
     onClick: (cocktailId: String) -> Unit,
 ) {
     Card(
@@ -490,7 +494,14 @@ private fun PreviewResultCard(
     @PreviewParameter(SampleFullDrinkEntityProvider::class) cocktail: FullDrinkEntity
 ) {
     ResultCard(
-        cocktail = cocktail,
+        cocktail = CocktailUiState(
+            id = cocktail.id,
+            name = cocktail.name,
+            thumb = cocktail.thumb,
+            ingredients = cocktail.ingredients,
+            instructions = cocktail.instructions,
+            category = cocktail.category,
+        ),
         onCardClick = {},
     )
 }

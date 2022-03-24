@@ -51,7 +51,18 @@ class SearchViewModel @Inject constructor(
             cocktailRepository.randomCocktail(10, false)
                 .onSuccess { data ->
                     _uiState.update {
-                        it.copy(randomCocktails = data)
+                        it.copy(
+                            randomCocktails = data.map { cocktail ->
+                                CocktailUiState(
+                                    id = cocktail.id,
+                                    name = cocktail.name,
+                                    thumb = cocktail.thumb,
+                                    ingredients = cocktail.ingredients,
+                                    instructions = cocktail.instructions,
+                                    category = cocktail.category,
+                                )
+                            }
+                        )
                     }
                 }
                 .onFailure { t ->
@@ -76,7 +87,33 @@ class SearchViewModel @Inject constructor(
             _uiState.update {
                 it.copy(isSearching = true)
             }
-            val result = cocktailRepository.searchCocktailByName(query)
+
+            val result = if (query in _uiState.value.categories) {
+                cocktailRepository.filterByCategory(query).map {
+                    it.map { cocktail ->
+                        CocktailUiState(
+                            id = cocktail.id,
+                            name = cocktail.name,
+                            thumb = cocktail.thumb,
+                            category = query,
+                        )
+                    }
+                }
+            } else {
+                cocktailRepository.searchCocktailByName(query).map {
+                    it.map { cocktail ->
+                        CocktailUiState(
+                            id = cocktail.id,
+                            name = cocktail.name,
+                            thumb = cocktail.thumb,
+                            ingredients = cocktail.ingredients,
+                            instructions = cocktail.instructions,
+                            category = cocktail.category,
+                        )
+                    }
+                }
+            }
+
             _uiState.update {
                 it.copy(
                     isSearching = false,
