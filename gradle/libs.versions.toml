@@ -28,7 +28,7 @@ composematerial3 = "1.0.0-alpha08"
 # Google
 desugar-jdk-libs = "1.1.5"
 material = "1.5.0-rc01"
-accompanist = "0.24.4-alpha"
+accompanist = "0.24.5-alpha"
 dagger = "2.40.5"
 firebase-bom = "29.2.0"
 
