@@ -72,11 +72,8 @@ private fun About(
             .fillMaxSize()
     ) {
         val context = LocalContext.current
-        val intent = Intent(Intent.ACTION_SENDTO).apply {
-            data = "mailto:".toUri()
-            putExtra(Intent.EXTRA_EMAIL, arrayOf(stringResource(id = R.string.contact_email)))
-            putExtra(Intent.EXTRA_SUBJECT, stringResource(id = R.string.feedback_subject))
-        }
+        val email = stringResource(id = R.string.contact_email)
+        val subject = stringResource(id = R.string.feedback_subject)
 
         Title()
         SectionTitle(stringResource(id = R.string.support))
@@ -84,8 +81,12 @@ private fun About(
             text = stringResource(id = R.string.feedback),
             painter = rememberVectorPainter(Icons.Default.Edit),
             onItemClick = {
-
-                startActivity(context, intent, null)
+                val intent = Intent(Intent.ACTION_SENDTO).apply {
+                    data = "mailto:".toUri()
+                    putExtra(Intent.EXTRA_EMAIL, arrayOf(email))
+                    putExtra(Intent.EXTRA_SUBJECT, subject)
+                }
+                startActivity(context, Intent.createChooser(intent, ""), null)
             }
         )
         SectionTitle(stringResource(id = R.string.legal))
