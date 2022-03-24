@@ -33,6 +33,7 @@ internal sealed class Screen(val route: String) {
             "?base_liquor_type={base_liquor_type}" +
             "&iba_category_type={iba_category_type}"
     )
+
     object Search : Screen("search")
     object Licenses : Screen("licenses")
     object Ingredient : Screen("ingredient/{ingredientName}")
