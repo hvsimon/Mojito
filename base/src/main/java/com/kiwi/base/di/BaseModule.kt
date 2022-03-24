@@ -30,7 +30,6 @@ object BaseModule {
     @Singleton
     fun provideTimberTree(crashReportingTree: CrashReportingTree): Timber.Tree =
         if (BuildConfig.DEBUG) {
-            Firebase.crashlytics.log()
             Timber.DebugTree()
         } else {
             crashReportingTree
