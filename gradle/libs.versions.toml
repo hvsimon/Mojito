@@ -22,8 +22,8 @@ browser = "1.4.0"
 # Compose
 compose = "1.2.0-alpha05"
 # TODO: replace material with material3 when it ready
-composematerial = "1.2.0-alpha04"
-composematerial3 = "1.0.0-alpha07"
+composematerial = "1.2.0-alpha06"
+composematerial3 = "1.0.0-alpha08"
 
 # Google
 desugar-jdk-libs = "1.1.5"
