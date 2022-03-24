@@ -109,8 +109,8 @@ hilt-library = { module = "com.google.dagger:hilt-android", version.ref = "dagge
 hilt-testing = { module = "com.google.dagger:hilt-android-testing", version.ref = "dagger" }
 
 firebase-bom = { module = "com.google.firebase:firebase-bom", version.ref = "firebase-bom" }
-firebase-crashlytics = { module = "com.google.firebase:firebase-crashlytics" }
-firebase-analytics = { module = "com.google.firebase:firebase-analytics" }
+firebase-crashlytics = { module = "com.google.firebase:firebase-crashlytics-ktx" }
+firebase-analytics = { module = "com.google.firebase:firebase-analytics-ktx" }
 
 # UI
 coil-compose = { module = "io.coil-kt:coil-compose", version.ref = "coil" }

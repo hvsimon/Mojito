@@ -1,6 +1,8 @@
 package com.kiwi.base.di
 
 import com.google.firebase.crashlytics.FirebaseCrashlytics
+import com.google.firebase.crashlytics.ktx.crashlytics
+import com.google.firebase.ktx.Firebase
 import com.kiwi.base.BuildConfig
 import com.kiwi.base.CrashReportingTree
 import dagger.Module
@@ -16,12 +18,13 @@ object BaseModule {
 
     @Provides
     @Singleton
-    fun provideFirebaseCrashlytics(): FirebaseCrashlytics = FirebaseCrashlytics.getInstance()
+    fun provideFirebaseCrashlytics(): FirebaseCrashlytics = Firebase.crashlytics
 
     @Provides
     @Singleton
     fun provideTimberTree(crashReportingTree: CrashReportingTree): Timber.Tree =
         if (BuildConfig.DEBUG) {
+            Firebase.crashlytics.log()
             Timber.DebugTree()
         } else {
             crashReportingTree
