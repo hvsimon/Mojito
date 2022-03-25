@@ -35,7 +35,7 @@ firebase-bom = "29.2.0"
 # UI
 coil = "1.4.0"
 lottie = "4.2.2"
-aboutlibraries = "10.0.0"
+aboutlibraries = "10.0.1"
 
 # Network
 okhttp-bom = "4.9.3"
