@@ -10,17 +10,24 @@ import androidx.compose.material.ContentAlpha
 import androidx.compose.material.Switch
 import androidx.compose.material.SwitchDefaults
 import androidx.compose.material3.Divider
+import androidx.compose.material3.DropdownMenu
+import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.Icon
 import androidx.compose.material3.LocalContentColor
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.compositeOver
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.unit.DpOffset
 import androidx.compose.ui.unit.dp
 
 @Composable
@@ -157,5 +164,53 @@ fun SwitchPreference(
         },
         divider = divider,
         onClick = { onCheckedChange(!checked) },
+    )
+}
+
+@Composable
+fun DropdownMenuPreference(
+    modifier: Modifier = Modifier,
+    icon: Painter,
+    title: String,
+    subtitle: String? = null,
+    enable: Boolean = true,
+    options: Array<String>,
+    divider: @Composable (() -> Unit)? = { Divider() },
+    onOptionSelected: (index: Int) -> Unit,
+) {
+
+    var expanded by remember { mutableStateOf(false) }
+
+    Preference(
+        modifier = modifier,
+        icon = icon,
+        title = title,
+        subtitle = subtitle,
+        enable = enable,
+        action = {
+            if (enable) {
+                DropdownMenu(
+                    expanded = expanded,
+                    offset = DpOffset(x = 48.dp, y = 0.dp),
+                    onDismissRequest = { expanded = false },
+                ) {
+                    options.forEachIndexed { index, s ->
+                        DropdownMenuItem(
+                            text = { Text(s) },
+                            onClick = {
+                                onOptionSelected(index)
+                                expanded = false
+                            },
+                        )
+                    }
+                }
+            }
+        },
+        divider = divider,
+        onClick = {
+            if (enable) {
+                expanded = true
+            }
+        },
     )
 }

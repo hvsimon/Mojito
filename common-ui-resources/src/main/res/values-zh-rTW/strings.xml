@@ -31,8 +31,16 @@
 
     <!--  About  -->
     <string name="about_title">關於</string>
-    <string name="theme">主題</string>
-    <string name="enable_dark_theme">使用深色主題</string>
+    <string name="appearance">外觀</string>
+    <string name="setting_theme">設定主題</string>
+    <string name="system_default">系統預設</string>
+    <string name="light_theme">淺色</string>
+    <string name="dark_theme">深色</string>
+    <string-array name="setting_theme_options">
+        <item>@string/system_default</item>
+        <item>@string/light_theme</item>
+        <item>@string/dark_theme</item>
+    </string-array>
     <string name="enable_dynamic_color">使用動態顏色</string>
     <string name="dynamic_color_hint">僅支持 Android 12 或更高版本</string>
     <string name="support">支援</string>
