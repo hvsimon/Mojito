@@ -185,7 +185,7 @@ private fun Ingredients(
                 )
             }
             Divider(
-                color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.12f),
+                color = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.12f),
                 modifier = Modifier.padding(horizontal = 16.dp)
             )
         }

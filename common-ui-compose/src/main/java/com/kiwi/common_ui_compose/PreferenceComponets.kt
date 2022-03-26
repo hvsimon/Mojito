@@ -50,7 +50,9 @@ fun Preference(
         .compositeOver(MaterialTheme.colorScheme.surface),
     enable: Boolean = true,
     action: @Composable (() -> Unit)? = null,
-    divider: @Composable (() -> Unit)? = { Divider() },
+    divider: @Composable (() -> Unit)? = {
+        Divider(color = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.12f))
+    },
     onClick: () -> Unit,
 ) {
     Column(
@@ -100,7 +102,9 @@ fun NavigationPreference(
     title: String,
     subtitle: String? = null,
     enable: Boolean = true,
-    divider: @Composable (() -> Unit)? = { Divider() },
+    divider: @Composable (() -> Unit)? = {
+        Divider(color = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.12f))
+    },
     onClick: () -> Unit,
 ) {
     Preference(
@@ -128,7 +132,9 @@ fun SwitchPreference(
     subtitle: String? = null,
     enable: Boolean = true,
     checked: Boolean,
-    divider: @Composable (() -> Unit)? = { Divider() },
+    divider: @Composable (() -> Unit)? = {
+        Divider(color = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.12f))
+    },
     onCheckedChange: (Boolean) -> Unit,
 ) {
     Preference(
@@ -175,7 +181,9 @@ fun DropdownMenuPreference(
     subtitle: String? = null,
     enable: Boolean = true,
     options: Array<String>,
-    divider: @Composable (() -> Unit)? = { Divider() },
+    divider: @Composable (() -> Unit)? = {
+        Divider(color = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.12f))
+    },
     onOptionSelected: (index: Int) -> Unit,
 ) {
 
