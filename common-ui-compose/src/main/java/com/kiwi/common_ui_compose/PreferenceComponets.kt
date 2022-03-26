@@ -11,11 +11,13 @@ import androidx.compose.material.Switch
 import androidx.compose.material.SwitchDefaults
 import androidx.compose.material3.Divider
 import androidx.compose.material3.Icon
+import androidx.compose.material3.LocalContentColor
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.compositeOver
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.res.painterResource
@@ -25,21 +27,25 @@ import androidx.compose.ui.unit.dp
 fun Preference(
     modifier: Modifier = Modifier,
     icon: Painter,
+    iconTint: Color = LocalContentColor.current,
+    disabledIconTint: Color = iconTint
+        .copy(alpha = ContentAlpha.disabled)
+        .compositeOver(MaterialTheme.colorScheme.surface),
     title: String,
-    subTitle: String? = null,
+    titleColor: Color = MaterialTheme.colorScheme.onSurface,
+    disabledTitleColor: Color = titleColor
+        .copy(alpha = ContentAlpha.disabled)
+        .compositeOver(MaterialTheme.colorScheme.surface),
+    subtitle: String? = null,
+    subtitleColor: Color = MaterialTheme.colorScheme.onSurface,
+    disabledSubtitleColor: Color = subtitleColor
+        .copy(alpha = ContentAlpha.disabled)
+        .compositeOver(MaterialTheme.colorScheme.surface),
     enable: Boolean = true,
     action: @Composable (() -> Unit)? = null,
     divider: @Composable (() -> Unit)? = { Divider() },
     onClick: () -> Unit,
 ) {
-    val enableColor = if (enable) {
-        MaterialTheme.colorScheme.onSurface
-    } else {
-        MaterialTheme.colorScheme.onSurface
-            .copy(alpha = ContentAlpha.disabled)
-            .compositeOver(MaterialTheme.colorScheme.surface)
-    }
-
     Column(
         modifier = modifier
             .clickable(onClick = onClick)
@@ -55,7 +61,7 @@ fun Preference(
             Icon(
                 painter = icon,
                 contentDescription = null,
-                tint = enableColor,
+                tint = if (enable) iconTint else disabledIconTint,
             )
             Column(
                 modifier = Modifier
@@ -64,13 +70,13 @@ fun Preference(
             ) {
                 Text(
                     text = title,
-                    color = enableColor,
+                    color = if (enable) titleColor else disabledTitleColor,
                 )
-                subTitle?.let {
+                subtitle?.let {
                     Text(
                         text = it,
                         style = MaterialTheme.typography.bodySmall,
-                        color = enableColor,
+                        color = if (enable) subtitleColor else disabledSubtitleColor,
                     )
                 }
             }
@@ -85,7 +91,7 @@ fun NavigationPreference(
     modifier: Modifier = Modifier,
     icon: Painter,
     title: String,
-    subTitle: String? = null,
+    subtitle: String? = null,
     enable: Boolean = true,
     divider: @Composable (() -> Unit)? = { Divider() },
     onClick: () -> Unit,
@@ -94,7 +100,7 @@ fun NavigationPreference(
         modifier = modifier,
         icon = icon,
         title = title,
-        subTitle = subTitle,
+        subtitle = subtitle,
         enable = enable,
         action = {
             Icon(
@@ -112,7 +118,7 @@ fun SwitchPreference(
     modifier: Modifier = Modifier,
     icon: Painter,
     title: String,
-    subTitle: String? = null,
+    subtitle: String? = null,
     enable: Boolean = true,
     checked: Boolean,
     divider: @Composable (() -> Unit)? = { Divider() },
@@ -122,7 +128,7 @@ fun SwitchPreference(
         modifier = modifier,
         icon = icon,
         title = title,
-        subTitle = subTitle,
+        subtitle = subtitle,
         enable = enable,
         action = {
             Switch(
