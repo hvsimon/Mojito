@@ -50,6 +50,8 @@ dependencies {
     implementation(libs.room.ktx)
     implementation(libs.room.paging)
 
+    implementation(libs.datastore.preferences)
+
     implementation(libs.dagger.dagger)
     kapt(libs.dagger.compiler)
     implementation(libs.hilt.library)

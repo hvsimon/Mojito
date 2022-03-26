@@ -1,6 +1,5 @@
 package com.kiwi.common_ui_compose.theme
 
-import android.os.Build
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.darkColorScheme
@@ -70,10 +69,10 @@ private val DarkThemeColors = darkColorScheme(
 @Composable
 fun KiwisBarTheme(
     useDarkColors: Boolean = isSystemInDarkTheme(),
-    isDynamic: Boolean = Build.VERSION.SDK_INT >= 31,
+    enableDynamicColor: Boolean = false,
     content: @Composable () -> Unit
 ) {
-    val colorScheme = if (isDynamic) {
+    val colorScheme = if (enableDynamicColor) {
         val context = LocalContext.current
         if (useDarkColors) dynamicDarkColorScheme(context) else dynamicLightColorScheme(context)
     } else {
