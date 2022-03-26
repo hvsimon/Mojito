@@ -19,9 +19,6 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.rememberVectorPainter
 import androidx.compose.ui.platform.LocalContext
@@ -60,6 +57,8 @@ private fun About(
     About(
         uiState = uiState,
         openLicenses = openLicenses,
+        onDeviceThemeChange = { viewModel.setDeviceTheme(it) },
+        onDynamicColorsEnableChange = { viewModel.enableDynamicColors(it) },
     )
 }
 
@@ -67,6 +66,8 @@ private fun About(
 private fun About(
     uiState: AboutUiState,
     openLicenses: () -> Unit,
+    onDeviceThemeChange: (DeviceTheme) -> Unit,
+    onDynamicColorsEnableChange: (Boolean) -> Unit,
 ) {
     Column(
         modifier = Modifier
@@ -80,28 +81,38 @@ private fun About(
 
         SectionTitle(stringResource(id = R.string.appearance))
 
+        val options = stringArrayResource(id = R.array.setting_theme_options)
+        val systemDefault = stringResource(id = R.string.system_default)
+        val lightTheme = stringResource(id = R.string.light_theme)
+        val darkTheme = stringResource(id = R.string.dark_theme)
+
         DropdownMenuPreference(
             icon = painterResource(id = R.drawable.ic_baseline_contrast_24),
             title = stringResource(id = R.string.setting_theme),
-            subtitle = when (uiState.currentDeviceTheme) {
-                DeviceTheme.SYSTEM -> stringResource(id = R.string.system_default)
-                DeviceTheme.LIGHT -> stringResource(id = R.string.light_theme)
-                DeviceTheme.DARK -> stringResource(id = R.string.dark_theme)
+            subtitle = when (uiState.deviceTheme) {
+                DeviceTheme.SYSTEM -> systemDefault
+                DeviceTheme.LIGHT -> lightTheme
+                DeviceTheme.DARK -> darkTheme
                 else -> ""
             },
-            options = stringArrayResource(id = R.array.setting_theme_options),
-        ) {
-            // TODO: update theme
+            options = options,
+        ) { index ->
+            val deviceTheme = when (options[index]) {
+                systemDefault -> DeviceTheme.SYSTEM
+                lightTheme -> DeviceTheme.LIGHT
+                darkTheme -> DeviceTheme.DARK
+                else -> return@DropdownMenuPreference
+            }
+            onDeviceThemeChange(deviceTheme)
         }
 
-        var checked by remember { mutableStateOf(false) }
         SwitchPreference(
             icon = painterResource(id = R.drawable.ic_baseline_palette_24),
             title = stringResource(id = R.string.enable_dynamic_color),
             subtitle = stringResource(id = R.string.dynamic_color_hint),
             enable = Build.VERSION.SDK_INT >= 31,
-            checked = checked,
-            onCheckedChange = { checked = it },
+            checked = uiState.enableDynamicColors,
+            onCheckedChange = onDynamicColorsEnableChange,
         )
 
         SectionTitle(stringResource(id = R.string.support))
@@ -196,6 +207,8 @@ private fun PreviewAbout() {
     About(
         uiState = AboutUiState("1.0.0", 99),
         openLicenses = {},
+        onDeviceThemeChange = {},
+        onDynamicColorsEnableChange = {},
     )
 }
 

@@ -18,6 +18,7 @@ lifecycle = "2.4.0"
 paging = "3.1.0"
 androidxhilt = "1.0.0"
 browser = "1.4.0"
+datastore = "1.0.0"
 
 # Compose
 compose = "1.2.0-alpha06"
@@ -79,6 +80,7 @@ androidx-hilt-compiler = { module = "androidx.hilt:hilt-compiler", version.ref =
 androidx-hilt-compose = { module = "androidx.hilt:hilt-navigation-compose", version.ref = "androidxhilt" }
 
 browser = { module = "androidx.browser:browser", version.ref = "browser" }
+datastore-preferences = { module = "androidx.datastore:datastore-preferences", version.ref = "datastore" }
 
 # Compose
 compose-runtime = { module = "androidx.compose.runtime:runtime", version.ref = "compose" }
