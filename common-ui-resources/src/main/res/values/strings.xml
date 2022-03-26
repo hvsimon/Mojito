@@ -38,8 +38,16 @@
 
     <!--  About  -->
     <string name="about_title">About</string>
-    <string name="theme">Theme</string>
-    <string name="enable_dark_theme">Enable Dark Theme</string>
+    <string name="appearance">Appearance</string>
+    <string name="setting_theme">Device Theme</string>
+    <string name="system_default">System Default</string>
+    <string name="light_theme">Light</string>
+    <string name="dark_theme">Dark</string>
+    <string-array name="setting_theme_options">
+        <item>@string/system_default</item>
+        <item>@string/light_theme</item>
+        <item>@string/dark_theme</item>
+    </string-array>
     <string name="enable_dynamic_color">Enable Dynamic Color</string>
     <string name="dynamic_color_hint">Only supported on Android 12 or higher</string>
     <string name="support">Support</string>
