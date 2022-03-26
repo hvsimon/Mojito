@@ -38,6 +38,10 @@
 
     <!--  About  -->
     <string name="about_title">About</string>
+    <string name="theme">Theme</string>
+    <string name="enable_dark_theme">Enable Dark Theme</string>
+    <string name="enable_dynamic_color">Enable Dynamic Color</string>
+    <string name="dynamic_color_hint">Only supported on Android 12 or higher</string>
     <string name="support">Support</string>
     <string name="legal">Legal</string>
     <string name="feedback">Feedback</string>
