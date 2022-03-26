@@ -81,7 +81,7 @@ private fun About(
         SwitchPreference(
             icon = painterResource(id = R.drawable.ic_baseline_palette_24),
             title = stringResource(id = R.string.enable_dynamic_color),
-            subTitle = stringResource(id = R.string.dynamic_color_hint),
+            subtitle = stringResource(id = R.string.dynamic_color_hint),
             enable = Build.VERSION.SDK_INT >= 31,
             checked = checked,
             onCheckedChange = { checked = it },
