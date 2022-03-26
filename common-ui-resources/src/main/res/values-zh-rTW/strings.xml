@@ -31,6 +31,10 @@
 
     <!--  About  -->
     <string name="about_title">關於</string>
+    <string name="theme">主題</string>
+    <string name="enable_dark_theme">使用深色主題</string>
+    <string name="enable_dynamic_color">使用動態顏色</string>
+    <string name="dynamic_color_hint">僅支持 Android 12 或更高版本</string>
     <string name="support">支援</string>
     <string name="legal">法律</string>
     <string name="feedback">提供意見</string>
