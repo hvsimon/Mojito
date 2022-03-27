@@ -1,13 +1,9 @@
 package com.kiwi.data.repositories
 
-import android.app.Application
-import com.kiwi.data.DataJsonParser
 import com.kiwi.data.api.CocktailApi
 import com.kiwi.data.db.CocktailDao
 import com.kiwi.data.di.IoDispatcher
-import com.kiwi.data.entities.BaseLiquor
 import com.kiwi.data.entities.FullDrinkEntity
-import com.kiwi.data.entities.IBACocktail
 import com.kiwi.data.entities.SimpleDrinkDto
 import dagger.Reusable
 import javax.inject.Inject
@@ -17,14 +13,11 @@ import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import okio.buffer
-import okio.source
 
 @Reusable
 class CocktailRepository @Inject constructor(
     private val cocktailDao: CocktailDao,
     private val cocktailApi: CocktailApi,
-    private val application: Application,
     @IoDispatcher private val ioDispatcher: CoroutineDispatcher,
 ) {
 
@@ -72,26 +65,6 @@ class CocktailRepository @Inject constructor(
                 cocktailApi.filterByCategory(category).drinks
             }
         }
-
-    suspend fun getBaseLiquors(): List<BaseLiquor> = withContext(ioDispatcher) {
-        // TODO: Implement cache mechanism
-        application.assets
-            // TODO: Do not hardcode file path
-            .open("base_liquors.json")
-            .source()
-            .buffer()
-            .use { DataJsonParser.parseBaseLiquorData(it) }
-    }
-
-    suspend fun getIBACocktails(): List<IBACocktail> = withContext(ioDispatcher) {
-        // TODO: Implement cache mechanism
-        application.assets
-            // TODO: Do not hardcode file path
-            .open("iba_cocktails.json")
-            .source()
-            .buffer()
-            .use { DataJsonParser.parseIBACocktailData(it) }
-    }
 
     suspend fun listIngredients() = withContext(ioDispatcher) {
         cocktailApi.listIngredients().drinks.map { it.ingredientName }

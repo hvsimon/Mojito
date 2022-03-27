@@ -1,5 +1,8 @@
 package com.kiwi.data.domain
 
+import com.dropbox.android.external.store4.Store
+import com.dropbox.android.external.store4.get
+import com.kiwi.data.entities.BaseLiquor
 import com.kiwi.data.entities.BaseLiquorType
 import com.kiwi.data.entities.SimpleDrinkDto
 import com.kiwi.data.repositories.CocktailRepository
@@ -10,11 +13,12 @@ import kotlinx.coroutines.coroutineScope
 
 class GetBaseLiquorsUseCase @Inject constructor(
     private val cocktailRepository: CocktailRepository,
+    private val baseLiquorsStore: Store<Unit, List<BaseLiquor>>,
 ) {
 
     suspend operator fun invoke(type: BaseLiquorType): Result<List<SimpleDrinkDto>> = runCatching {
         coroutineScope {
-            cocktailRepository.getBaseLiquors()
+            baseLiquorsStore.get(Unit)
                 .filter { it.baseLiquor == type }
                 .map { async { cocktailRepository.searchByIngredient(it.name) } }
                 .awaitAll()

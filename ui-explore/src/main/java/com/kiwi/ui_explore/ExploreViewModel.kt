@@ -2,6 +2,10 @@ package com.kiwi.ui_explore
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.dropbox.android.external.store4.Store
+import com.dropbox.android.external.store4.get
+import com.kiwi.data.entities.BaseLiquor
+import com.kiwi.data.entities.IBACocktail
 import com.kiwi.data.repositories.CocktailRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
@@ -15,6 +19,8 @@ import timber.log.Timber
 @HiltViewModel
 class ExploreViewModel @Inject constructor(
     private val cocktailRepository: CocktailRepository,
+    baseLiquorsStore: Store<Unit, List<BaseLiquor>>,
+    ibaCocktailsStore: Store<Unit, List<IBACocktail>>,
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(ExploreUiState())
@@ -24,7 +30,7 @@ class ExploreViewModel @Inject constructor(
         randomCocktail()
 
         viewModelScope.launch {
-            val list = cocktailRepository.getBaseLiquors()
+            val list = baseLiquorsStore.get(Unit)
                 .groupBy { it.baseLiquor }
                 .keys
                 .map { BaseLiquorItemUiState(it) }
@@ -34,7 +40,7 @@ class ExploreViewModel @Inject constructor(
         }
 
         viewModelScope.launch {
-            val list = cocktailRepository.getIBACocktails()
+            val list = ibaCocktailsStore.get(Unit)
                 .groupBy { it.iba }
                 .keys
                 .map { IBACategoryItemUiState(it) }
