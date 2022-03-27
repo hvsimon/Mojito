@@ -15,6 +15,7 @@ import com.kiwi.data.entities.CategoryEntity
 import com.kiwi.data.entities.FullDrinkEntity
 import com.kiwi.data.entities.FullIngredientEntity
 import com.kiwi.data.entities.IBACocktail
+import com.kiwi.data.entities.SimpleDrinkDto
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -122,6 +123,17 @@ object StoreModule {
                 .use { DataJsonParser.parseIBACocktailData(it) }
         },
     ).build()
+
+    @Provides
+    @Singleton
+    fun provideSearchByIngredientStore(
+        cocktailApi: CocktailApi,
+    ): Store<String, List<SimpleDrinkDto>> =
+        StoreBuilder.from<String, List<SimpleDrinkDto>>(
+            fetcher = Fetcher.of {
+                cocktailApi.searchByIngredient(it).drinks
+            },
+        ).build()
 }
 
 private const val BASE_LIQUORS_FILENAME = "base_liquors.json"
