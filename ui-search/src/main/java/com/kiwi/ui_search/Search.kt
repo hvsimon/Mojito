@@ -1,7 +1,6 @@
 package com.kiwi.ui_search
 
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -267,10 +266,10 @@ private fun ResultCard(
     onCardClick: () -> Unit,
 ) {
     Card(
+        onClick = onCardClick,
         modifier = Modifier
             .fillMaxWidth()
-            .height(128.dp)
-            .clickable(onClick = onCardClick)
+            .height(128.dp),
     ) {
         Row(
             modifier = Modifier.fillMaxWidth()
@@ -427,10 +426,10 @@ private fun CocktailCard(
     onClick: (cocktailId: String) -> Unit,
 ) {
     Card(
+        onClick = { onClick.invoke(cocktail.id) },
         modifier = modifier
             .width(150.dp)
-            .wrapContentHeight()
-            .clickable(onClick = { onClick.invoke(cocktail.id) }),
+            .wrapContentHeight(),
     ) {
         Column {
             Image(

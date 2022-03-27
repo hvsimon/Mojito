@@ -2,7 +2,6 @@ package com.kiwi.ui_explore
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -300,7 +299,8 @@ private fun IngredientCard(
     onCardClick: () -> Unit,
 ) {
     Card(
-        modifier = modifier.clickable(onClick = onCardClick)
+        onClick = onCardClick,
+        modifier = modifier,
     ) {
         Image(
             painter = rememberImagePainter(
@@ -341,10 +341,10 @@ private fun WineCard(
     modifier: Modifier = Modifier
 ) {
     Card(
+        onClick = onCardClick,
         modifier = modifier
             .padding(4.dp)
-            .aspectRatio(1f)
-            .clickable(onClick = onCardClick),
+            .aspectRatio(1f),
     ) {
         Box {
             Image(
@@ -378,10 +378,10 @@ private fun CategoryCard(
     modifier: Modifier = Modifier
 ) {
     Card(
+        onClick = onCardClick,
         modifier = modifier
             .padding(4.dp)
-            .aspectRatio(2f)
-            .clickable(onClick = onCardClick),
+            .aspectRatio(2f),
     ) {
         Box {
             Image(

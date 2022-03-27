@@ -2,7 +2,6 @@ package com.kiwi.ui_cocktail_list
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -133,9 +132,9 @@ private fun CocktailCard(
     onClick: (cocktailId: String) -> Unit,
 ) {
     Card(
+        onClick = { onClick.invoke(cocktail.id) },
         modifier = Modifier
-            .fillMaxWidth()
-            .clickable(onClick = { onClick.invoke(cocktail.id) }),
+            .fillMaxWidth(),
     ) {
         Column {
             Image(
