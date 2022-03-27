@@ -35,8 +35,8 @@ _*Mojito: an alcoholic drink made with rum, lime juice, sugar, and mint._
  + Follow latest official [app architecture guide](https://developer.android.com/jetpack/guide)
  + Follow [Material3](https://m3.material.io/) (Material You) Design Guide
  + Support dark mode
- + Support dynamic colors (Android 12 above) **Not open config to user yet**
- + Use [version catalog](https://docs.gradle.org/current/userguide/platforms.html) to share dependency versions.
+ + Support dynamic colors (Require Android 12 or higher)
+ + Use [version catalog](https://docs.gradle.org/current/userguide/platforms.html) to share dependency versions
 
 ## API
 
