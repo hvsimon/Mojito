@@ -1,5 +1,6 @@
 package com.kiwi.ui_search
 
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -95,6 +96,11 @@ private fun Search(
                 selection = TextRange(uiState.query.length)
             )
         )
+    }
+
+    BackHandler(enabled = uiState.searchResult.isNotEmpty()) {
+        searchQuery = TextFieldValue()
+        onSearchQuery(searchQuery.text)
     }
 
     Scaffold(
@@ -194,7 +200,12 @@ private fun SearchBar(
         onValueChange = onValueChange,
         trailingIcon = {
             if (value.text.isNotEmpty()) {
-                IconButton(onClick = { onValueChange(TextFieldValue()) }) {
+                IconButton(
+                    onClick = {
+                        onValueChange(TextFieldValue())
+                        onSearch()
+                    }
+                ) {
                     Icon(
                         imageVector = Icons.Default.Clear,
                         contentDescription = null,
