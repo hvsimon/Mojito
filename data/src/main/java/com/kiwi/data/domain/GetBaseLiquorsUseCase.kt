@@ -5,22 +5,21 @@ import com.dropbox.android.external.store4.get
 import com.kiwi.data.entities.BaseLiquor
 import com.kiwi.data.entities.BaseLiquorType
 import com.kiwi.data.entities.SimpleDrinkDto
-import com.kiwi.data.repositories.CocktailRepository
 import javax.inject.Inject
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.coroutineScope
 
 class GetBaseLiquorsUseCase @Inject constructor(
-    private val cocktailRepository: CocktailRepository,
     private val baseLiquorsStore: Store<Unit, List<BaseLiquor>>,
+    private val searchByIngredientStore: Store<String, List<SimpleDrinkDto>>,
 ) {
 
     suspend operator fun invoke(type: BaseLiquorType): Result<List<SimpleDrinkDto>> = runCatching {
         coroutineScope {
             baseLiquorsStore.get(Unit)
                 .filter { it.baseLiquor == type }
-                .map { async { cocktailRepository.searchByIngredient(it.name) } }
+                .map { async { searchByIngredientStore.get(it.name) } }
                 .awaitAll()
                 .flatten()
         }

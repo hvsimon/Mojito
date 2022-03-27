@@ -54,11 +54,6 @@ class CocktailRepository @Inject constructor(
                 .also { launch { cocktailDao.insertCocktails(*it.toTypedArray()) } }
         }
 
-    suspend fun searchByIngredient(ingredientName: String): List<SimpleDrinkDto> =
-        withContext(ioDispatcher) {
-            cocktailApi.searchByIngredient(ingredientName).drinks
-        }
-
     suspend fun filterByCategory(category: String): Result<List<SimpleDrinkDto>> =
         runCatching {
             withContext(ioDispatcher) {
