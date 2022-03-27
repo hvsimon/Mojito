@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.selection.SelectionContainer
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -124,8 +125,10 @@ private fun IngredientImage(imageUrl: String) {
 
 @Composable
 private fun IngredientDesc(desc: String) {
-    Text(
-        text = desc,
-        modifier = Modifier.fillMaxWidth(),
-    )
+    SelectionContainer {
+        Text(
+            text = desc,
+            modifier = Modifier.fillMaxWidth(),
+        )
+    }
 }

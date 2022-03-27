@@ -14,6 +14,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.text.selection.SelectionContainer
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Favorite
@@ -204,10 +205,12 @@ private fun Step(
             text = stringResource(id = R.string.step),
             style = MaterialTheme.typography.headlineLarge,
         )
-        Text(
-            text = steps,
-            style = MaterialTheme.typography.bodyLarge,
-        )
+        SelectionContainer {
+            Text(
+                text = steps,
+                style = MaterialTheme.typography.bodyLarge,
+            )
+        }
     }
 }
 
