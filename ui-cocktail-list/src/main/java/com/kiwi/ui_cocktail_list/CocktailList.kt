@@ -54,7 +54,7 @@ fun CocktailList(
     Scaffold(
         topBar = {
             CocktailListAppBar(
-                title = stringResource(id = uiState.titleStringRes),
+                title = uiState.titleStringRes?.let { stringResource(it) } ?: viewModel.keyword,
                 navigateUp = navigateUp,
                 scrollBehavior = scrollBehavior,
             )
