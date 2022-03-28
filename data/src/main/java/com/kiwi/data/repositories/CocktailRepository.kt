@@ -4,7 +4,6 @@ import com.kiwi.data.api.CocktailApi
 import com.kiwi.data.db.CocktailDao
 import com.kiwi.data.di.IoDispatcher
 import com.kiwi.data.entities.FullDrinkEntity
-import com.kiwi.data.entities.SimpleDrinkDto
 import dagger.Reusable
 import javax.inject.Inject
 import kotlinx.coroutines.CoroutineDispatcher
@@ -52,13 +51,6 @@ class CocktailRepository @Inject constructor(
         withContext(ioDispatcher) {
             cocktailApi.searchCocktailByFirstLetter(firstLetter).drinks
                 .also { launch { cocktailDao.insertCocktails(*it.toTypedArray()) } }
-        }
-
-    suspend fun filterByCategory(category: String): Result<List<SimpleDrinkDto>> =
-        runCatching {
-            withContext(ioDispatcher) {
-                cocktailApi.filterByCategory(category).drinks
-            }
         }
 
     suspend fun listIngredients() = withContext(ioDispatcher) {

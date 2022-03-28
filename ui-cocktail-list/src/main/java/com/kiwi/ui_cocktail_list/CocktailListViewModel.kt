@@ -4,13 +4,16 @@ import androidx.annotation.StringRes
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.dropbox.android.external.store4.Store
+import com.dropbox.android.external.store4.get
 import com.kiwi.data.domain.GetBaseLiquorsUseCase
 import com.kiwi.data.domain.GetIBACocktailsUseCase
 import com.kiwi.data.entities.BaseLiquorType
 import com.kiwi.data.entities.IBACategoryType
-import com.kiwi.data.repositories.CocktailRepository
+import com.kiwi.data.entities.SimpleDrinkDto
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
+import javax.inject.Named
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -23,7 +26,8 @@ class CocktailListViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
     getBaseLiquorsUseCase: GetBaseLiquorsUseCase,
     getIBACocktailsUseCase: GetIBACocktailsUseCase,
-    cocktailRepository: CocktailRepository,
+    @Named("FilterByCategory")
+    private val filterByCategoryStore: Store<String, List<SimpleDrinkDto>>,
 ) : ViewModel() {
 
     private val type = savedStateHandle.get<CocktailListType>("type")!!
@@ -65,7 +69,7 @@ class CocktailListViewModel @Inject constructor(
                     getBaseLiquorsUseCase(BaseLiquorType.valueOf(keyword))
                 CocktailListType.IBA_CATEGORY ->
                     getIBACocktailsUseCase(IBACategoryType.valueOf(keyword))
-                CocktailListType.CATEGORY -> cocktailRepository.filterByCategory(keyword)
+                CocktailListType.CATEGORY -> runCatching { filterByCategoryStore.get(keyword) }
             }.onSuccess { data ->
                 val items = data.map {
                     CocktailItemUiState(
