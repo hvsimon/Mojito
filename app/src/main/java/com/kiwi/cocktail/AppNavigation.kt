@@ -17,6 +17,7 @@ import com.google.accompanist.navigation.material.bottomSheet
 import com.kiwi.ui_about.About
 import com.kiwi.ui_about.Licenses
 import com.kiwi.ui_cocktail_list.CocktailList
+import com.kiwi.ui_cocktail_list.CocktailListType
 import com.kiwi.ui_collection.Collection
 import com.kiwi.ui_explore.Explore
 import com.kiwi.ui_ingredient.Ingredient
@@ -28,11 +29,7 @@ internal sealed class Screen(val route: String) {
     object Collection : Screen("collection")
     object About : Screen("about")
     object Recipe : Screen("recipe/{cocktailId}")
-    object CocktailList : Screen(
-        "cocktail_list/" +
-            "?base_liquor_type={base_liquor_type}" +
-            "&iba_category_type={iba_category_type}"
-    )
+    object CocktailList : Screen("cocktail_list/{type}/?keyword={keyword}")
 
     object Search : Screen("search")
     object Licenses : Screen("licenses")
@@ -64,11 +61,16 @@ internal fun AppNavigation(
                     openRecipe = { cocktailId ->
                         navController.navigate("recipe/$cocktailId")
                     },
-                    openCocktailList = { baseLiquorType, ibaCategoryType ->
+                    openCocktailListWithBaseLiquor = { baseLiquorType ->
                         navController.navigate(
-                            "cocktail_list/" +
-                                "?base_liquor_type=${baseLiquorType?.name ?: ""}" +
-                                "&iba_category_type=${ibaCategoryType?.name ?: ""}"
+                            "cocktail_list/${CocktailListType.BASE_LIQUOR}/" +
+                                "?keyword=$baseLiquorType"
+                        )
+                    },
+                    openCocktailListWithIBACategory = { ibaCategoryType ->
+                        navController.navigate(
+                            "cocktail_list/${CocktailListType.IBA_CATEGORY}/" +
+                                "?keyword=$ibaCategoryType"
                         )
                     },
                     openIngredient = { ingredientName ->
@@ -112,13 +114,11 @@ internal fun AppNavigation(
             composable(
                 route = Screen.CocktailList.route,
                 arguments = listOf(
-                    navArgument("base_liquor_type") {
-                        type = NavType.StringType
-                        nullable = true
+                    navArgument("type") {
+                        type = NavType.EnumType(CocktailListType::class.java)
                     },
-                    navArgument("iba_category_type") {
+                    navArgument("keyword") {
                         type = NavType.StringType
-                        nullable = true
                     },
                 )
             ) {
@@ -133,6 +133,12 @@ internal fun AppNavigation(
             composable(Screen.Search.route) {
                 Search(
                     navigateUp = navController::navigateUp,
+                    openCocktailListWithCategory = { categoryName ->
+                        navController.navigate(
+                            "cocktail_list/${CocktailListType.CATEGORY}/" +
+                                "?keyword=$categoryName"
+                        )
+                    },
                     openRecipe = { cocktailId ->
                         navController.navigate("recipe/$cocktailId")
                     },

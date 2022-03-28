@@ -64,7 +64,8 @@ fun Explore(
     viewModel: ExploreViewModel = hiltViewModel(),
     openSearch: () -> Unit,
     openRecipe: (cocktailId: String) -> Unit,
-    openCocktailList: (baseLiquorType: BaseLiquorType?, ibaCategoryType: IBACategoryType?) -> Unit,
+    openCocktailListWithBaseLiquor: (baseLiquorType: BaseLiquorType) -> Unit,
+    openCocktailListWithIBACategory: (ibaCategoryType: IBACategoryType) -> Unit,
     openIngredient: (ingredientName: String) -> Unit,
 ) {
     val uiState by rememberStateWithLifecycle(viewModel.uiState)
@@ -73,7 +74,8 @@ fun Explore(
         uiState = uiState,
         openSearch = openSearch,
         openRecipe = openRecipe,
-        openCocktailList = openCocktailList,
+        openCocktailListWithBaseLiquor = openCocktailListWithBaseLiquor,
+        openCocktailListWithIBACategory = openCocktailListWithIBACategory,
         onRefresh = { viewModel.randomCocktail() },
         openIngredient = openIngredient,
     )
@@ -85,7 +87,8 @@ private fun Explore(
     uiState: ExploreUiState,
     openSearch: () -> Unit,
     openRecipe: (cocktailId: String) -> Unit,
-    openCocktailList: (baseLiquorType: BaseLiquorType?, ibaCategoryType: IBACategoryType?) -> Unit,
+    openCocktailListWithBaseLiquor: (baseLiquorType: BaseLiquorType) -> Unit,
+    openCocktailListWithIBACategory: (ibaCategoryType: IBACategoryType) -> Unit,
     onRefresh: () -> Unit,
     openIngredient: (ingredientName: String) -> Unit,
 ) {
@@ -142,9 +145,7 @@ private fun Explore(
                             WineCard(
                                 imageData = it.imageUrl,
                                 label = stringResource(id = it.displayTextResId),
-                                onCardClick = {
-                                    openCocktailList(it.type, null)
-                                },
+                                onCardClick = { openCocktailListWithBaseLiquor(it.type) },
                                 modifier = Modifier.weight(1f)
                             )
                         }
@@ -159,7 +160,7 @@ private fun Explore(
                     CategoryCard(
                         imageData = it.imageUrl,
                         categoryName = stringResource(id = it.displayTextResId),
-                        onCardClick = { openCocktailList(null, it.type) },
+                        onCardClick = { openCocktailListWithIBACategory(it.type) },
                     )
                 }
             }

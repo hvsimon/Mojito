@@ -69,6 +69,7 @@ import com.kiwi.data.entities.FullDrinkEntity
 fun Search(
     viewModel: SearchViewModel = hiltViewModel(),
     navigateUp: () -> Unit,
+    openCocktailListWithCategory: (String) -> Unit,
     openRecipe: (cocktailId: String) -> Unit,
 ) {
     val uiState by rememberStateWithLifecycle(viewModel.uiState)
@@ -76,6 +77,7 @@ fun Search(
     Search(
         uiState = uiState,
         navigateUp = navigateUp,
+        openCocktailListWithCategory = openCocktailListWithCategory,
         onSearchQuery = { viewModel.search(it) },
         openRecipe = openRecipe,
     )
@@ -86,6 +88,7 @@ fun Search(
 private fun Search(
     uiState: SearchUiState,
     navigateUp: () -> Unit,
+    openCocktailListWithCategory: (String) -> Unit,
     onSearchQuery: (String) -> Unit,
     openRecipe: (cocktailId: String) -> Unit,
 ) {
@@ -131,13 +134,7 @@ private fun Search(
                 }
                 RecommendResult(
                     uiState = uiState,
-                    onSearchQuery = {
-                        searchQuery = TextFieldValue(
-                            text = it,
-                            selection = TextRange(it.length),
-                        )
-                        onSearchQuery(it)
-                    },
+                    openCocktailListWithCategory = openCocktailListWithCategory,
                     openRecipe = openRecipe,
                 )
             }
@@ -345,7 +342,7 @@ private fun ResultCard(
 @Composable
 private fun RecommendResult(
     uiState: SearchUiState,
-    onSearchQuery: (String) -> Unit,
+    openCocktailListWithCategory: (String) -> Unit,
     openRecipe: (cocktailId: String) -> Unit
 ) {
     Column(
@@ -363,7 +360,7 @@ private fun RecommendResult(
             TagGroup(
                 modifier = Modifier.padding(horizontal = 16.dp),
                 data = uiState.categories,
-                onChipClick = onSearchQuery,
+                onChipClick = openCocktailListWithCategory,
             )
         }
 

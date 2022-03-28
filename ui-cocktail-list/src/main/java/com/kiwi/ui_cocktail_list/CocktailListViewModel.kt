@@ -8,6 +8,7 @@ import com.kiwi.data.domain.GetBaseLiquorsUseCase
 import com.kiwi.data.domain.GetIBACocktailsUseCase
 import com.kiwi.data.entities.BaseLiquorType
 import com.kiwi.data.entities.IBACategoryType
+import com.kiwi.data.repositories.CocktailRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -22,21 +23,17 @@ class CocktailListViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
     getBaseLiquorsUseCase: GetBaseLiquorsUseCase,
     getIBACocktailsUseCase: GetIBACocktailsUseCase,
+    cocktailRepository: CocktailRepository,
 ) : ViewModel() {
 
-    private val baseLiquorType: BaseLiquorType? =
-        savedStateHandle.get<String>("base_liquor_type")
-            ?.let { BaseLiquorType.valueOf(it) }
+    private val type = savedStateHandle.get<CocktailListType>("type")!!
+    val keyword = savedStateHandle.get<String>("keyword")!!
 
-    private val ibaCategoryType: IBACategoryType? =
-        savedStateHandle.get<String>("iba_category_type")
-            ?.let { IBACategoryType.valueOf(it) }
-
-    private val titleStringRes: Int
+    private val titleStringRes: Int?
         @StringRes
         get() {
-            if (baseLiquorType != null) {
-                return when (baseLiquorType) {
+            return when (type) {
+                CocktailListType.BASE_LIQUOR -> when (BaseLiquorType.valueOf(keyword)) {
                     BaseLiquorType.RUM -> R.string.rum
                     BaseLiquorType.GIN -> R.string.gin
                     BaseLiquorType.VODKA -> R.string.vodka
@@ -44,17 +41,13 @@ class CocktailListViewModel @Inject constructor(
                     BaseLiquorType.WHISKEY -> R.string.whiskey
                     BaseLiquorType.BRANDY -> R.string.brandy
                 }
-            }
-
-            if (ibaCategoryType != null) {
-                return when (ibaCategoryType) {
+                CocktailListType.IBA_CATEGORY -> when (IBACategoryType.valueOf(keyword)) {
                     IBACategoryType.THE_UNFORGETTABLES -> R.string.the_unforgettables
                     IBACategoryType.CONTEMPORARY_CLASSICS -> R.string.contemporary_classics
                     IBACategoryType.NEW_ERA_DRINKS -> R.string.new_era_drinks
                 }
+                CocktailListType.CATEGORY -> null
             }
-
-            return -1
         }
 
     private val _uiState = MutableStateFlow(
@@ -67,10 +60,12 @@ class CocktailListViewModel @Inject constructor(
 
     init {
         viewModelScope.launch {
-            when {
-                baseLiquorType != null -> getBaseLiquorsUseCase(baseLiquorType)
-                ibaCategoryType != null -> getIBACocktailsUseCase(ibaCategoryType)
-                else -> error("Must pass one of types: BaseLiquorType or IBACategoryType")
+            when (type) {
+                CocktailListType.BASE_LIQUOR ->
+                    getBaseLiquorsUseCase(BaseLiquorType.valueOf(keyword))
+                CocktailListType.IBA_CATEGORY ->
+                    getIBACocktailsUseCase(IBACategoryType.valueOf(keyword))
+                CocktailListType.CATEGORY -> cocktailRepository.filterByCategory(keyword)
             }.onSuccess { data ->
                 val items = data.map {
                     CocktailItemUiState(
@@ -86,11 +81,7 @@ class CocktailListViewModel @Inject constructor(
                     )
                 }
             }.onFailure { t ->
-                Timber.e(
-                    t,
-                    "Error while fetching cocktail list by type: " +
-                        "$baseLiquorType or $ibaCategoryType"
-                )
+                Timber.e(t, "Error while fetching cocktail list by type: $type, keyword: $keyword")
                 _uiState.update {
                     it.copy(
                         isLoading = false,
