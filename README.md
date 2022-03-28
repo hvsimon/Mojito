@@ -37,6 +37,7 @@ _*Mojito: an alcoholic drink made with rum, lime juice, sugar, and mint._
  + Support dark mode
  + Support dynamic colors (Require Android 12 or higher)
  + Use [version catalog](https://docs.gradle.org/current/userguide/platforms.html) to share dependency versions
+ + Use [ktlint](https://github.com/pinterest/ktlint) to check code style
 
 ## API
 
