@@ -20,6 +20,7 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import javax.inject.Named
 import javax.inject.Singleton
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext
@@ -124,6 +125,7 @@ object StoreModule {
         },
     ).build()
 
+    @Named("SearchByIngredient")
     @Provides
     @Singleton
     fun provideSearchByIngredientStore(
@@ -132,6 +134,18 @@ object StoreModule {
         StoreBuilder.from<String, List<SimpleDrinkDto>>(
             fetcher = Fetcher.of {
                 cocktailApi.searchByIngredient(it).drinks
+            },
+        ).build()
+
+    @Named("FilterByCategory")
+    @Provides
+    @Singleton
+    fun provideFilterByCategoryStore(
+        cocktailApi: CocktailApi,
+    ): Store<String, List<SimpleDrinkDto>> =
+        StoreBuilder.from<String, List<SimpleDrinkDto>>(
+            fetcher = Fetcher.of {
+                cocktailApi.filterByCategory(it).drinks
             },
         ).build()
 }

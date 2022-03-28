@@ -88,29 +88,16 @@ class SearchViewModel @Inject constructor(
                 it.copy(isSearching = true)
             }
 
-            val result = if (query in _uiState.value.categories) {
-                cocktailRepository.filterByCategory(query).map {
-                    it.map { cocktail ->
-                        CocktailUiState(
-                            id = cocktail.id,
-                            name = cocktail.name,
-                            thumb = cocktail.thumb,
-                            category = query,
-                        )
-                    }
-                }
-            } else {
-                cocktailRepository.searchCocktailByName(query).map {
-                    it.map { cocktail ->
-                        CocktailUiState(
-                            id = cocktail.id,
-                            name = cocktail.name,
-                            thumb = cocktail.thumb,
-                            ingredients = cocktail.ingredients,
-                            instructions = cocktail.instructions,
-                            category = cocktail.category,
-                        )
-                    }
+            val result = cocktailRepository.searchCocktailByName(query).map {
+                it.map { cocktail ->
+                    CocktailUiState(
+                        id = cocktail.id,
+                        name = cocktail.name,
+                        thumb = cocktail.thumb,
+                        ingredients = cocktail.ingredients,
+                        instructions = cocktail.instructions,
+                        category = cocktail.category,
+                    )
                 }
             }
 
