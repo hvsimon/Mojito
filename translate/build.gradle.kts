@@ -7,7 +7,7 @@ plugins {
 }
 
 val azureTranslateApiKey: String =
-    gradleLocalProperties(rootDir).getProperty("AZURE_TRANSLATE_API_KEY")
+    gradleLocalProperties(rootDir).getProperty("AZURE_TRANSLATE_API_KEY") ?: ""
 
 android {
     compileSdk = libs.versions.compileSdk.get().toInt()
@@ -15,7 +15,7 @@ android {
     defaultConfig {
         minSdk = libs.versions.minSdk.get().toInt()
 
-        buildConfigField("String", "AZURE_TRANSLATE_API_KEY", azureTranslateApiKey)
+        buildConfigField("String", "AZURE_TRANSLATE_API_KEY", "\"$azureTranslateApiKey\"")
     }
 
     compileOptions {

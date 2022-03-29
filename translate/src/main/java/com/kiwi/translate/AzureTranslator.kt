@@ -18,8 +18,9 @@ private val json = Json {
 
 class AzureTranslator(
     private val key: String = BuildConfig.AZURE_TRANSLATE_API_KEY,
-    private val client: OkHttpClient = OkHttpClient(),
 ) {
+
+    private val client: OkHttpClient = OkHttpClient()
 
     @Throws(IOException::class)
     fun translate(

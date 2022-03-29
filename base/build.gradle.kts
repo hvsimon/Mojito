@@ -32,7 +32,4 @@ dependencies {
 
     implementation(libs.hilt.library)
     kapt(libs.hilt.compiler)
-
-    implementation(platform(libs.okhttp.bom))
-    implementation(libs.okhttp.core)
 }
