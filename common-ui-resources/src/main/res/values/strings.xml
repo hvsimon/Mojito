@@ -30,6 +30,9 @@
     <!--  Recipe  -->
     <string name="ingredients">Ingredients</string>
     <string name="step">How to Make</string>
+    <string name="translate">Translate</string>
+    <string name="translating">Translating...</string>
+    <string name="translated_by_microsoft">Translated by Microsoft</string>
 
     <!--  Collection  -->
     <string name="collection_title">Collections</string>

@@ -26,6 +26,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
@@ -43,6 +44,7 @@ import com.kiwi.common_ui_compose.ProgressLayout
 import com.kiwi.common_ui_compose.SampleFullDrinkEntityProvider
 import com.kiwi.common_ui_compose.rememberStateWithLifecycle
 import com.kiwi.data.entities.FullDrinkEntity
+import java.util.Locale
 
 @Composable
 fun Recipe(
@@ -69,9 +71,13 @@ fun Recipe(
     uiState.cocktail?.let { cocktail ->
         Recipe(
             cocktail = cocktail,
+            isTranslating = uiState.isInstructionsTranslating,
+            translatedSteps = uiState.translatedInstructions,
+            translatedErrorMessage = uiState.translatedInstructionsErrorMessage,
             isFollowed = uiState.isFollowed,
             onToggleFollowed = { viewModel.toggleFollow() },
             openIngredient = openIngredient,
+            onTranslateStepsClick = { viewModel.translate(it) }
         )
     }
 }
@@ -80,9 +86,13 @@ fun Recipe(
 @Composable
 private fun Recipe(
     cocktail: FullDrinkEntity,
+    isTranslating: Boolean,
+    translatedSteps: String?,
+    translatedErrorMessage: String?,
     isFollowed: Boolean,
     onToggleFollowed: () -> Unit,
     openIngredient: (ingredientName: String) -> Unit,
+    onTranslateStepsClick: (String) -> Unit,
 ) {
     val scrollState = rememberScrollState()
     Scaffold(
@@ -118,7 +128,13 @@ private fun Recipe(
                     measures = cocktail.measures,
                     onItemClick = openIngredient,
                 )
-                Step(cocktail.instructions)
+                Step(
+                    steps = cocktail.instructions,
+                    isTranslating = isTranslating,
+                    translatedSteps = translatedSteps,
+                    translatedErrorMessage = translatedErrorMessage,
+                    onTranslateStepsClick = onTranslateStepsClick,
+                )
                 Spacer(
                     modifier = Modifier
                         .fillMaxWidth()
@@ -196,6 +212,10 @@ private fun Ingredients(
 @Composable
 private fun Step(
     steps: String,
+    isTranslating: Boolean,
+    translatedSteps: String?,
+    translatedErrorMessage: String?,
+    onTranslateStepsClick: (String) -> Unit,
 ) {
     Column(
         verticalArrangement = Arrangement.spacedBy(4.dp),
@@ -210,6 +230,31 @@ private fun Step(
                 text = steps,
                 style = MaterialTheme.typography.bodyLarge,
             )
+        }
+
+        //  FIXME: The translation feature is only support translate to zh-Hant currently.
+        if (Locale.getDefault().language == "zh" && Locale.getDefault().script == "Hant") {
+            TextButton(
+                enabled = translatedSteps == null && !isTranslating,
+                onClick = { onTranslateStepsClick(steps) }
+            ) {
+                val text =
+                    when {
+                        isTranslating -> stringResource(id = R.string.translating)
+                        translatedSteps == null -> stringResource(id = R.string.translate)
+                        else -> stringResource(id = R.string.translated_by_microsoft)
+                    }
+                Text(text = text)
+            }
+            translatedSteps?.let {
+                Text(
+                    text = it,
+                    style = MaterialTheme.typography.bodyLarge,
+                )
+            }
+            translatedErrorMessage?.let {
+                Text(text = it)
+            }
         }
     }
 }
@@ -241,9 +286,13 @@ fun PreviewRecipe(
 ) {
     Recipe(
         cocktail = cocktail,
+        isTranslating = false,
+        translatedSteps = null,
+        translatedErrorMessage = null,
         isFollowed = false,
         onToggleFollowed = {},
         openIngredient = {},
+        onTranslateStepsClick = {},
     )
 }
 
