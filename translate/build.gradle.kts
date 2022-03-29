@@ -1,15 +1,21 @@
+import com.android.build.gradle.internal.cxx.configure.gradleLocalProperties
+
 plugins {
     id("com.android.library")
     id("kotlin-android")
-    id("kotlin-kapt")
-    id("dagger.hilt.android.plugin")
+    kotlin("plugin.serialization") version "1.6.10"
 }
+
+val azureTranslateApiKey: String =
+    gradleLocalProperties(rootDir).getProperty("AZURE_TRANSLATE_API_KEY")
 
 android {
     compileSdk = libs.versions.compileSdk.get().toInt()
 
     defaultConfig {
         minSdk = libs.versions.minSdk.get().toInt()
+
+        buildConfigField("String", "AZURE_TRANSLATE_API_KEY", azureTranslateApiKey)
     }
 
     compileOptions {
@@ -23,15 +29,7 @@ android {
 }
 
 dependencies {
-    api(libs.timber)
-    implementation(project(":translate"))
-
-    implementation(platform(libs.firebase.bom))
-    implementation(libs.firebase.crashlytics)
-    implementation(libs.firebase.analytics)
-
-    implementation(libs.hilt.library)
-    kapt(libs.hilt.compiler)
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.3.2")
 
     implementation(platform(libs.okhttp.bom))
     implementation(libs.okhttp.core)

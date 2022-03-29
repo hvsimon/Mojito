@@ -8,21 +8,26 @@ import com.dropbox.android.external.store4.StoreRequest
 import com.dropbox.android.external.store4.StoreResponse
 import com.kiwi.data.entities.FullDrinkEntity
 import com.kiwi.data.repositories.FollowedRecipesRepository
+import com.kiwi.translate.AzureTranslator
+import com.kiwi.translate.getTranslationByLang
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import timber.log.Timber
 
 @HiltViewModel
 class RecipeViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
     private val followedRecipesRepository: FollowedRecipesRepository,
-    cocktailStore: Store<String, FullDrinkEntity>
+    cocktailStore: Store<String, FullDrinkEntity>,
+    private val translator: AzureTranslator,
 ) : ViewModel() {
 
     private val cocktailId: String = savedStateHandle.get("cocktailId")!!
@@ -75,6 +80,44 @@ class RecipeViewModel @Inject constructor(
     fun toggleFollow() {
         viewModelScope.launch {
             followedRecipesRepository.changeRecipeFollowedStatus(cocktailId)
+        }
+    }
+
+    fun translate(text: String, toLang: String = "zh-Hant") {
+        viewModelScope.launch {
+            _uiState.update {
+                it.copy(
+                    isInstructionsTranslating = true,
+                    translatedInstructions = null,
+                    translatedInstructionsErrorMessage = null,
+                )
+            }
+            runCatching {
+                withContext(Dispatchers.IO) {
+                    translator.translate(text) {
+                        to = listOf(toLang)
+                    }
+                }
+            }.onSuccess { data ->
+                _uiState.update {
+                    it.copy(
+                        isInstructionsTranslating = false,
+                        translatedInstructions = data.getTranslationByLang(toLang)?.text,
+                        translatedInstructionsErrorMessage = null,
+                    )
+                }
+            }.onFailure { t ->
+                _uiState.update {
+                    it.copy(
+                        isInstructionsTranslating = false,
+                        translatedInstructions = null,
+                        translatedInstructionsErrorMessage =
+                        "Translation failed. ${t.localizedMessage}",
+                    )
+                }.also {
+                    Timber.e("Translation failed. ", t)
+                }
+            }
         }
     }
 }

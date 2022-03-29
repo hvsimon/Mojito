@@ -14,6 +14,7 @@ include(
     ":app",
     ":base",
     ":data",
+    ":translate",
     ":common-ui-resources",
     ":common-ui-compose",
     ":ui-explore",

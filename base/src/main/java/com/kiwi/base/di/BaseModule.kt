@@ -7,6 +7,7 @@ import com.google.firebase.crashlytics.ktx.crashlytics
 import com.google.firebase.ktx.Firebase
 import com.kiwi.base.BuildConfig
 import com.kiwi.base.CrashReportingTree
+import com.kiwi.translate.AzureTranslator
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -34,4 +35,8 @@ object BaseModule {
         } else {
             crashReportingTree
         }
+
+    @Provides
+    @Singleton
+    fun provideTranslator(): AzureTranslator = AzureTranslator()
 }

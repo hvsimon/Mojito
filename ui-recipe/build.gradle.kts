@@ -33,6 +33,7 @@ android {
 dependencies {
     implementation(project(":base"))
     implementation(project(":data"))
+    implementation(project(":translate"))
     implementation(project(":common-ui-resources"))
     implementation(project(":common-ui-compose"))
 

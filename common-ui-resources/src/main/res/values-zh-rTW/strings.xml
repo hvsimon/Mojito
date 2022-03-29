@@ -23,6 +23,9 @@
     <!--  Recipe  -->
     <string name="ingredients">配方</string>
     <string name="step">如何調製</string>
+    <string name="translate">翻譯</string>
+    <string name="translating">翻譯中…</string>
+    <string name="translated_by_microsoft">由 Microsoft 翻譯的結果</string>
 
     <!--  Collection  -->
     <string name="collection_title">收藏</string>
