@@ -1,3 +1,5 @@
+import com.android.build.gradle.internal.cxx.configure.gradleLocalProperties
+
 plugins {
     id("com.android.library")
     id("kotlin-android")
@@ -5,6 +7,9 @@ plugins {
     id("dagger.hilt.android.plugin")
     kotlin("plugin.serialization") version "1.6.10"
 }
+
+val thecocktaildbKey: String =
+    gradleLocalProperties(rootDir).getProperty("THECOCKTAILDB_KEY") ?: "1" // 1 is test key
 
 android {
     compileSdk = libs.versions.compileSdk.get().toInt()
@@ -21,8 +26,9 @@ android {
         buildConfigField(
             "String",
             "API_URL",
-            "\"https://www.thecocktaildb.com/api/json/v1/1/\""
+            "\"https://www.thecocktaildb.com/api/json/v1/\""
         )
+        buildConfigField("String", "THECOCKTAILDB_KEY", "\"$thecocktaildbKey\"")
     }
 
     compileOptions {
