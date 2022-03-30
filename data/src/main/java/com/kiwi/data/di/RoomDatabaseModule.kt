@@ -3,6 +3,7 @@ package com.kiwi.data.di
 import android.content.Context
 import android.os.Debug
 import androidx.room.Room
+import com.kiwi.data.db.BrowsingHistoryDao
 import com.kiwi.data.db.CategoryDao
 import com.kiwi.data.db.CocktailDao
 import com.kiwi.data.db.FollowedRecipesDao
@@ -47,4 +48,8 @@ object RoomDatabaseModule {
     @Singleton
     @Provides
     fun provideFollowedCocktailDao(db: KiwiDatabase): FollowedRecipesDao = db.followedCocktailDao()
+
+    @Singleton
+    @Provides
+    fun provideBrowsingHistoryDao(db: KiwiDatabase): BrowsingHistoryDao = db.browsingHistoryDao()
 }
