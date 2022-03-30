@@ -203,7 +203,7 @@ private fun Ingredients(
     measures: List<String>,
     onItemClick: (String) -> Unit,
 ) {
-    ingredients.zip(measures) { ingredient, measure ->
+    ingredients.forEachIndexed { index, ingredient ->
         Row(
             verticalAlignment = Alignment.CenterVertically,
             modifier = Modifier
@@ -224,7 +224,7 @@ private fun Ingredients(
                 style = MaterialTheme.typography.headlineSmall,
             )
             Text(
-                text = measure,
+                text = measures.getOrElse(index) { " " },
                 style = MaterialTheme.typography.bodyLarge,
                 textAlign = TextAlign.End,
                 modifier = Modifier.weight(1f),
