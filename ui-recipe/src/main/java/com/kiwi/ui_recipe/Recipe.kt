@@ -3,7 +3,6 @@ package com.kiwi.ui_recipe
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -16,6 +15,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.selection.SelectionContainer
 import androidx.compose.foundation.verticalScroll
@@ -314,24 +314,23 @@ private fun CommonIngredientCocktails(
                     style = MaterialTheme.typography.headlineSmall,
                 )
             }
-
-            Row(
+            LazyRow(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .horizontalScroll(rememberScrollState())
                     .height(180.dp)
                     .padding(horizontal = 8.dp),
                 horizontalArrangement = Arrangement.spacedBy(8.dp),
             ) {
-                // TODO: show loading view
                 it.cocktails.forEach {
-                    CommonIngredientCocktailCard(
-                        modifier = Modifier
-                            .width(128.dp)
-                            .fillMaxHeight(),
-                        cocktail = it,
-                        onCardClick = { onItemClick(it.id) },
-                    )
+                    item {
+                        CommonIngredientCocktailCard(
+                            modifier = Modifier
+                                .width(128.dp)
+                                .fillMaxHeight(),
+                            cocktail = it,
+                            onCardClick = { onItemClick(it.id) },
+                        )
+                    }
                 }
             }
         }
