@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!--  Common  -->
+    <string name="yes">是</string>
+    <string name="no">否</string>
+    <string name="cancel">取消</string>
 
     <!--  Explore  -->
     <string name="explore_title">探索</string>
@@ -65,4 +68,10 @@
     <!--  Ingredient  -->
     <string name="ingredient_title">配方</string>
     <string name="default_ingredient_desc">毫無反應，就只是個 %s。</string>
+
+    <!--  Browsing History  -->
+    <string name="browsing_history">瀏覽紀錄</string>
+    <string name="clear_all">全部清除</string>
+    <string name="clear_all_check_title">確定要清除所有瀏覽紀錄嗎？</string>
+    <string name="clear_all_check_message">清除後無法再復原。</string>
 </resources>

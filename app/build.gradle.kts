@@ -92,6 +92,7 @@ dependencies {
     implementation(project(":ui-search"))
     implementation(project(":ui-about"))
     implementation(project(":ui-ingredient"))
+    implementation(project(":ui-browsing-history"))
 
     // Androidx
     implementation(libs.core)

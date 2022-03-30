@@ -2,6 +2,7 @@ package com.kiwi.data.db
 
 import androidx.paging.PagingSource
 import androidx.room.Dao
+import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
@@ -18,6 +19,9 @@ interface BrowsingHistoryDao {
     @Transaction
     @Query("SELECT * FROM BrowsingHistoryEntity ORDER BY datetime(updated_at) DESC")
     fun getBrowsingHistoryPagingSource(): PagingSource<Int, BrowsingHistoryAndCocktail>
+
+    @Delete
+    suspend fun delete(vararg browsingHistoryEntity: BrowsingHistoryEntity)
 
     @Query("DELETE FROM BrowsingHistoryEntity")
     suspend fun deleteAll()
