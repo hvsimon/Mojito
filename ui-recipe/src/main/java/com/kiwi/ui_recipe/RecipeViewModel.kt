@@ -6,17 +6,24 @@ import androidx.lifecycle.viewModelScope
 import com.dropbox.android.external.store4.Store
 import com.dropbox.android.external.store4.StoreRequest
 import com.dropbox.android.external.store4.StoreResponse
+import com.dropbox.android.external.store4.get
 import com.kiwi.data.entities.FullDrinkEntity
+import com.kiwi.data.entities.SimpleDrinkDto
 import com.kiwi.data.repositories.FollowedRecipesRepository
 import com.kiwi.translate.AzureTranslator
 import com.kiwi.translate.getTranslationByLang
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
+import javax.inject.Named
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.flatMapConcat
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.toList
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -26,6 +33,8 @@ import timber.log.Timber
 class RecipeViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
     private val followedRecipesRepository: FollowedRecipesRepository,
+    @Named("SearchByIngredient")
+    private val searchByIngredientStore: Store<String, List<SimpleDrinkDto>>,
     cocktailStore: Store<String, FullDrinkEntity>,
     private val translator: AzureTranslator,
 ) : ViewModel() {
@@ -44,11 +53,14 @@ class RecipeViewModel @Inject constructor(
                             it.copy(isLoading = true)
                         }
 
-                        is StoreResponse.Data -> _uiState.update {
-                            it.copy(
-                                isLoading = false,
-                                cocktail = response.value,
-                            )
+                        is StoreResponse.Data -> {
+                            _uiState.update {
+                                it.copy(
+                                    isLoading = false,
+                                    cocktail = response.value,
+                                )
+                            }
+                            loadCommonIngredientCocktails(response.value.ingredients)
                         }
                         is StoreResponse.Error.Exception -> _uiState.update {
                             it.copy(
@@ -72,6 +84,48 @@ class RecipeViewModel @Inject constructor(
                 .collectLatest { isFollowed ->
                     _uiState.update {
                         it.copy(isFollowed = isFollowed)
+                    }
+                }
+        }
+    }
+
+    private fun loadCommonIngredientCocktails(ingredients: List<String>) {
+        viewModelScope.launch {
+            // placeholder
+            _uiState.update {
+                it.copy(
+                    commonIngredientCocktailsUiState = ingredients.map { ingredientName ->
+                        CommonIngredientCocktailsUiState(
+                            ingredient = ingredientName,
+                            cocktails = listOf(),
+                        )
+                    }
+                )
+            }
+
+            ingredients
+                .asFlow()
+                .flatMapConcat { ingredient ->
+                    flow {
+                        val result = runCatching {
+                            searchByIngredientStore.get(ingredient)
+                                .map {
+                                    CocktailItemUiState(
+                                        id = it.id,
+                                        name = it.name,
+                                        imageUrl = it.thumb,
+                                    )
+                                }
+                        }
+                        if (result.isSuccess) {
+                            emit(CommonIngredientCocktailsUiState(ingredient, result.getOrThrow()))
+                        }
+                    }
+                }
+                .toList()
+                .run {
+                    _uiState.update {
+                        it.copy(commonIngredientCocktailsUiState = this)
                     }
                 }
         }

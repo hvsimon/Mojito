@@ -26,6 +26,7 @@
     <string name="translate">翻譯</string>
     <string name="translating">翻譯中…</string>
     <string name="translated_by_microsoft">由 Microsoft 翻譯的結果</string>
+    <string name="common_ingredient_cocktails">相同材料調酒</string>
 
     <!--  Collection  -->
     <string name="collection_title">收藏</string>

@@ -3,22 +3,26 @@ package com.kiwi.ui_recipe
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.aspectRatio
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.selection.SelectionContainer
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.FavoriteBorder
+import androidx.compose.material3.Card
 import androidx.compose.material3.Divider
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FloatingActionButton
@@ -31,6 +35,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
@@ -50,6 +55,7 @@ import java.util.Locale
 fun Recipe(
     viewModel: RecipeViewModel = hiltViewModel(),
     openIngredient: (ingredientName: String) -> Unit,
+    openRecipe: (String) -> Unit,
 ) {
     val uiState by rememberStateWithLifecycle(viewModel.uiState)
 
@@ -74,10 +80,12 @@ fun Recipe(
             isTranslating = uiState.isInstructionsTranslating,
             translatedSteps = uiState.translatedInstructions,
             translatedErrorMessage = uiState.translatedInstructionsErrorMessage,
+            commonIngredientCocktailsUiState = uiState.commonIngredientCocktailsUiState,
             isFollowed = uiState.isFollowed,
             onToggleFollowed = { viewModel.toggleFollow() },
             openIngredient = openIngredient,
-            onTranslateStepsClick = { viewModel.translate(it) }
+            onTranslateStepsClick = { viewModel.translate(it) },
+            openRecipe = openRecipe,
         )
     }
 }
@@ -89,10 +97,12 @@ private fun Recipe(
     isTranslating: Boolean,
     translatedSteps: String?,
     translatedErrorMessage: String?,
+    commonIngredientCocktailsUiState: List<CommonIngredientCocktailsUiState>,
     isFollowed: Boolean,
     onToggleFollowed: () -> Unit,
     openIngredient: (ingredientName: String) -> Unit,
     onTranslateStepsClick: (String) -> Unit,
+    openRecipe: (String) -> Unit,
 ) {
     val scrollState = rememberScrollState()
     Scaffold(
@@ -123,10 +133,22 @@ private fun Recipe(
                 Introduction(
                     cocktailName = cocktail.name,
                 )
-                Ingredients(
-                    ingredients = cocktail.ingredients,
-                    measures = cocktail.measures,
-                    onItemClick = openIngredient,
+                Column(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .background(color = MaterialTheme.colorScheme.surfaceVariant)
+                ) {
+                    SectionTitle(
+                        text = stringResource(id = R.string.ingredients)
+                    )
+                    Ingredients(
+                        ingredients = cocktail.ingredients,
+                        measures = cocktail.measures,
+                        onItemClick = openIngredient,
+                    )
+                }
+                SectionTitle(
+                    text = stringResource(id = R.string.step)
                 )
                 Step(
                     steps = cocktail.instructions,
@@ -134,6 +156,13 @@ private fun Recipe(
                     translatedSteps = translatedSteps,
                     translatedErrorMessage = translatedErrorMessage,
                     onTranslateStepsClick = onTranslateStepsClick,
+                )
+                SectionTitle(
+                    text = stringResource(id = R.string.common_ingredient_cocktails)
+                )
+                CommonIngredientCocktails(
+                    commonIngredientCocktailsUiState = commonIngredientCocktailsUiState,
+                    onItemClick = openRecipe,
                 )
                 Spacer(
                     modifier = Modifier
@@ -143,6 +172,17 @@ private fun Recipe(
             }
         }
     }
+}
+
+@Composable
+private fun SectionTitle(
+    text: String
+) {
+    Text(
+        text = text,
+        style = MaterialTheme.typography.headlineLarge,
+        modifier = Modifier.padding(horizontal = 16.dp, vertical = 4.dp)
+    )
 }
 
 @Composable
@@ -163,49 +203,37 @@ private fun Ingredients(
     measures: List<String>,
     onItemClick: (String) -> Unit,
 ) {
-    Column(
-        modifier = Modifier
-            .background(color = MaterialTheme.colorScheme.surfaceVariant)
-            .fillMaxWidth()
-            .padding(vertical = 4.dp)
-    ) {
-        Text(
-            text = stringResource(id = R.string.ingredients),
-            style = MaterialTheme.typography.headlineLarge,
-            modifier = Modifier.padding(horizontal = 16.dp, vertical = 4.dp)
-        )
-        ingredients.zip(measures) { ingredient, measure ->
-            Row(
-                verticalAlignment = Alignment.CenterVertically,
-                modifier = Modifier
-                    .height(40.dp)
-                    .fillMaxWidth()
-                    .clickable { onItemClick(ingredient) }
-                    .padding(horizontal = 16.dp)
-            ) {
-                Image(
-                    painter = rememberImagePainter(
-                        data = stringResource(id = R.string.ingredient_small_image_url, ingredient)
-                    ),
-                    contentDescription = null,
-                    modifier = Modifier.size(36.dp)
-                )
-                Text(
-                    text = ingredient,
-                    style = MaterialTheme.typography.headlineSmall,
-                )
-                Text(
-                    text = measure,
-                    style = MaterialTheme.typography.bodyLarge,
-                    textAlign = TextAlign.End,
-                    modifier = Modifier.weight(1f),
-                )
-            }
-            Divider(
-                color = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.12f),
-                modifier = Modifier.padding(horizontal = 16.dp)
+    ingredients.zip(measures) { ingredient, measure ->
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+            modifier = Modifier
+                .height(40.dp)
+                .fillMaxWidth()
+                .clickable { onItemClick(ingredient) }
+                .padding(horizontal = 16.dp)
+        ) {
+            Image(
+                painter = rememberImagePainter(
+                    data = stringResource(id = R.string.ingredient_small_image_url, ingredient)
+                ),
+                contentDescription = null,
+                modifier = Modifier.size(36.dp)
+            )
+            Text(
+                text = ingredient,
+                style = MaterialTheme.typography.headlineSmall,
+            )
+            Text(
+                text = measure,
+                style = MaterialTheme.typography.bodyLarge,
+                textAlign = TextAlign.End,
+                modifier = Modifier.weight(1f),
             )
         }
+        Divider(
+            color = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.12f),
+            modifier = Modifier.padding(horizontal = 16.dp)
+        )
     }
 }
 
@@ -219,12 +247,8 @@ private fun Step(
 ) {
     Column(
         verticalArrangement = Arrangement.spacedBy(4.dp),
-        modifier = Modifier.padding(16.dp)
+        modifier = Modifier.padding(horizontal = 16.dp)
     ) {
-        Text(
-            text = stringResource(id = R.string.step),
-            style = MaterialTheme.typography.headlineLarge,
-        )
         SelectionContainer {
             Text(
                 text = steps,
@@ -260,6 +284,97 @@ private fun Step(
 }
 
 @Composable
+private fun CommonIngredientCocktails(
+    commonIngredientCocktailsUiState: List<CommonIngredientCocktailsUiState>,
+    onItemClick: (String) -> Unit,
+) {
+    commonIngredientCocktailsUiState.forEach {
+        Column(
+            modifier = Modifier.padding(bottom = 16.dp),
+        ) {
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                modifier = Modifier
+                    .height(40.dp)
+                    .fillMaxWidth()
+                    .padding(horizontal = 16.dp)
+            ) {
+                Image(
+                    painter = rememberImagePainter(
+                        data = stringResource(
+                            id = R.string.ingredient_small_image_url,
+                            it.ingredient
+                        )
+                    ),
+                    contentDescription = null,
+                    modifier = Modifier.size(24.dp)
+                )
+                Text(
+                    text = it.ingredient,
+                    style = MaterialTheme.typography.headlineSmall,
+                )
+            }
+
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .horizontalScroll(rememberScrollState())
+                    .height(180.dp)
+                    .padding(horizontal = 8.dp),
+                horizontalArrangement = Arrangement.spacedBy(8.dp),
+            ) {
+                // TODO: show loading view
+                it.cocktails.forEach {
+                    CommonIngredientCocktailCard(
+                        modifier = Modifier
+                            .width(128.dp)
+                            .fillMaxHeight(),
+                        cocktail = it,
+                        onCardClick = { onItemClick(it.id) },
+                    )
+                }
+            }
+        }
+    }
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun CommonIngredientCocktailCard(
+    modifier: Modifier = Modifier,
+    cocktail: CocktailItemUiState,
+    onCardClick: () -> Unit,
+) {
+    Card(
+        onClick = { onCardClick() },
+        modifier = modifier,
+    ) {
+        Column {
+            Image(
+                painter = rememberImagePainter(
+                    data = cocktail.imageUrl,
+                    builder = {
+                        crossfade(true)
+                    },
+                ),
+                contentScale = ContentScale.Crop,
+                contentDescription = null,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .aspectRatio(1f)
+            )
+
+            Text(
+                text = cocktail.name,
+                style = MaterialTheme.typography.titleMedium,
+                maxLines = 1,
+                modifier = Modifier.padding(16.dp)
+            )
+        }
+    }
+}
+
+@Composable
 private fun ToggleFollowFloatingActionButton(
     isFollowed: Boolean,
     onClick: () -> Unit,
@@ -289,10 +404,12 @@ fun PreviewRecipe(
         isTranslating = false,
         translatedSteps = null,
         translatedErrorMessage = null,
+        commonIngredientCocktailsUiState = listOf(),
         isFollowed = false,
         onToggleFollowed = {},
         openIngredient = {},
         onTranslateStepsClick = {},
+        openRecipe = {},
     )
 }
 
