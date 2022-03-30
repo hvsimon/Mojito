@@ -31,8 +31,9 @@
     <string name="ingredients">Ingredients</string>
     <string name="step">How to Make</string>
     <string name="translate">Translate</string>
-    <string name="translating">Translating...</string>
+    <string name="translating">Translating…</string>
     <string name="translated_by_microsoft">Translated by Microsoft</string>
+    <string name="common_ingredient_cocktails">Common Ingredient Cocktails</string>
 
     <!--  Collection  -->
     <string name="collection_title">Collections</string>

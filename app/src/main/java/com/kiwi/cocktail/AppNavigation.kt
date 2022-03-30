@@ -107,6 +107,9 @@ internal fun AppNavigation(
                 Recipe(
                     openIngredient = { ingredientName ->
                         navController.navigate("ingredient/$ingredientName")
+                    },
+                    openRecipe = { cocktailId ->
+                        navController.navigate("recipe/$cocktailId")
                     }
                 )
             }
