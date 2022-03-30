@@ -103,7 +103,6 @@ private fun BrowsingHistoryList(
             },
             title = { Text(text = stringResource(id = R.string.clear_all_check_title)) },
             text = { Text(text = stringResource(id = R.string.clear_all_check_message)) },
-            modifier = Modifier.padding(16.dp),
         )
     }
 
