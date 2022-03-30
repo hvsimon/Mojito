@@ -9,6 +9,7 @@ import com.dropbox.android.external.store4.StoreResponse
 import com.dropbox.android.external.store4.get
 import com.kiwi.data.entities.FullDrinkEntity
 import com.kiwi.data.entities.SimpleDrinkDto
+import com.kiwi.data.repositories.BrowsingHistoryRepository
 import com.kiwi.data.repositories.FollowedRecipesRepository
 import com.kiwi.translate.AzureTranslator
 import com.kiwi.translate.getTranslationByLang
@@ -33,6 +34,7 @@ import timber.log.Timber
 class RecipeViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
     private val followedRecipesRepository: FollowedRecipesRepository,
+    browsingHistoryRepository: BrowsingHistoryRepository,
     @Named("SearchByIngredient")
     private val searchByIngredientStore: Store<String, List<SimpleDrinkDto>>,
     cocktailStore: Store<String, FullDrinkEntity>,
@@ -45,6 +47,10 @@ class RecipeViewModel @Inject constructor(
     val uiState: StateFlow<RecipeUiState> = _uiState.asStateFlow()
 
     init {
+        viewModelScope.launch {
+            browsingHistoryRepository.record(cocktailId)
+        }
+
         viewModelScope.launch {
             cocktailStore.stream(StoreRequest.cached(key = cocktailId, refresh = false))
                 .collect { response ->
