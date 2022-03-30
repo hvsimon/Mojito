@@ -8,6 +8,9 @@
 
     <!--  Common  -->
     <string name="app_name" translatable="false">Mojito</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+    <string name="cancel">Cancel</string>
 
     <!--  Explore  -->
     <string name="explore_title">Explore</string>
@@ -72,4 +75,10 @@
     <!--  Ingredient  -->
     <string name="ingredient_title">Ingredient</string>
     <string name="default_ingredient_desc">This is %s (´◓Д◔`)</string>
+
+    <!--  Browsing History  -->
+    <string name="browsing_history">Browsing History</string>
+    <string name="clear_all">Clear All</string>
+    <string name="clear_all_check_title">Are you sure you want to clear all browsing history?</string>
+    <string name="clear_all_check_message">Once cleared, it cannot be restored.</string>
 </resources>

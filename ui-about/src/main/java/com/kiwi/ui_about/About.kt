@@ -38,10 +38,12 @@ import com.kiwi.data.entities.DeviceTheme
 
 @Composable
 fun About(
+    openBrowsingHistory: () -> Unit,
     openLicenses: () -> Unit,
 ) {
     About(
         viewModel = hiltViewModel(),
+        openBrowsingHistory = openBrowsingHistory,
         openLicenses = openLicenses,
     )
 }
@@ -49,6 +51,7 @@ fun About(
 @Composable
 private fun About(
     viewModel: AboutViewModel,
+    openBrowsingHistory: () -> Unit,
     openLicenses: () -> Unit,
 ) {
 
@@ -56,6 +59,7 @@ private fun About(
 
     About(
         uiState = uiState,
+        openBrowsingHistory = openBrowsingHistory,
         openLicenses = openLicenses,
         onDeviceThemeChange = { viewModel.setDeviceTheme(it) },
         onDynamicColorsEnableChange = { viewModel.enableDynamicColors(it) },
@@ -65,6 +69,7 @@ private fun About(
 @Composable
 private fun About(
     uiState: AboutUiState,
+    openBrowsingHistory: () -> Unit,
     openLicenses: () -> Unit,
     onDeviceThemeChange: (DeviceTheme) -> Unit,
     onDynamicColorsEnableChange: (Boolean) -> Unit,
@@ -78,6 +83,12 @@ private fun About(
         val context = LocalContext.current
 
         Title()
+
+        NavigationPreference(
+            icon = painterResource(id = R.drawable.ic_baseline_history_24),
+            title = stringResource(id = R.string.browsing_history),
+            onClick = openBrowsingHistory,
+        )
 
         SectionTitle(stringResource(id = R.string.appearance))
 
@@ -206,6 +217,7 @@ private fun VersionItem(
 private fun PreviewAbout() {
     About(
         uiState = AboutUiState("1.0.0", 99),
+        openBrowsingHistory = {},
         openLicenses = {},
         onDeviceThemeChange = {},
         onDynamicColorsEnableChange = {},

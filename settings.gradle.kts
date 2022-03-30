@@ -24,4 +24,5 @@ include(
     ":ui-search",
     ":ui-about",
     ":ui-ingredient",
+    ":ui-browsing-history"
 )

@@ -33,6 +33,12 @@ class BrowsingHistoryRepository @Inject constructor(
         browsingHistoryDao.getBrowsingHistoryPagingSource()
     }.flow
 
+    suspend fun delete(vararg entity: BrowsingHistoryEntity) {
+        withContext(ioDispatcher) {
+            browsingHistoryDao.delete(*entity)
+        }
+    }
+
     suspend fun deleteAll() {
         withContext(ioDispatcher) {
             browsingHistoryDao.deleteAll()

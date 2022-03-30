@@ -14,19 +14,13 @@ import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.Card
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.SmallTopAppBar
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults.pinnedScrollBehavior
-import androidx.compose.material3.TopAppBarScrollBehavior
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
@@ -38,6 +32,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.rememberImagePainter
+import com.kiwi.common_ui_compose.CommonAppBar
 import com.kiwi.common_ui_compose.ErrorLayout
 import com.kiwi.common_ui_compose.rememberStateWithLifecycle
 
@@ -53,7 +48,7 @@ fun CocktailList(
 
     Scaffold(
         topBar = {
-            CocktailListAppBar(
+            CommonAppBar(
                 title = uiState.titleStringRes?.let { stringResource(it) } ?: viewModel.keyword,
                 navigateUp = navigateUp,
                 scrollBehavior = scrollBehavior,
@@ -80,29 +75,6 @@ fun CocktailList(
             )
         }
     }
-}
-
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-private fun CocktailListAppBar(
-    modifier: Modifier = Modifier,
-    title: String,
-    navigateUp: () -> Unit,
-    scrollBehavior: TopAppBarScrollBehavior? = null,
-) {
-    SmallTopAppBar(
-        title = { Text(text = title) },
-        navigationIcon = {
-            IconButton(onClick = navigateUp) {
-                Icon(
-                    imageVector = Icons.Filled.ArrowBack,
-                    contentDescription = null,
-                )
-            }
-        },
-        scrollBehavior = scrollBehavior,
-        modifier = modifier,
-    )
 }
 
 @Composable
@@ -158,15 +130,6 @@ private fun CocktailCard(
             )
         }
     }
-}
-
-@Preview
-@Composable
-fun PreviewCocktailListAppBar() {
-    CocktailListAppBar(
-        title = "Title",
-        navigateUp = { },
-    )
 }
 
 @Composable

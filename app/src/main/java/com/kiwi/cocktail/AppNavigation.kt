@@ -16,6 +16,7 @@ import com.google.accompanist.navigation.material.ModalBottomSheetLayout
 import com.google.accompanist.navigation.material.bottomSheet
 import com.kiwi.ui_about.About
 import com.kiwi.ui_about.Licenses
+import com.kiwi.ui_browsing_history.BrowsingHistory
 import com.kiwi.ui_cocktail_list.CocktailList
 import com.kiwi.ui_cocktail_list.CocktailListType
 import com.kiwi.ui_collection.Collection
@@ -34,6 +35,7 @@ internal sealed class Screen(val route: String) {
     object Search : Screen("search")
     object Licenses : Screen("licenses")
     object Ingredient : Screen("ingredient/{ingredientName}")
+    object BrowsingHistory : Screen("browsing_history")
 }
 
 @OptIn(ExperimentalMaterialNavigationApi::class)
@@ -92,7 +94,8 @@ internal fun AppNavigation(
 
             composable(Screen.About.route) {
                 About(
-                    openLicenses = { navController.navigate("licenses") }
+                    openBrowsingHistory = { navController.navigate("browsing_history") },
+                    openLicenses = { navController.navigate("licenses") },
                 )
             }
 
@@ -156,6 +159,15 @@ internal fun AppNavigation(
 
             bottomSheet(Screen.Ingredient.route) {
                 Ingredient()
+            }
+
+            composable(Screen.BrowsingHistory.route) {
+                BrowsingHistory(
+                    navigateUp = navController::navigateUp,
+                    openRecipe = { cocktailId ->
+                        navController.navigate("recipe/$cocktailId")
+                    },
+                )
             }
         }
     }
