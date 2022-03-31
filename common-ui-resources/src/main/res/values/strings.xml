@@ -81,4 +81,5 @@
     <string name="clear_all">Clear All</string>
     <string name="clear_all_check_title">Are you sure you want to clear all browsing history?</string>
     <string name="clear_all_check_message">Once cleared, it cannot be restored.</string>
+    <string name="browsing_history_empty">Here will display your browsing history</string>
 </resources>

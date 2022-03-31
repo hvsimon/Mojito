@@ -6,6 +6,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -34,6 +35,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.paging.LoadState
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
 import androidx.paging.compose.items
@@ -74,10 +76,13 @@ private fun BrowsingHistoryList(
     onItemClearClick: (BrowsingHistoryEntity) -> Unit,
     onClearAllClick: () -> Unit,
 ) {
+
     val scrollBehavior = remember { TopAppBarDefaults.pinnedScrollBehavior() }
     val showClearAllCheckDialog = rememberSaveable { mutableStateOf(false) }
 
-    // TODO: show empty view
+    val isEmpty = lazyPagingItems.loadState.refresh is LoadState.NotLoading &&
+        lazyPagingItems.loadState.append.endOfPaginationReached &&
+        lazyPagingItems.itemCount == 0
 
     if (showClearAllCheckDialog.value) {
         AlertDialog(
@@ -123,6 +128,9 @@ private fun BrowsingHistoryList(
             .statusBarsPadding()
             .nestedScroll(scrollBehavior.nestedScrollConnection)
     ) {
+
+        if (isEmpty) EmptyLayout()
+
         LazyColumn {
             items(
                 items = lazyPagingItems,
@@ -189,5 +197,23 @@ private fun BrowsingHistoryItem(
                 contentDescription = null,
             )
         }
+    }
+}
+
+@Composable
+private fun EmptyLayout() {
+    Column(
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally,
+        modifier = Modifier.fillMaxSize()
+    ) {
+        // TODO: Find a beautiful image
+//        Image(
+//            painter = painterResource(),
+//            contentDescription = null,
+//            colorFilter = ColorFilter.tint(color = MaterialTheme.colorScheme.onBackground),
+//            modifier = Modifier.size(200.dp)
+//        )
+        Text(text = stringResource(id = R.string.browsing_history_empty))
     }
 }

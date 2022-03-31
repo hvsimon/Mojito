@@ -74,4 +74,5 @@
     <string name="clear_all">全部清除</string>
     <string name="clear_all_check_title">確定要清除所有瀏覽紀錄嗎？</string>
     <string name="clear_all_check_message">清除後無法再復原。</string>
+    <string name="browsing_history_empty">這邊會顯示你的瀏覽紀錄</string>
 </resources>
