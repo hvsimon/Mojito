@@ -31,6 +31,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.paging.LoadState
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
 import coil.compose.rememberImagePainter
@@ -51,7 +52,10 @@ fun Collection(
     openSearch: () -> Unit,
 ) {
     val lazyPagingItems = rememberFlowWithLifecycle(viewModel.pagedList).collectAsLazyPagingItems()
-    val isEmpty = lazyPagingItems.itemCount == 0
+
+    val isEmpty = lazyPagingItems.loadState.refresh is LoadState.NotLoading &&
+        lazyPagingItems.loadState.append.endOfPaginationReached &&
+        lazyPagingItems.itemCount == 0
 
     Collection(
         lazyPagingItems = lazyPagingItems,
