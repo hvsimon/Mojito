@@ -257,7 +257,10 @@ private fun Step(
         }
 
         //  FIXME: The translation feature is only support translate to zh-Hant currently.
-        if (Locale.getDefault().language == "zh" && Locale.getDefault().script == "Hant") {
+        val currentLocale = Locale.getDefault()
+        if (currentLocale.language == "zh" && currentLocale.script == "Hant" ||
+            currentLocale.country == "TW"
+        ) {
             TextButton(
                 enabled = translatedSteps == null && !isTranslating,
                 onClick = { onTranslateStepsClick(steps) }
