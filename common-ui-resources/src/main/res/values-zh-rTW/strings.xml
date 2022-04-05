@@ -65,6 +65,9 @@
     <string name="categories">類別</string>
     <string name="drink_again">再喝一次？</string>
 
+    <string name="search_by_name_with_total">按名稱搜尋 (%d)</string>
+    <string name="search_by_ingredient_with_total">按材料搜尋 (%d)</string>
+
     <!--  Ingredient  -->
     <string name="ingredient_title">配方</string>
     <string name="default_ingredient_desc">毫無反應，就只是個 %s。</string>

@@ -2,6 +2,7 @@ package com.kiwi.ui_search
 
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -12,6 +13,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentHeight
@@ -23,6 +25,9 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.Chip
 import androidx.compose.material.ChipDefaults
 import androidx.compose.material.ExperimentalMaterialApi
+import androidx.compose.material.Tab
+import androidx.compose.material.TabRow
+import androidx.compose.material.TabRowDefaults
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Clear
@@ -30,7 +35,6 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
@@ -42,6 +46,7 @@ import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
@@ -62,10 +67,19 @@ import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.rememberImagePainter
+import coil.size.Precision
+import coil.transform.RoundedCornersTransformation
 import com.google.accompanist.flowlayout.FlowRow
+import com.google.accompanist.pager.ExperimentalPagerApi
+import com.google.accompanist.pager.HorizontalPager
+import com.google.accompanist.pager.pagerTabIndicatorOffset
+import com.google.accompanist.pager.rememberPagerState
+import com.kiwi.common_ui_compose.ProgressLayout
 import com.kiwi.common_ui_compose.SampleFullDrinkEntityProvider
 import com.kiwi.common_ui_compose.rememberStateWithLifecycle
 import com.kiwi.data.entities.FullDrinkEntity
+import com.kiwi.data.entities.SimpleDrinkDto
+import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
@@ -111,7 +125,10 @@ private fun Search(
         )
     }
 
-    BackHandler(enabled = uiState.searchResult.isNotEmpty()) {
+    BackHandler(
+        enabled = uiState.searchByNameResult.data.isNotEmpty() &&
+            uiState.searchByIngredientResult.data.isNotEmpty()
+    ) {
         searchQuery = TextFieldValue()
         onSearchQuery(searchQuery.text)
     }
@@ -129,28 +146,16 @@ private fun Search(
             .fillMaxSize()
             .statusBarsPadding()
     ) {
-        if (uiState.isSearching) {
-            LinearProgressIndicator(modifier = Modifier.fillMaxWidth())
-        }
-        if (uiState.searchResult.isEmpty()) {
-            Column(modifier = Modifier.fillMaxWidth()) {
-
-                if (uiState.query.isNotBlank()) {
-                    val message =
-                        uiState.errorMessage ?: stringResource(id = R.string.no_result_caption)
-                    NoResult(
-                        message = message
-                    )
-                }
-                RecommendResult(
-                    uiState = uiState,
-                    openCocktailListWithCategory = openCocktailListWithCategory,
-                    openRecipe = openRecipe,
-                )
-            }
+        if (uiState.query.isEmpty()) {
+            RecommendResult(
+                uiState = uiState,
+                openCocktailListWithCategory = openCocktailListWithCategory,
+                openRecipe = openRecipe,
+            )
         } else {
             SearchResult(
-                data = uiState.searchResult,
+                searchByNameResult = uiState.searchByNameResult,
+                searchByIngredientResult = uiState.searchByIngredientResult,
                 onItemClick = openRecipe
             )
         }
@@ -248,7 +253,6 @@ private fun NoResult(
         modifier = Modifier
             .fillMaxWidth()
             .padding(16.dp),
-        verticalArrangement = Arrangement.Center,
     ) {
         Text(
             text = stringResource(id = R.string.no_result),
@@ -258,11 +262,76 @@ private fun NoResult(
     }
 }
 
+@OptIn(ExperimentalPagerApi::class)
 @Composable
 private fun SearchResult(
-    data: List<CocktailUiState>,
+    searchByNameResult: SearchResultUiState<CocktailUiState>,
+    searchByIngredientResult: SearchResultUiState<SimpleDrinkDto>,
     onItemClick: (String) -> Unit,
 ) {
+    val pagerState = rememberPagerState()
+    val scope = rememberCoroutineScope()
+
+    val pages = listOf(
+        stringResource(
+            R.string.search_by_name_with_total,
+            searchByNameResult.data.size
+        ),
+        stringResource(
+            R.string.search_by_ingredient_with_total,
+            searchByIngredientResult.data.size
+        )
+    )
+
+    Column {
+        TabRow(
+            backgroundColor = MaterialTheme.colorScheme.surface,
+            contentColor = MaterialTheme.colorScheme.primary,
+            selectedTabIndex = pagerState.currentPage,
+            indicator = { tabPositions ->
+                TabRowDefaults.Indicator(
+                    Modifier.pagerTabIndicatorOffset(pagerState, tabPositions)
+                )
+            }
+        ) {
+            pages.forEachIndexed { index, title ->
+                Tab(
+                    text = { Text(text = title) },
+                    selected = pagerState.currentPage == index,
+                    onClick = { scope.launch { pagerState.animateScrollToPage(index) } },
+                )
+            }
+        }
+
+        HorizontalPager(
+            count = pages.size,
+            state = pagerState,
+            verticalAlignment = Alignment.Top,
+            modifier = Modifier.fillMaxSize(),
+        ) { page ->
+            when (page) {
+                0 -> SearchByNameResult(searchByNameResult, onItemClick)
+                1 -> SearchByIngredientResult(searchByIngredientResult, onItemClick)
+            }
+        }
+    }
+}
+
+@Composable
+private fun SearchByNameResult(
+    result: SearchResultUiState<CocktailUiState>,
+    onItemClick: (String) -> Unit
+) {
+    if (result.isSearching) {
+        ProgressLayout(modifier = Modifier.fillMaxSize())
+    }
+
+    val data = result.data
+    if (data.isEmpty() && !result.isSearching) {
+        NoResult(message = stringResource(id = R.string.no_result_caption))
+        return
+    }
+
     LazyColumn(
         verticalArrangement = Arrangement.spacedBy(8.dp),
         contentPadding = PaddingValues(8.dp),
@@ -272,6 +341,33 @@ private fun SearchResult(
             ResultCard(
                 cocktail = it,
                 onCardClick = { onItemClick(it.id) },
+            )
+        }
+    }
+}
+
+@Composable
+private fun SearchByIngredientResult(
+    result: SearchResultUiState<SimpleDrinkDto>,
+    onItemClick: (String) -> Unit
+) {
+    if (result.isSearching) {
+        ProgressLayout(modifier = Modifier.fillMaxSize())
+    }
+
+    val data = result.data
+    if (data.isEmpty() && !result.isSearching) {
+        NoResult(message = stringResource(id = R.string.no_result_caption))
+        return
+    }
+
+    LazyColumn(
+        modifier = Modifier.fillMaxSize()
+    ) {
+        items(data) {
+            SearchByIngredientItem(
+                cocktail = it,
+                onClick = { onItemClick(it.id) },
             )
         }
     }
@@ -346,6 +442,35 @@ private fun ResultCard(
                 }
             }
         }
+    }
+}
+
+@Composable
+private fun SearchByIngredientItem(
+    cocktail: SimpleDrinkDto,
+    onClick: () -> Unit,
+) {
+    Row(
+        horizontalArrangement = Arrangement.spacedBy(16.dp),
+        verticalAlignment = Alignment.CenterVertically,
+        modifier = Modifier
+            .fillMaxWidth()
+            .clickable(onClick = onClick)
+            .padding(horizontal = 8.dp, vertical = 4.dp)
+    ) {
+        Image(
+            painter = rememberImagePainter(
+                data = cocktail.thumb,
+                builder = {
+                    crossfade(true)
+                    transformations(RoundedCornersTransformation(radius = 16.dp.value))
+                    precision(Precision.EXACT)
+                }
+            ),
+            contentDescription = null,
+            modifier = Modifier.size(56.dp)
+        )
+        Text(text = cocktail.name)
     }
 }
 

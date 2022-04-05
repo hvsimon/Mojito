@@ -48,6 +48,8 @@ dependencies {
     // Google
     implementation(libs.material)
     implementation(libs.accompanist.flowlayout)
+    implementation(libs.accompanist.pager.core)
+    implementation(libs.accompanist.pager.indicators)
 
     // DI
     implementation(libs.androidx.hilt.compose)

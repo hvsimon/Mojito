@@ -72,6 +72,9 @@
     <string name="categories">Categories</string>
     <string name="drink_again">Drink again?</string>
 
+    <string name="search_by_name_with_total">By Name (%d)</string>
+    <string name="search_by_ingredient_with_total">By Ingredient (%d)</string>
+
     <!--  Ingredient  -->
     <string name="ingredient_title">Ingredient</string>
     <string name="default_ingredient_desc">This is %s (´◓Д◔`)</string>

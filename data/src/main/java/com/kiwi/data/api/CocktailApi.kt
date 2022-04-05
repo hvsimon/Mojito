@@ -36,7 +36,7 @@ interface CocktailApi {
 
     @Headers("Accept-Encoding: identity")
     @GET("filter.php")
-    suspend fun searchByIngredient(
+    suspend fun searchCocktailByIngredient(
         @Query("i") ingredientName: String
     ): TheCocktailDBResponse<SimpleDrinkDto>
 

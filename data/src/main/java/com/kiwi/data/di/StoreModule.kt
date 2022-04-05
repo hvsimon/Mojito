@@ -128,12 +128,12 @@ object StoreModule {
     @Named("SearchByIngredient")
     @Provides
     @Singleton
-    fun provideSearchByIngredientStore(
+    fun provideSearchCocktailByIngredientStore(
         cocktailApi: CocktailApi,
     ): Store<String, List<SimpleDrinkDto>> =
         StoreBuilder.from<String, List<SimpleDrinkDto>>(
             fetcher = Fetcher.of {
-                cocktailApi.searchByIngredient(it).drinks
+                cocktailApi.searchCocktailByIngredient(it).drinks
             },
         ).build()
 
