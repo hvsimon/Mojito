@@ -75,6 +75,8 @@
     <string name="search_by_name_with_total">By Name (%d)</string>
     <string name="search_by_ingredient_with_total">By Ingredient (%d)</string>
 
+    <string name="list_all_cocktails_by_first_letter">List all cocktails by first letter</string>
+
     <!--  Ingredient  -->
     <string name="ingredient_title">Ingredient</string>
     <string name="default_ingredient_desc">This is %s (´◓Д◔`)</string>

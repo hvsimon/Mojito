@@ -68,6 +68,8 @@
     <string name="search_by_name_with_total">按名稱搜尋 (%d)</string>
     <string name="search_by_ingredient_with_total">按材料搜尋 (%d)</string>
 
+    <string name="list_all_cocktails_by_first_letter">按首字母列出所有調酒</string>
+
     <!--  Ingredient  -->
     <string name="ingredient_title">配方</string>
     <string name="default_ingredient_desc">毫無反應，就只是個 %s。</string>

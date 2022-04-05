@@ -314,7 +314,7 @@ private fun DrawerContent(
             .fillMaxSize()
     ) {
         Text(
-            text = "List all cocktails by first letter",
+            text = stringResource(id = R.string.list_all_cocktails_by_first_letter),
             style = MaterialTheme.typography.headlineSmall,
             modifier = Modifier.padding(16.dp),
         )
