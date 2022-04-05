@@ -68,6 +68,8 @@ fun CocktailList(
                 modifier = Modifier.fillMaxSize(),
                 errorMessage = errorMessage
             )
+        } else if (uiState.cocktailItems.isEmpty()) {
+            // TODO: show empty view
         } else {
             CocktailList(
                 list = uiState.cocktailItems,

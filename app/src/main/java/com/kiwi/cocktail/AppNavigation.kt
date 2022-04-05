@@ -145,6 +145,12 @@ internal fun AppNavigation(
                                 "?keyword=$categoryName"
                         )
                     },
+                    openCocktailListWithFirstLetter = { firstLetter ->
+                        navController.navigate(
+                            "cocktail_list/${CocktailListType.FIRST_LETTER}/" +
+                                "?keyword=$firstLetter"
+                        )
+                    },
                     openRecipe = { cocktailId ->
                         navController.navigate("recipe/$cocktailId")
                     },

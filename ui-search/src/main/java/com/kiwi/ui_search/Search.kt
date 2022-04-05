@@ -32,16 +32,21 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Clear
 import androidx.compose.material3.Card
+import androidx.compose.material3.DrawerValue
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.FilledTonalButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.ModalNavigationDrawer
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SmallTopAppBar
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarScrollBehavior
+import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -56,7 +61,9 @@ import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.compositeOver
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalFocusManager
+import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextRange
 import androidx.compose.ui.text.input.ImeAction
@@ -64,6 +71,7 @@ import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
+import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.rememberImagePainter
@@ -87,6 +95,7 @@ fun Search(
     viewModel: SearchViewModel = hiltViewModel(),
     navigateUp: () -> Unit,
     openCocktailListWithCategory: (String) -> Unit,
+    openCocktailListWithFirstLetter: (String) -> Unit,
     openRecipe: (cocktailId: String) -> Unit,
 ) {
     val keyboardController = LocalSoftwareKeyboardController.current
@@ -99,6 +108,10 @@ fun Search(
             openCocktailListWithCategory(it)
             keyboardController?.hide()
         },
+        openCocktailListWithFirstLetter = {
+            openCocktailListWithFirstLetter(it)
+            keyboardController?.hide()
+        },
         onSearchQuery = { viewModel.search(it) },
         openRecipe = {
             openRecipe(it)
@@ -107,12 +120,13 @@ fun Search(
     )
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
+@OptIn(ExperimentalMaterial3Api::class, ExperimentalComposeUiApi::class)
 @Composable
 private fun Search(
     uiState: SearchUiState,
     navigateUp: () -> Unit,
     openCocktailListWithCategory: (String) -> Unit,
+    openCocktailListWithFirstLetter: (String) -> Unit,
     onSearchQuery: (String) -> Unit,
     openRecipe: (cocktailId: String) -> Unit,
 ) {
@@ -124,41 +138,70 @@ private fun Search(
             )
         )
     }
+    val keyboardController = LocalSoftwareKeyboardController.current
+    val focusRequester = remember { FocusRequester() }
+
+    val drawerState = rememberDrawerState(DrawerValue.Closed)
+    val scope = rememberCoroutineScope()
 
     BackHandler(
-        enabled = uiState.searchByNameResult.data.isNotEmpty() &&
-            uiState.searchByIngredientResult.data.isNotEmpty()
+        enabled = uiState.query.isNotEmpty() || drawerState.isOpen
     ) {
-        searchQuery = TextFieldValue()
-        onSearchQuery(searchQuery.text)
+        if (drawerState.isOpen) {
+            scope.launch { drawerState.close() }
+        } else {
+            searchQuery = TextFieldValue()
+            onSearchQuery(searchQuery.text)
+        }
     }
 
-    Scaffold(
-        topBar = {
-            SearchableTopBar(
-                navigateUp = navigateUp,
-                queryValue = searchQuery,
-                onValueChange = { searchQuery = it },
-                onSearch = { onSearchQuery(searchQuery.text) },
-            )
-        },
-        modifier = Modifier
-            .fillMaxSize()
-            .statusBarsPadding()
-    ) {
-        if (uiState.query.isEmpty()) {
-            RecommendResult(
-                uiState = uiState,
-                openCocktailListWithCategory = openCocktailListWithCategory,
-                openRecipe = openRecipe,
-            )
-        } else {
-            SearchResult(
-                searchByNameResult = uiState.searchByNameResult,
-                searchByIngredientResult = uiState.searchByIngredientResult,
-                onItemClick = openRecipe
-            )
-        }
+    CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Rtl) {
+        ModalNavigationDrawer(
+            drawerState = drawerState,
+            drawerContent = {
+                CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Ltr) {
+                    DrawerContent(
+                        listByFirstLetter = openCocktailListWithFirstLetter,
+                    )
+                }
+            },
+            content = {
+                CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Ltr) {
+                    Scaffold(
+                        topBar = {
+                            SearchableTopBar(
+                                navigateUp = navigateUp,
+                                queryValue = searchQuery,
+                                onValueChange = { searchQuery = it },
+                                onSearch = { onSearchQuery(searchQuery.text) },
+                                openDrawer = {
+                                    scope.launch { drawerState.open() }
+                                    keyboardController?.hide()
+                                },
+                                enableAutoFocus = drawerState.isClosed,
+                            )
+                        },
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .statusBarsPadding()
+                    ) {
+                        if (uiState.query.isEmpty()) {
+                            RecommendResult(
+                                uiState = uiState,
+                                openCocktailListWithCategory = openCocktailListWithCategory,
+                                openRecipe = openRecipe,
+                            )
+                        } else {
+                            SearchResult(
+                                searchByNameResult = uiState.searchByNameResult,
+                                searchByIngredientResult = uiState.searchByIngredientResult,
+                                onItemClick = openRecipe
+                            )
+                        }
+                    }
+                }
+            }
+        )
     }
 }
 
@@ -170,6 +213,8 @@ private fun SearchableTopBar(
     queryValue: TextFieldValue,
     onValueChange: (TextFieldValue) -> Unit,
     onSearch: () -> Unit,
+    openDrawer: () -> Unit,
+    enableAutoFocus: Boolean = true,
 ) {
     SmallTopAppBar(
         modifier = modifier,
@@ -179,13 +224,22 @@ private fun SearchableTopBar(
                 value = queryValue,
                 onValueChange = onValueChange,
                 onSearch = onSearch,
-                hint = stringResource(id = R.string.drink_something)
+                hint = stringResource(id = R.string.drink_something),
+                enableAutoFocus = enableAutoFocus,
             )
         },
         navigationIcon = {
             IconButton(onClick = { navigateUp() }) {
                 Icon(
                     imageVector = Icons.Filled.ArrowBack,
+                    contentDescription = null,
+                )
+            }
+        },
+        actions = {
+            IconButton(onClick = openDrawer) {
+                Icon(
+                    painter = painterResource(id = R.drawable.ic_baseline_sort_by_alpha_24),
                     contentDescription = null,
                 )
             }
@@ -201,6 +255,7 @@ private fun SearchBar(
     onValueChange: (TextFieldValue) -> Unit,
     onSearch: () -> Unit,
     hint: String,
+    enableAutoFocus: Boolean = true,
 ) {
 
     val focusRequester = remember { FocusRequester() }
@@ -239,8 +294,60 @@ private fun SearchBar(
     )
 
     SideEffect {
-        if (value.text.isEmpty()) {
+        if (enableAutoFocus && value.text.isEmpty()) {
             focusRequester.requestFocus()
+        }
+    }
+}
+
+@Composable
+private fun DrawerContent(
+    listByFirstLetter: (String) -> Unit,
+) {
+
+    val alphabet = remember { ('A'..'Z').toList().map { it.toString() } }
+    val number = remember { ('0'..'9').toList().map { it.toString() } }
+
+    Column(
+        modifier = Modifier
+            .statusBarsPadding()
+            .fillMaxSize()
+    ) {
+        Text(
+            text = "List all cocktails by first letter",
+            style = MaterialTheme.typography.headlineSmall,
+            modifier = Modifier.padding(16.dp),
+        )
+        DrawerFilter(
+            modifier = Modifier.padding(horizontal = 16.dp),
+            data = alphabet,
+            onButtonClick = listByFirstLetter,
+        )
+        DrawerFilter(
+            modifier = Modifier.padding(horizontal = 16.dp),
+            data = number,
+            onButtonClick = listByFirstLetter,
+        )
+    }
+}
+
+@OptIn(ExperimentalMaterialApi::class)
+@Composable
+private fun DrawerFilter(
+    modifier: Modifier = Modifier,
+    data: List<String>,
+    onButtonClick: (String) -> Unit,
+) {
+    FlowRow(
+        modifier = modifier.wrapContentHeight(),
+        mainAxisSpacing = 8.dp,
+    ) {
+        data.forEach {
+            FilledTonalButton(
+                onClick = { onButtonClick(it) },
+            ) {
+                Text(text = it)
+            }
         }
     }
 }
@@ -607,6 +714,8 @@ private fun PreviewTopBar() {
         queryValue = TextFieldValue("text"),
         onValueChange = {},
         onSearch = {},
+        openDrawer = {},
+        enableAutoFocus = true,
     )
 }
 

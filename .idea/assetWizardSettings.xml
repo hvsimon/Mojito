@@ -23,7 +23,7 @@
                                 <PersistentState>
                                   <option name="values">
                                     <map>
-                                      <entry key="url" value="file:/$USER_HOME$/AppData/Local/Android/Sdk/icons/material/materialicons/history/baseline_history_24.xml" />
+                                      <entry key="url" value="file:/$USER_HOME$/AppData/Local/Android/Sdk/icons/material/materialicons/sort_by_alpha/baseline_sort_by_alpha_24.xml" />
                                     </map>
                                   </option>
                                 </PersistentState>
@@ -33,7 +33,7 @@
                         </option>
                         <option name="values">
                           <map>
-                            <entry key="outputName" value="ic_baseline_history_24" />
+                            <entry key="outputName" value="ic_baseline_sort_by_alpha_24" />
                             <entry key="sourceFile" value="C:\Users\Simon\Downloads\easteregg_svg\ic_unknowngod_b_type.svg" />
                           </map>
                         </option>

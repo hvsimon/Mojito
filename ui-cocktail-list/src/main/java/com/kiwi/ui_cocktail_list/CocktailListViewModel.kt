@@ -11,6 +11,7 @@ import com.kiwi.data.domain.GetIBACocktailsUseCase
 import com.kiwi.data.entities.BaseLiquorType
 import com.kiwi.data.entities.IBACategoryType
 import com.kiwi.data.entities.SimpleDrinkDto
+import com.kiwi.data.repositories.CocktailRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 import javax.inject.Named
@@ -28,6 +29,7 @@ class CocktailListViewModel @Inject constructor(
     getIBACocktailsUseCase: GetIBACocktailsUseCase,
     @Named("FilterByCategory")
     private val filterByCategoryStore: Store<String, List<SimpleDrinkDto>>,
+    cocktailRepository: CocktailRepository,
 ) : ViewModel() {
 
     private val type = savedStateHandle.get<CocktailListType>("type")!!
@@ -51,6 +53,7 @@ class CocktailListViewModel @Inject constructor(
                     IBACategoryType.NEW_ERA_DRINKS -> R.string.new_era_drinks
                 }
                 CocktailListType.CATEGORY -> null
+                CocktailListType.FIRST_LETTER -> null
             }
         }
 
@@ -70,6 +73,17 @@ class CocktailListViewModel @Inject constructor(
                 CocktailListType.IBA_CATEGORY ->
                     getIBACocktailsUseCase(IBACategoryType.valueOf(keyword))
                 CocktailListType.CATEGORY -> runCatching { filterByCategoryStore.get(keyword) }
+                CocktailListType.FIRST_LETTER ->
+                    cocktailRepository.searchCocktailByFirstLetter(keyword.first())
+                        .map { list ->
+                            list.map {
+                                SimpleDrinkDto(
+                                    id = it.id,
+                                    name = it.name,
+                                    thumb = it.thumb,
+                                )
+                            }
+                        }
             }.onSuccess { data ->
                 val items = data.map {
                     CocktailItemUiState(
