@@ -55,10 +55,12 @@ class CocktailRepository @Inject constructor(
             }
         }
 
-    suspend fun searchCocktailByFirstLetter(firstLetter: Char): List<FullDrinkEntity> =
-        withContext(ioDispatcher) {
-            cocktailApi.searchCocktailByFirstLetter(firstLetter).drinks
-                .also { launch { cocktailDao.insertCocktails(*it.toTypedArray()) } }
+    suspend fun searchCocktailByFirstLetter(firstLetter: Char): Result<List<FullDrinkEntity>> =
+        runCatching {
+            withContext(ioDispatcher) {
+                cocktailApi.searchCocktailByFirstLetter(firstLetter).drinks
+                    .also { launch { cocktailDao.insertCocktails(*it.toTypedArray()) } }
+            }
         }
 
     suspend fun listIngredients() = withContext(ioDispatcher) {
