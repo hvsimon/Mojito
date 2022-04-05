@@ -1,12 +1,19 @@
 package com.kiwi.ui_search
 
+import com.kiwi.data.entities.SimpleDrinkDto
+
 data class SearchUiState(
     val query: String = "",
     val categories: List<String> = emptyList(),
     val ingredients: List<String> = emptyList(),
     val randomCocktails: List<CocktailUiState> = emptyList(),
-    val searchResult: List<CocktailUiState> = emptyList(),
+    val searchByNameResult: SearchResultUiState<CocktailUiState> = SearchResultUiState(),
+    val searchByIngredientResult: SearchResultUiState<SimpleDrinkDto> = SearchResultUiState(),
+)
+
+data class SearchResultUiState<T>(
     val isSearching: Boolean = false,
+    val data: List<T> = emptyList(),
     val errorMessage: String? = null,
 )
 

@@ -77,17 +77,26 @@ class SearchViewModel @Inject constructor(
             _uiState.update {
                 it.copy(
                     query = "",
-                    searchResult = emptyList(),
+                    searchByNameResult = SearchResultUiState(),
+                    searchByIngredientResult = SearchResultUiState(),
                 )
             }
             return
         }
 
-        viewModelScope.launch {
-            _uiState.update {
-                it.copy(isSearching = true)
-            }
+        _uiState.update {
+            it.copy(
+                query = query,
+                searchByNameResult = it.searchByNameResult.copy(
+                    isSearching = true
+                ),
+                searchByIngredientResult = it.searchByIngredientResult.copy(
+                    isSearching = true
+                )
+            )
+        }
 
+        viewModelScope.launch {
             val result = cocktailRepository.searchCocktailByName(query).map {
                 it.map { cocktail ->
                     CocktailUiState(
@@ -103,12 +112,31 @@ class SearchViewModel @Inject constructor(
 
             _uiState.update {
                 it.copy(
-                    isSearching = false,
-                    query = query,
-                    searchResult = result.getOrDefault(emptyList()),
-                    errorMessage = result.exceptionOrNull()
-                        ?.also { t -> Timber.e(t, "Error while searching: $query") }
-                        ?.localizedMessage,
+                    searchByNameResult = it.searchByNameResult.copy(
+                        isSearching = false,
+                        data = result.getOrDefault(emptyList()),
+                        errorMessage = result.exceptionOrNull()
+                            ?.also { t -> Timber.e(t, "Error while searching: $query") }
+                            ?.localizedMessage
+                    )
+                )
+            }
+        }
+
+        viewModelScope.launch {
+            val result = cocktailRepository.searchCocktailByIngredient(query).map {
+                it
+            }
+
+            _uiState.update {
+                it.copy(
+                    searchByIngredientResult = it.searchByIngredientResult.copy(
+                        isSearching = false,
+                        data = result.getOrDefault(emptyList()),
+                        errorMessage = result.exceptionOrNull()
+                            ?.also { t -> Timber.e(t, "Error while searching: $query") }
+                            ?.localizedMessage
+                    )
                 )
             }
         }

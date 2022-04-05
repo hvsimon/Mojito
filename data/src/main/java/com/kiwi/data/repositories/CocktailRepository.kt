@@ -4,6 +4,7 @@ import com.kiwi.data.api.CocktailApi
 import com.kiwi.data.db.CocktailDao
 import com.kiwi.data.di.IoDispatcher
 import com.kiwi.data.entities.FullDrinkEntity
+import com.kiwi.data.entities.SimpleDrinkDto
 import dagger.Reusable
 import javax.inject.Inject
 import kotlinx.coroutines.CoroutineDispatcher
@@ -44,6 +45,13 @@ class CocktailRepository @Inject constructor(
         runCatching {
             withContext(ioDispatcher) {
                 cocktailApi.searchCocktailByName(cocktailName).drinks
+            }
+        }
+
+    suspend fun searchCocktailByIngredient(ingredientName: String): Result<List<SimpleDrinkDto>> =
+        runCatching {
+            withContext(ioDispatcher) {
+                cocktailApi.searchCocktailByIngredient(ingredientName).drinks
             }
         }
 
