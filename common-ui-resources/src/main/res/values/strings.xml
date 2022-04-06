@@ -80,6 +80,7 @@
     <!--  Ingredient  -->
     <string name="ingredient_title">Ingredient</string>
     <string name="default_ingredient_desc">This is %s (´◓Д◔`)</string>
+    <string name="also_use_cocktails">Also use %s cocktails</string>
 
     <!--  Browsing History  -->
     <string name="browsing_history">Browsing History</string>

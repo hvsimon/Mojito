@@ -6,9 +6,12 @@ import androidx.lifecycle.viewModelScope
 import com.dropbox.android.external.store4.Store
 import com.dropbox.android.external.store4.StoreRequest
 import com.dropbox.android.external.store4.StoreResponse
+import com.dropbox.android.external.store4.get
 import com.kiwi.data.entities.FullIngredientEntity
+import com.kiwi.data.entities.SimpleDrinkDto
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
+import javax.inject.Named
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
@@ -19,6 +22,8 @@ import timber.log.Timber
 class IngredientViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
     ingredientStore: Store<String, FullIngredientEntity>,
+    @Named("SearchByIngredient")
+    searchByIngredientStore: Store<String, List<SimpleDrinkDto>>,
 ) : ViewModel() {
 
     private val ingredientName = savedStateHandle.get<String>("ingredientName")!!
@@ -60,6 +65,25 @@ class IngredientViewModel @Inject constructor(
                         else -> Unit
                     }
                 }
+        }
+
+        viewModelScope.launch {
+            runCatching {
+                searchByIngredientStore.get(ingredientName)
+                    .map {
+                        CocktailUiState(
+                            id = it.id,
+                            name = it.name,
+                            imageUrl = it.thumb,
+                        )
+                    }
+            }.onSuccess { data ->
+                _uiState.update {
+                    it.copy(
+                        alsoUseCocktails = data
+                    )
+                }
+            }
         }
     }
 }

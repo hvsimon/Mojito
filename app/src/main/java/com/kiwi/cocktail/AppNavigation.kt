@@ -164,7 +164,11 @@ internal fun AppNavigation(
             }
 
             bottomSheet(Screen.Ingredient.route) {
-                Ingredient()
+                Ingredient(
+                    openRecipe = { cocktailId ->
+                        navController.navigate("recipe/$cocktailId")
+                    },
+                )
             }
 
             composable(Screen.BrowsingHistory.route) {
