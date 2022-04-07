@@ -1,6 +1,3 @@
-import java.io.FileInputStream
-import java.util.Properties
-
 plugins {
     id("com.android.application")
     id("kotlin-android")
@@ -13,10 +10,6 @@ if (file("google-services.json").exists()) {
     apply(plugin = "com.google.gms.google-services")
     apply(plugin = "com.google.firebase.crashlytics")
 }
-
-val keystorePropertiesFile = rootProject.file("/release/keystore.properties")
-val keystoreProperties = Properties()
-keystoreProperties.load(FileInputStream(keystorePropertiesFile))
 
 android {
     compileSdk = libs.versions.compileSdk.get().toInt()
@@ -38,12 +31,6 @@ android {
             keyAlias = "androiddebugkey"
             storePassword = "android"
         }
-        create("release") {
-            storeFile = rootProject.file(keystoreProperties.getProperty("storeFile"))
-            keyPassword = keystoreProperties.getProperty("keyPassword")
-            keyAlias = keystoreProperties.getProperty("keyAlias")
-            storePassword = keystoreProperties.getProperty("storePassword")
-        }
     }
 
     buildTypes {
@@ -54,7 +41,6 @@ android {
         getByName("release") {
             isMinifyEnabled = true
             isShrinkResources = true
-            signingConfig = signingConfigs.getByName("release")
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
