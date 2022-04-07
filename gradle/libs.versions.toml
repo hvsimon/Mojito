@@ -5,8 +5,8 @@ minSdk = "23"
 targetSdk = "31"
 
 # Kotlin
-kotlin = "1.6.10"
-coroutines = "1.6.0"
+kotlin = "1.6.20"
+coroutines = "1.6.1"
 
 # Androidx
 core = "1.7.0"
@@ -21,15 +21,15 @@ browser = "1.4.0"
 datastore = "1.0.0"
 
 # Compose
-compose = "1.2.0-alpha06"
+compose = "1.2.0-alpha07"
 # TODO: replace material with material3 when it ready
-composematerial = "1.2.0-alpha06"
-composematerial3 = "1.0.0-alpha08"
+composematerial = "1.2.0-alpha07"
+composematerial3 = "1.0.0-alpha09"
 
 # Google
 desugar-jdk-libs = "1.1.5"
 material = "1.5.0-rc01"
-accompanist = "0.24.5-alpha"
+accompanist = "0.24.6-alpha"
 dagger = "2.40.5"
 firebase-bom = "29.2.0"
 
