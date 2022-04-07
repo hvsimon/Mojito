@@ -7,14 +7,13 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.ContentAlpha
-import androidx.compose.material.Switch
-import androidx.compose.material.SwitchDefaults
 import androidx.compose.material3.Divider
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.Icon
 import androidx.compose.material3.LocalContentColor
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -148,24 +147,6 @@ fun SwitchPreference(
                 checked = checked,
                 onCheckedChange = onCheckedChange,
                 enabled = enable,
-                colors = SwitchDefaults.colors(
-                    checkedThumbColor = MaterialTheme.colorScheme.primary,
-                    checkedTrackColor = MaterialTheme.colorScheme.primary,
-                    uncheckedThumbColor = MaterialTheme.colorScheme.surface,
-                    uncheckedTrackColor = MaterialTheme.colorScheme.onSurface,
-                    disabledCheckedThumbColor = MaterialTheme.colorScheme.primary
-                        .copy(alpha = ContentAlpha.disabled)
-                        .compositeOver(MaterialTheme.colorScheme.surface),
-                    disabledCheckedTrackColor = MaterialTheme.colorScheme.primary
-                        .copy(alpha = ContentAlpha.disabled)
-                        .compositeOver(MaterialTheme.colorScheme.surface),
-                    disabledUncheckedThumbColor = MaterialTheme.colorScheme.surface
-                        .copy(alpha = ContentAlpha.disabled)
-                        .compositeOver(MaterialTheme.colorScheme.surface),
-                    disabledUncheckedTrackColor = MaterialTheme.colorScheme.onSurface
-                        .copy(alpha = ContentAlpha.disabled)
-                        .compositeOver(MaterialTheme.colorScheme.surface),
-                )
             )
         },
         divider = divider,
