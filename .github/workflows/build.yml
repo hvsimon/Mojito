@@ -22,6 +22,12 @@ jobs:
       - name: Copy CI gradle.properties
         run: mkdir -p ~/.gradle ; cp .github/ci-gradle.properties ~/.gradle/gradle.properties
 
+      - name: Retrieve the secret and decode it to a file
+        env:
+          GOOGLE_SERVICES_JSON: ${{ secrets.GOOGLE_SERVICES_JSON }}
+        run: |
+          echo $GOOGLE_SERVICES_JSON > app/google-services.json
+
       - name: Build Mojito AAB
         uses: burrunan/gradle-cache-action@v1
         with:
