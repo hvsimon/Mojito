@@ -43,6 +43,12 @@ _*Mojito: an alcoholic drink made with rum, lime juice, sugar, and mint._
 
 This project uses [TheCocktailDB](https://www.thecocktaildb.com/) to fetch cocktail data.
 
+## Firebase (optional)
+
+This project use Firebase for tracking screen view and recording log. 
+
+If you don't need those features, just ignore it. Otherwise, put your `google-services.json` in `app/`.
+
 ## Credits
 
  + App logo and easter egg images are designed by .. (aka Shih).
