@@ -11,7 +11,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.graphics.Color
 import androidx.core.view.WindowCompat
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
-import com.google.firebase.analytics.FirebaseAnalytics
+import com.kiwi.base.utils.Analytics
 import com.kiwi.cocktail.ui.Home
 import com.kiwi.common_ui_compose.theme.KiwisBarTheme
 import com.kiwi.data.entities.DeviceTheme
@@ -22,7 +22,7 @@ import javax.inject.Inject
 class MainActivity : AppCompatActivity() {
 
     @Inject
-    lateinit var firebaseAnalytics: FirebaseAnalytics
+    lateinit var analytics: Analytics
 
     private val viewModel by viewModels<MainViewModel>()
 
@@ -57,7 +57,7 @@ class MainActivity : AppCompatActivity() {
                     enableDynamicColor = enableDynamicColors,
                 ) {
                     Home(
-                        firebaseAnalytics = firebaseAnalytics
+                        analytics = analytics
                     )
                 }
             }

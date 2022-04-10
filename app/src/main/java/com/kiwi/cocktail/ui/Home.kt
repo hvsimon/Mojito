@@ -15,6 +15,7 @@ import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
@@ -27,11 +28,10 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.google.accompanist.navigation.material.ExperimentalMaterialNavigationApi
 import com.google.accompanist.navigation.material.rememberBottomSheetNavigator
-import com.google.firebase.analytics.FirebaseAnalytics
+import com.kiwi.base.utils.Analytics
 import com.kiwi.cocktail.AppNavigation
 import com.kiwi.cocktail.R
 import com.kiwi.cocktail.Screen
-import com.kiwi.common_ui_compose.trackScreen
 
 @OptIn(
     ExperimentalMaterial3Api::class,
@@ -39,12 +39,22 @@ import com.kiwi.common_ui_compose.trackScreen
 )
 @Composable
 fun Home(
-    firebaseAnalytics: FirebaseAnalytics,
+    analytics: Analytics,
 ) {
 
     val bottomSheetNavigator = rememberBottomSheetNavigator()
     val navController = rememberNavController(bottomSheetNavigator)
-        .also { it.trackScreen(firebaseAnalytics) }
+
+    // Launch an effect to track changes to the current back stack entry, and push them
+    // as a screen views to analytics
+    LaunchedEffect(navController, analytics) {
+        navController.currentBackStackEntryFlow.collect { entry ->
+            analytics.trackScreenView(
+                route = entry.destination.route,
+                arguments = entry.arguments,
+            )
+        }
+    }
 
     val mainScreen = listOf(
         Screen.Explore.route,

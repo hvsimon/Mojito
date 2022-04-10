@@ -7,7 +7,10 @@ import com.google.firebase.crashlytics.ktx.crashlytics
 import com.google.firebase.ktx.Firebase
 import com.kiwi.base.BuildConfig
 import com.kiwi.base.CrashReportingTree
+import com.kiwi.base.utils.Analytics
+import com.kiwi.base.utils.FirebaseAnalyticsImpl
 import com.kiwi.translate.AzureTranslator
+import dagger.Binds
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -17,26 +20,33 @@ import timber.log.Timber
 
 @InstallIn(SingletonComponent::class)
 @Module
-object BaseModule {
+abstract class BaseModule {
 
-    @Provides
     @Singleton
-    fun provideFirebaseCrashlytics(): FirebaseCrashlytics = Firebase.crashlytics
+    @Binds
+    internal abstract fun provideAnalytics(bind: FirebaseAnalyticsImpl): Analytics
 
-    @Provides
-    @Singleton
-    fun provideFirebaseAnalytics(): FirebaseAnalytics = Firebase.analytics
+    companion object {
 
-    @Provides
-    @Singleton
-    fun provideTimberTree(crashReportingTree: CrashReportingTree): Timber.Tree =
-        if (BuildConfig.DEBUG) {
-            Timber.DebugTree()
-        } else {
-            crashReportingTree
-        }
+        @Provides
+        @Singleton
+        fun provideFirebaseCrashlytics(): FirebaseCrashlytics = Firebase.crashlytics
 
-    @Provides
-    @Singleton
-    fun provideTranslator(): AzureTranslator = AzureTranslator()
+        @Provides
+        @Singleton
+        fun provideFirebaseAnalytics(): FirebaseAnalytics = Firebase.analytics
+
+        @Provides
+        @Singleton
+        fun provideTimberTree(crashReportingTree: CrashReportingTree): Timber.Tree =
+            if (BuildConfig.DEBUG) {
+                Timber.DebugTree()
+            } else {
+                crashReportingTree
+            }
+
+        @Provides
+        @Singleton
+        fun provideTranslator(): AzureTranslator = AzureTranslator()
+    }
 }
