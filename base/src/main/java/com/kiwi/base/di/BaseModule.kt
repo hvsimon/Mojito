@@ -6,8 +6,8 @@ import com.google.firebase.crashlytics.FirebaseCrashlytics
 import com.google.firebase.crashlytics.ktx.crashlytics
 import com.google.firebase.ktx.Firebase
 import com.kiwi.base.BuildConfig
-import com.kiwi.base.CrashReportingTree
 import com.kiwi.base.utils.Analytics
+import com.kiwi.base.utils.CrashReportingTree
 import com.kiwi.base.utils.FirebaseAnalyticsImpl
 import com.kiwi.translate.AzureTranslator
 import dagger.Binds
