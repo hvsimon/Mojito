@@ -17,7 +17,8 @@ buildscript {
 }
 
 plugins {
-    id("org.jlleitschuh.gradle.ktlint") version "10.2.0"
+    // Issue: https://youtrack.jetbrains.com/issue/KTIJ-19369
+    alias(libs.plugins.ktlint)
 }
 
 subprojects {

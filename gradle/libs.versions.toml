@@ -54,6 +54,10 @@ timber = "5.0.1"
 junit-core = "4.13.2"
 mockk-core = "1.12.3"
 
+[plugins]
+
+ktlint = { id = "org.jlleitschuh.gradle.ktlint", version = "10.2.0" }
+
 [libraries]
 
 android-pluginGradle = { module = "com.android.tools.build:gradle", version.ref = "android-pluginGradle" }
