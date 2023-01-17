@@ -6,6 +6,7 @@ plugins {
 }
 
 android {
+    namespace = "com.kiwi.ui_cocktail_list"
     compileSdk = libs.versions.compileSdk.get().toInt()
 
     defaultConfig {

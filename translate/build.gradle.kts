@@ -10,6 +10,7 @@ val azureTranslateApiKey: String =
     gradleLocalProperties(rootDir).getProperty("AZURE_TRANSLATE_API_KEY") ?: ""
 
 android {
+    namespace = "com.kiwi.translate"
     compileSdk = libs.versions.compileSdk.get().toInt()
 
     defaultConfig {

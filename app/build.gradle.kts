@@ -12,6 +12,7 @@ if (file("google-services.json").exists()) {
 }
 
 android {
+    namespace = "com.kiwi.cocktail"
     compileSdk = libs.versions.compileSdk.get().toInt()
 
     defaultConfig {

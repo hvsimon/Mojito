@@ -6,6 +6,7 @@ plugins {
 }
 
 android {
+    namespace = "com.kiwi.ui_browsing_history"
     compileSdk = libs.versions.compileSdk.get().toInt()
 
     defaultConfig {

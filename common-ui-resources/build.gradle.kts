@@ -3,6 +3,7 @@ plugins {
 }
 
 android {
+    namespace = "com.kiwi.common_ui_resources"
     compileSdk = 31
 
     defaultConfig {

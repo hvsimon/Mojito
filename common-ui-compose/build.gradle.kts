@@ -4,6 +4,7 @@ plugins {
 }
 
 android {
+    namespace = "com.kiwi.common_ui_compose"
     compileSdk = libs.versions.compileSdk.get().toInt()
 
     defaultConfig {
