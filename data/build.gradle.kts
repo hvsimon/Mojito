@@ -12,6 +12,7 @@ val thecocktaildbKey: String =
     gradleLocalProperties(rootDir).getProperty("THECOCKTAILDB_KEY") ?: "1" // 1 is test key
 
 android {
+    namespace = "com.kiwi.data"
     compileSdk = libs.versions.compileSdk.get().toInt()
 
     defaultConfig {

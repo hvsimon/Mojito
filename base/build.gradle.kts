@@ -6,6 +6,7 @@ plugins {
 }
 
 android {
+    namespace = "com.kiwi.base"
     compileSdk = libs.versions.compileSdk.get().toInt()
 
     defaultConfig {
