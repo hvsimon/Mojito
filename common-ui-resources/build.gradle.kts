@@ -4,7 +4,7 @@ plugins {
 
 android {
     namespace = "com.kiwi.common_ui_resources"
-    compileSdk = 31
+    compileSdk = libs.versions.compileSdk.get().toInt()
 
     defaultConfig {
         minSdk = 23
