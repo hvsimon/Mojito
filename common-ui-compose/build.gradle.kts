@@ -25,7 +25,7 @@ android {
     }
 
     composeOptions {
-        kotlinCompilerExtensionVersion = libs.versions.compose.get()
+        kotlinCompilerExtensionVersion = libs.versions.composecompiler.get()
     }
 }
 
@@ -42,5 +42,6 @@ dependencies {
     implementation(libs.firebase.analytics)
 
     // Compose
+    implementation(platform(libs.compose.bom))
     implementation(libs.bundles.compose)
 }

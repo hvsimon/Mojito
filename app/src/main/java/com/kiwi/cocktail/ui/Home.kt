@@ -81,7 +81,7 @@ fun Home(
         AppNavigation(
             navController = navController,
             bottomSheetNavigator = bottomSheetNavigator,
-            modifier = Modifier.padding(paddingBottom),
+            modifier = Modifier.padding(bottom = paddingBottom.calculateBottomPadding()),
         )
     }
 }

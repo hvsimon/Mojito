@@ -1,6 +1,7 @@
 package com.kiwi.ui_about
 
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
@@ -11,10 +12,11 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SmallTopAppBar
 import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.TopAppBarScrollBehavior
+import androidx.compose.material3.rememberTopAppBarState
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.res.stringResource
@@ -27,7 +29,8 @@ fun Licenses(
     navigateUp: () -> Unit,
 ) {
 
-    val scrollBehavior = remember { TopAppBarDefaults.pinnedScrollBehavior() }
+    val topBarState = rememberTopAppBarState()
+    val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior(topBarState)
 
     Scaffold(
         topBar = {
@@ -40,7 +43,7 @@ fun Licenses(
             .fillMaxSize()
             .statusBarsPadding()
             .nestedScroll(scrollBehavior.nestedScrollConnection)
-    ) {
+    ) { innerPadding ->
         LibrariesContainer(
             colors = LibraryDefaults.libraryColors(
                 backgroundColor = MaterialTheme.colorScheme.background,
@@ -48,17 +51,19 @@ fun Licenses(
                 badgeBackgroundColor = MaterialTheme.colorScheme.primary,
                 badgeContentColor = MaterialTheme.colorScheme.onPrimary,
             ),
+            contentPadding = innerPadding,
             modifier = Modifier.fillMaxSize(),
         )
     }
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun TopBar(
     navigateUp: () -> Unit,
     scrollBehavior: TopAppBarScrollBehavior,
 ) {
-    SmallTopAppBar(
+    TopAppBar(
         title = { Text(text = stringResource(id = R.string.licenses)) },
         scrollBehavior = scrollBehavior,
         navigationIcon = {

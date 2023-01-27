@@ -17,8 +17,12 @@ import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Search
+import androidx.compose.material.pullrefresh.PullRefreshIndicator
+import androidx.compose.material.pullrefresh.pullRefresh
+import androidx.compose.material.pullrefresh.rememberPullRefreshState
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.ElevatedButton
@@ -32,10 +36,10 @@ import androidx.compose.material3.TopAppBarColors
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.TopAppBarScrollBehavior
 import androidx.compose.material3.contentColorFor
+import androidx.compose.material3.rememberTopAppBarState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -81,7 +85,7 @@ fun Explore(
     )
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
+@OptIn(ExperimentalMaterial3Api::class, ExperimentalMaterialApi::class)
 @Composable
 private fun Explore(
     uiState: ExploreUiState,
@@ -92,7 +96,8 @@ private fun Explore(
     onRefresh: () -> Unit,
     openIngredient: (ingredientName: String) -> Unit,
 ) {
-    val scrollBehavior = remember { TopAppBarDefaults.pinnedScrollBehavior() }
+    val topBarState = rememberTopAppBarState()
+    val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior(topBarState)
 
     Scaffold(
         modifier = Modifier
@@ -110,19 +115,14 @@ private fun Explore(
                 )
             )
         }
-    ) {
-        SwipeRefresh(
-            state = rememberSwipeRefreshState(uiState.isRefreshing),
-            onRefresh = onRefresh,
-            indicator = { s, trigger ->
-                SwipeRefreshIndicator(
-                    state = s,
-                    refreshTriggerDistance = trigger,
-                    backgroundColor = MaterialTheme.colorScheme.surface,
-                    contentColor = contentColorFor(MaterialTheme.colorScheme.surface)
-                )
-            },
-            modifier = Modifier.fillMaxSize()
+    ) { paddingValues ->
+
+        val pullRefreshState = rememberPullRefreshState(uiState.isRefreshing, onRefresh)
+
+        Box(
+            modifier = Modifier
+                .pullRefresh(pullRefreshState)
+                .padding(top = paddingValues.calculateTopPadding()),
         ) {
             Column(
                 modifier = Modifier
@@ -164,6 +164,13 @@ private fun Explore(
                     )
                 }
             }
+            PullRefreshIndicator(
+                refreshing = uiState.isRefreshing,
+                state = pullRefreshState,
+                backgroundColor = MaterialTheme.colorScheme.surface,
+                contentColor = contentColorFor(MaterialTheme.colorScheme.surface),
+                modifier = Modifier.align(Alignment.TopCenter),
+            )
         }
     }
 }
@@ -258,6 +265,7 @@ private fun IngredientCardRow(
     }
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun SearchBar(
     modifier: Modifier = Modifier,
@@ -267,16 +275,17 @@ private fun SearchBar(
 ) {
     val offsetLimit = with(LocalDensity.current) { -64.0.dp.toPx() }
     SideEffect {
-        if (scrollBehavior?.offsetLimit != offsetLimit) {
-            scrollBehavior?.offsetLimit = offsetLimit
+        if (scrollBehavior?.state?.heightOffsetLimit != offsetLimit) {
+            scrollBehavior?.state?.heightOffsetLimit = offsetLimit
         }
     }
 
-    val scrollFraction = scrollBehavior?.scrollFraction ?: 0f
-    val appBarContainerColor by colors.containerColor(scrollFraction)
+    // val scrollFraction = scrollBehavior?.state?.overlappedFraction ?: 0f
+    // FIXME: Cannot access 'containerColor': it is internal in 'TopAppBarColors'
+    // val appBarContainerColor = colors.containerColor(scrollFraction)
 
     Surface(
-        color = appBarContainerColor,
+        // color = appBarContainerColor,
         shadowElevation = 3.dp
     ) {
         ElevatedButton(
@@ -339,7 +348,7 @@ private fun WineCard(
     imageData: Any,
     label: String,
     onCardClick: () -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     Card(
         onClick = onCardClick,
@@ -376,7 +385,7 @@ private fun CategoryCard(
     imageData: Any,
     categoryName: String,
     onCardClick: () -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     Card(
         onClick = onCardClick,
@@ -407,6 +416,7 @@ private fun CategoryCard(
     }
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Preview
 @Composable
 private fun PreviewSearchBar() {

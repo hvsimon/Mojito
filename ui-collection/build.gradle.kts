@@ -29,7 +29,7 @@ android {
     }
 
     composeOptions {
-        kotlinCompilerExtensionVersion = libs.versions.compose.get()
+        kotlinCompilerExtensionVersion = libs.versions.composecompiler.get()
     }
 }
 
@@ -51,6 +51,7 @@ dependencies {
     implementation(libs.paging.compose)
 
     // Compose
+    implementation(platform(libs.compose.bom))
     implementation(libs.bundles.compose)
 
     // Google
