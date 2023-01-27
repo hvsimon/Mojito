@@ -59,7 +59,7 @@ fun CocktailList(
         modifier = Modifier
             .statusBarsPadding()
             .nestedScroll(scrollBehavior.nestedScrollConnection)
-    ) {
+    ) { paddingValues ->
         if (uiState.isLoading) {
             LinearProgressIndicator(modifier = Modifier.fillMaxWidth())
         }
@@ -76,6 +76,7 @@ fun CocktailList(
             CocktailList(
                 list = uiState.cocktailItems,
                 onItemClick = openRecipe,
+                contentPadding = paddingValues,
             )
         }
     }
@@ -84,11 +85,17 @@ fun CocktailList(
 @Composable
 private fun CocktailList(
     list: List<CocktailItemUiState>,
-    onItemClick: (cocktailId: String) -> Unit
+    onItemClick: (cocktailId: String) -> Unit,
+    contentPadding: PaddingValues = PaddingValues(0.dp),
 ) {
     LazyVerticalGrid(
         columns = GridCells.Fixed(2),
-        contentPadding = PaddingValues(16.dp),
+        contentPadding = PaddingValues(
+            top = contentPadding.calculateTopPadding() + 16.dp,
+            bottom = 16.dp,
+            start = 16.dp,
+            end = 16.dp,
+        ),
         verticalArrangement = Arrangement.spacedBy(8.dp),
         horizontalArrangement = Arrangement.spacedBy(8.dp),
     ) {

@@ -5,7 +5,6 @@ import androidx.annotation.StringRes
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.slideInVertically
 import androidx.compose.animation.slideOutVertically
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -76,12 +75,12 @@ fun Home(
                 }
             )
         },
-    ) { innerPadding ->
-        val paddingBottom = if (showBottomBar) innerPadding else PaddingValues(0.dp)
+    ) { paddingValues ->
+        val paddingBottom = if (showBottomBar) paddingValues.calculateBottomPadding() else 0.dp
         AppNavigation(
             navController = navController,
             bottomSheetNavigator = bottomSheetNavigator,
-            modifier = Modifier.padding(bottom = paddingBottom.calculateBottomPadding()),
+            modifier = Modifier.padding(bottom = paddingBottom),
         )
     }
 }

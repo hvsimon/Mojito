@@ -43,7 +43,7 @@ fun Licenses(
             .fillMaxSize()
             .statusBarsPadding()
             .nestedScroll(scrollBehavior.nestedScrollConnection)
-    ) { innerPadding ->
+    ) { paddingValues ->
         LibrariesContainer(
             colors = LibraryDefaults.libraryColors(
                 backgroundColor = MaterialTheme.colorScheme.background,
@@ -51,7 +51,7 @@ fun Licenses(
                 badgeBackgroundColor = MaterialTheme.colorScheme.primary,
                 badgeContentColor = MaterialTheme.colorScheme.onPrimary,
             ),
-            contentPadding = innerPadding,
+            contentPadding = paddingValues,
             modifier = Modifier.fillMaxSize(),
         )
     }

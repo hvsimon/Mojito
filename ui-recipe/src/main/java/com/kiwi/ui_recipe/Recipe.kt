@@ -1,5 +1,6 @@
 package com.kiwi.ui_recipe
 
+import android.annotation.SuppressLint
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -90,6 +91,7 @@ fun Recipe(
     }
 }
 
+@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun Recipe(
@@ -111,7 +113,7 @@ private fun Recipe(
                 isFollowed = isFollowed,
                 onClick = onToggleFollowed
             )
-        }
+        },
     ) {
         Column(
             modifier = Modifier
