@@ -1,5 +1,6 @@
 package com.kiwi.cocktail
 
+import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
@@ -49,6 +50,7 @@ internal fun AppNavigation(
         bottomSheetNavigator = bottomSheetNavigator,
         sheetShape = RoundedCornerShape(topStart = 12.dp, topEnd = 12.dp),
         sheetBackgroundColor = MaterialTheme.colorScheme.surface,
+        modifier = Modifier.statusBarsPadding(),
     ) {
         NavHost(
             navController = navController,

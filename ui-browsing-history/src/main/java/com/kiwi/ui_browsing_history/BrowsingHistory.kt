@@ -26,7 +26,6 @@ import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.rememberTopAppBarState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -130,11 +129,13 @@ private fun BrowsingHistoryList(
         modifier = Modifier
             .statusBarsPadding()
             .nestedScroll(scrollBehavior.nestedScrollConnection)
-    ) {
+    ) { paddingValues ->
 
         if (isEmpty) EmptyLayout()
 
-        LazyColumn {
+        LazyColumn(
+            contentPadding = paddingValues,
+        ) {
             items(
                 items = lazyPagingItems,
                 key = { it.browsingHistoryEntity.cocktailId },
