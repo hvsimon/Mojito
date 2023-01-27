@@ -23,6 +23,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBarDefaults
+import androidx.compose.material3.rememberTopAppBarState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -77,7 +78,9 @@ private fun BrowsingHistoryList(
     onClearAllClick: () -> Unit,
 ) {
 
-    val scrollBehavior = remember { TopAppBarDefaults.pinnedScrollBehavior() }
+    val topBarState = rememberTopAppBarState()
+    val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior(topBarState)
+
     val showClearAllCheckDialog = rememberSaveable { mutableStateOf(false) }
 
     val isEmpty = lazyPagingItems.loadState.refresh is LoadState.NotLoading &&

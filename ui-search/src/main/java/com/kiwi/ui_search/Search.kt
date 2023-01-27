@@ -38,11 +38,13 @@ import androidx.compose.material3.FilledTonalButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.ModalDrawerSheet
 import androidx.compose.material3.ModalNavigationDrawer
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SmallTopAppBar
 import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarScrollBehavior
 import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
@@ -160,9 +162,11 @@ private fun Search(
             drawerState = drawerState,
             drawerContent = {
                 CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Ltr) {
-                    DrawerContent(
-                        listByFirstLetter = openCocktailListWithFirstLetter,
-                    )
+                    ModalDrawerSheet {
+                        DrawerContent(
+                            listByFirstLetter = openCocktailListWithFirstLetter,
+                        )
+                    }
                 }
             },
             content = {
@@ -184,18 +188,21 @@ private fun Search(
                         modifier = Modifier
                             .fillMaxSize()
                             .statusBarsPadding()
-                    ) {
+                    ) { paddingValues ->
+                        paddingValues
                         if (uiState.query.isEmpty()) {
                             RecommendResult(
                                 uiState = uiState,
                                 openCocktailListWithCategory = openCocktailListWithCategory,
                                 openRecipe = openRecipe,
+                                modifier = Modifier.padding(top = paddingValues.calculateTopPadding())
                             )
                         } else {
                             SearchResult(
                                 searchByNameResult = uiState.searchByNameResult,
                                 searchByIngredientResult = uiState.searchByIngredientResult,
-                                onItemClick = openRecipe
+                                onItemClick = openRecipe,
+                                modifier = Modifier.padding(top = paddingValues.calculateTopPadding())
                             )
                         }
                     }
@@ -205,6 +212,7 @@ private fun Search(
     }
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun SearchableTopBar(
     modifier: Modifier = Modifier,
@@ -216,7 +224,7 @@ private fun SearchableTopBar(
     openDrawer: () -> Unit,
     enableAutoFocus: Boolean = true,
 ) {
-    SmallTopAppBar(
+    TopAppBar(
         modifier = modifier,
         title = {
             SearchBar(
@@ -248,6 +256,7 @@ private fun SearchableTopBar(
     )
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun SearchBar(
     modifier: Modifier = Modifier,
@@ -375,6 +384,7 @@ private fun SearchResult(
     searchByNameResult: SearchResultUiState<CocktailUiState>,
     searchByIngredientResult: SearchResultUiState<SimpleDrinkDto>,
     onItemClick: (String) -> Unit,
+    modifier: Modifier,
 ) {
     val pagerState = rememberPagerState()
     val scope = rememberCoroutineScope()
@@ -390,7 +400,7 @@ private fun SearchResult(
         )
     )
 
-    Column {
+    Column(modifier = modifier) {
         TabRow(
             backgroundColor = MaterialTheme.colorScheme.surface,
             contentColor = MaterialTheme.colorScheme.primary,
@@ -585,10 +595,11 @@ private fun SearchByIngredientItem(
 private fun RecommendResult(
     uiState: SearchUiState,
     openCocktailListWithCategory: (String) -> Unit,
-    openRecipe: (cocktailId: String) -> Unit
+    openRecipe: (cocktailId: String) -> Unit,
+    modifier: Modifier,
 ) {
     Column(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxSize(),
         verticalArrangement = Arrangement.spacedBy(8.dp),
     ) {
@@ -706,6 +717,7 @@ private fun CocktailCard(
     }
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Preview
 @Composable
 private fun PreviewTopBar() {
