@@ -49,7 +49,6 @@ dependencies {
 
     // Google
     implementation(libs.material)
-    implementation(libs.accompanist.swiperefresh)
 
     // DI
     implementation(libs.androidx.hilt.compose)
